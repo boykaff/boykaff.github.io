@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="None">
+        
+        
+        <link rel="shortcut icon" href="./img/favicon.ico">
+        <title>My Docs</title>
+        <link href="./css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="./css/font-awesome-4.5.0.css" rel="stylesheet">
+        <link href="./css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="./css/highlight.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="./js/jquery-1.10.2.min.js"></script>
+        <script src="./js/bootstrap-3.0.3.min.js"></script>
+        <script src="./js/highlight.pack.js"></script> 
+    </head>
+
+    <body class="homepage">
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <a class="navbar-brand" href=".">My Docs</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#welcome-to-mkdocs">Welcome to MkDocs</a></li>
+            <li><a href="#commands">Commands</a></li>
+            <li><a href="#project-layout">Project layout</a></li>
+            <li><a href="#_1">这是一个标题。</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h1 id="welcome-to-mkdocs">Welcome to MkDocs</h1>
+<p>For full documentation visit <a href="http://mkdocs.org">mkdocs.org</a>.</p>
+<h2 id="commands">Commands</h2>
+<ul>
+<li><code>mkdocs new [dir-name]</code> - Create a new project.</li>
+<li><code>mkdocs serve</code> - Start the live-reloading docs server.</li>
+<li><code>mkdocs build</code> - Build the documentation site.</li>
+<li><code>mkdocs help</code> - Print this help message.</li>
+</ul>
+<h2 id="project-layout">Project layout</h2>
+<pre><code>mkdocs.yml    # The configuration file.
+docs/
+    index.md  # The documentation homepage.
+    ...       # Other markdown pages, images and other files.
+</code></pre>
+<nobr><pre><code class="java">package forkjoin;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.ForkJoinTask;
+import java.util.concurrent.RecursiveTask;
+
+import static java.util.stream.Collectors.toList;
+
+/**
+ * fork-join的简单易用
+ *
+ * 2018/3/20
+ *
+ * @author boyka
+ */
+
+/**
+ * 任务类:批改的一套试卷或试卷的一部分
+ */
+
+class Task {
+    private String name;  //任务名
+    private String level; //困难等级
+    private Long useTime; //预计花费时间
+    private List&lt;Task&gt; subTaskList; //子任务列表
+
+    public Task(String name, String level, Long useTime, List&lt;Task&gt; subTaskList) {
+        this.name = name;
+        this.level = level;
+        this.useTime = useTime;
+        this.subTaskList = subTaskList;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
+    }
+
+    public Long getUseTime() {
+        return useTime;
+    }
+
+    public void setUseTime(Long useTime) {
+        this.useTime = useTime;
+    }
+
+    public List&lt;Task&gt; getSubTaskList() {
+        return subTaskList;
+    }
+
+    public void setSubTaskList(List&lt;Task&gt; subTaskList) {
+        this.subTaskList = subTaskList;
+    }
+}
+
+/**
+ * 任务操作类:进行试卷批改操作
+ */
+public class ForkJoinTest extends RecursiveTask&lt;Long&gt; {
+    private final static String EASY = &quot;easy&quot;;
+    private final static String DIFFICULT = &quot;difficult&quot;;
+    private Task task;
+
+    private ForkJoinTest(Task task) {
+        this.task = task;
+    }
+
+    @Override
+    protected Long compute() {
+        Long useTimes = 0L;
+        //容易，一个同学能够改得完了
+        if (EASY.equals(task.getLevel())) {
+            useTimes = task.getUseTime();
+            try {
+                Thread.sleep(task.getUseTime() * 1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        } else {
+            //任务量大，将批改试卷任务按任务量细分后让多个童鞋去(工作线程)完成
+            if (null != task &amp;&amp; null != task.getSubTaskList()) {
+                useTimes = task.getSubTaskList()
+                        .stream()
+                        .map(t -&gt; new ForkJoinTest(t).fork())
+                        .collect(toList())
+                        .stream()
+                        .mapToLong(t -&gt; t.join())
+                        .sum();
+            }
+        }
+        return useTimes;
+    }
+
+    // 测试
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
+        long startTime = System.currentTimeMillis();
+        ForkJoinPool forkJoinPool = new ForkJoinPool();
+        ForkJoinTest mainForkJoin = new ForkJoinTest(ForkJoinTest.initTasks());
+        ForkJoinTask&lt;Long&gt; result = forkJoinPool.submit(mainForkJoin);
+        System.out.println(&quot;BOSS一个人批改用时：&quot; + result.get() + &quot; H&quot;);
+        System.out.println(&quot;多个童鞋一起改用时： &quot; + (System.currentTimeMillis() - startTime) / 1000 + &quot; H&quot;);
+    }
+
+    //构造简易批改试卷任务树
+    private static Task initTasks() {
+        //微机
+        Task wjTask1 = new Task(&quot;微机选择+填空题&quot;, EASY, 4L, new ArrayList&lt;&gt;());
+        Task wjTask2 = new Task(&quot;微机大题&quot;, EASY, 3L, null);
+        Task wjTask = new Task(&quot;算法试卷&quot;, DIFFICULT, null, Arrays.asList(wjTask1, wjTask2));
+        //网络
+        Task wlTask = new Task(&quot;网络&quot;, EASY, 6L, null);
+
+        //算法
+        Task sfTask1 = new Task(&quot;算法前3道&quot;, EASY, 4L, null);
+        Task sfTask2 = new Task(&quot;算法后2道&quot;, EASY, 4L, null);
+        Task sfTask = new Task(&quot;算法试卷&quot;, DIFFICULT, null, Arrays.asList(sfTask1, sfTask2));
+
+        return new Task(&quot;所有试卷&quot;, DIFFICULT, null, Arrays.asList(wjTask, wlTask, sfTask));
+    }
+}
+</code></pre><nobr>
+
+<p><br /> 
+<br /></p>
+<blockquote>
+<h2 id="_1">这是一个标题。</h2>
+<ol>
+<li>这是第一行列表项。</li>
+<li>这是第二行列表项。</li>
+</ol>
+<p>给出一些例子代码：</p>
+<pre><code>return shell_exec("echo $input | $markdown_script");
+</code></pre>
+</blockquote>
+<p><br /></p></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>var base_url = '.';</script>
+        <script src="./js/base.js"></script>
+        <script src="./search/require.js"></script>
+        <script src="./search/search.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td><kbd>&larr;</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td><kbd>&rarr;</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    </body>
+</html>
+
+<!--
+MkDocs version : 0.17.3
+Build Date UTC : 2018-03-27 18:02:29
+-->
