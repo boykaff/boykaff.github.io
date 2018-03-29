@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../../../../../img/favicon.ico">
+        <title>lambda初识 - 个人博客</title>
+        <link href="../../../../../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../../../../../css/font-awesome-4.5.0.css" rel="stylesheet">
+        <link href="../../../../../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="../../../../../../css/highlight.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../../../../../../js/jquery-1.10.2.min.js"></script>
+        <script src="../../../../../../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../../../../../../js/highlight.pack.js"></script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="../../../../../..">个人博客</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                    <li >
+                        <a href="../../../../../..">主页</a>
+                    </li>
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">hello-IT <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            
+  <li class="dropdown-submenu">
+    <a href="#">java</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../../../">java index</a>
+</li>
+            
+  <li class="dropdown-submenu">
+    <a href="#">java 7</a>
+    <ul class="dropdown-menu">
+            
+  <li class="dropdown-submenu">
+    <a href="#">多线程框架</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../../../java7/asynchronous_programming/18-03-18/fork-join%E6%A1%86%E6%9E%B6%E7%BF%BB%E8%AF%91/">fork-join框架翻译</a>
+</li>
+            
+<li >
+    <a href="../../../../java7/asynchronous_programming/18-03-21/fork-join%E7%A4%BA%E4%BE%8B%E7%AF%87/">fork-join示例篇</a>
+</li>
+    </ul>
+  </li>
+    </ul>
+  </li>
+            
+  <li class="dropdown-submenu">
+    <a href="#">java8</a>
+    <ul class="dropdown-menu">
+            
+  <li class="dropdown-submenu">
+    <a href="#">lambda</a>
+    <ul class="dropdown-menu">
+            
+<li class="active">
+    <a href="./">lambda初识</a>
+</li>
+            
+<li >
+    <a href="../../18-03-07/lambda%E5%8E%9F%E7%90%86%E7%AF%87%28%E8%AF%91%29/">lambda原理篇(译)</a>
+</li>
+    </ul>
+  </li>
+            
+  <li class="dropdown-submenu">
+    <a href="#">stream流</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../../stream/18-03-10/stream%E6%B5%81%E6%B5%85%E6%9E%90-1/">stream流浅析-1</a>
+</li>
+    </ul>
+  </li>
+    </ul>
+  </li>
+    </ul>
+  </li>
+                            
+  <li class="dropdown-submenu">
+    <a href="#">tools</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../../../../tools/">tools index</a>
+</li>
+            
+  <li class="dropdown-submenu">
+    <a href="#">postman</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../../../../tools/postman/18-01-21/%E5%AE%89%E8%A3%85%E4%B8%8E%E5%AD%A6%E4%B9%A0/">安装与学习</a>
+</li>
+            
+<li >
+    <a href="../../../../../tools/postman/18-01-27/postman%E6%B5%8B%E8%AF%95/">postman测试</a>
+</li>
+    </ul>
+  </li>
+    </ul>
+  </li>
+                            
+<li >
+    <a href="../../../../../python/">python</a>
+</li>
+                        </ul>
+                    </li>
+                    <li >
+                        <a href="../../../../../../about_me/">关于我</a>
+                    </li>
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> 搜索
+                    </a>
+                </li>
+                    <li >
+                        <a rel="next" href="../../../../java7/asynchronous_programming/18-03-21/fork-join%E7%A4%BA%E4%BE%8B%E7%AF%87/">
+                            <i class="fa fa-arrow-left"></i> 上一篇
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../../18-03-07/lambda%E5%8E%9F%E7%90%86%E7%AF%87%28%E8%AF%91%29/">
+                            下一篇 <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#lambda">lambda初识</a></li>
+            <li><a href="#1">1. 函数一等公民等级由来</a></li>
+            <li><a href="#2-lambda">2. 匿名内部类和lambda</a></li>
+            <li><a href="#3-lambda">3. lambda和函数式接口</a></li>
+            <li><a href="#4-lambda">4. lambda在集合中的一些应用</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h3 id="lambda">lambda初识</h3>
+<p>时间: 2018年02月27日</p>
+<blockquote>
+<p>java繁琐的语法也被摒垢已久，在java8中引入的lambda这一个非常重要的特性。这标志着Java往函数式编程迈进了一小步，java程序猿也可以写出简单优雅的代码了。</p>
+</blockquote>
+<h4 id="1">1. 函数一等公民等级由来</h4>
+<ul>
+<li>或许可以说这么说，如果没有将函数进行一等公民，java8中stream、lambda这些新的特性根本无从谈起，函数一等功民化并非由java8独家首创，早在python、javascript、scala等语言中运用得轻车熟路。在传统的一些语言，比如c/c++/c#以及java8之前的语言中，整个编程语言的核心就在于操作值，so，值被当作一等公民，拥有能够进行赋值、传参、返回等操作，与此相对，方法和类等概念就被冠以二等功名的头衔，所谓二等，必然就主起辅助作用。</li>
+</ul>
+<h4 id="2-lambda">2. 匿名内部类和lambda</h4>
+<ul>
+<li>函数作为实参进行传递在c/c++中非常常见(表现为指针形式)，在java中则需要利用匿名内部类，先看一组简单的线程实现代码对比：</li>
+</ul>
+<pre><code> new Thread(new Runnable() {
+    @Override
+    public void run() {
+        System.out.println(&quot;匿名内部类式创建线程!&quot;);
+    }
+}).start();
+
+new Thread(() -&gt; System.out.println(&quot;lambda式创建线程 !&quot;)).start();
+</code></pre>
+
+<ul>
+<li>输出结果:</li>
+</ul>
+<pre><code>匿名内部类式创建线程!
+lambda式创建线程 !
+</code></pre>
+
+<ul>
+<li>可以看出，lambda式将操作行为参数化，实现现成的方式较匿名内部类着实简单太多了，而且代码的可读性也好不少。</li>
+</ul>
+<h4 id="3-lambda">3. lambda和函数式接口</h4>
+<ul>
+<li>
+<p>如上面一个例子中，Runnable作为一个接口，仅包含一个run方法，但必须要写一大堆啰里啰嗦的代码，在JDK中，还有很多比如Callable、ActionListener等，java8中将这样的接口进行简化，即函数式接口，表达形式： ()-&gt; {}。</p>
+</li>
+<li>
+<p>(), 表示参数列表；</p>
+</li>
+<li>{}，lambda主体，即要实现的代码逻辑；</li>
+<li>
+<p>-&gt;, 将参数和lambda主体分开。</p>
+</li>
+<li>
+<p>比如：</p>
+</li>
+</ul>
+<pre><code>//Callable
+//旧api      
+Callable&lt;String&gt; c1 = new Callable&lt;String&gt;() {
+    @Override
+    public String call() throws Exception {
+        return &quot;done&quot;;
+    }
+};
+//java8
+ Callable&lt;String&gt; c2 = () -&gt; &quot;done&quot;;
+
+//comparator比较器
+//旧api      
+Comparator&lt;String&gt; c3 = new Comparator&lt;String&gt;() {
+    @Override
+    public int compare(String s1, String s2) {
+        return s1.compareToIgnoreCase(s2);
+    }
+};
+//java8 
+Comparator&lt;String&gt; c2 = (s1, s2) -&gt; s1.compareToIgnoreCase(s2);
+</code></pre>
+
+<h4 id="4-lambda">4. lambda在集合中的一些应用</h4>
+<ul>
+<li>再看一道例子：</li>
+</ul>
+<pre><code>// code:
+List&lt;Integer&gt; list = Arrays.asList(1, 4, 5, 6, 2, 3);
+for(Integer i: list) {
+    System.out.print(i + &quot;  &quot;);
+}
+// result:
+1
+4
+5
+6
+2
+3 
+</code></pre>
+
+<ul>
+<li>
+<p>上面这道例子使用了外部迭代方法遍历并打印列表原始，外部迭代在可以说是之前对数据列表最常进行的操作之一，但外部迭代有如下不足之处：</p>
+</li>
+<li>
+<p>只能顺序处理数据；</p>
+</li>
+<li>不能充分利用CPU多核优势；</li>
+<li>
+<p>不利于编译器的优化工作。</p>
+</li>
+<li>
+<p>在java8中，将外部迭代转换为内部迭代,同样能够输入相同的结果:</p>
+</li>
+</ul>
+<pre><code>//可以写成：
+list.forEach(i -&gt; System.out::println(i));
+//甚至可以写成 
+list.forEach(System.out::println);
+</code></pre>
+
+<ul>
+<li>此外，java8中对集合的操作进行了进一步的丰富，在Collection集合类中添加了stream方法，这两个方法会将Collection的实例转换为数据流(关于流将会在后面进一步展开学习)，将lambda和stream结合起来使用，在进行数据的流水线化处理时优势极为明显。</li>
+<li>又来例子：获取列表中前50个大于20的数据的列表：</li>
+</ul>
+<pre><code>//旧方法
+List&lt;Integer&gt; resList1 = new ArrayList&lt;&gt;();
+int num = 0;
+for(Integer i: list) {
+   if(num &gt; 50) {
+       break;
+   } else if(i &gt; 20) {
+       resList1.add(i);
+       num++;
+   }
+}
+//lambda
+List&lt;Integer&gt; resList2 = list.stream().filter(i -&gt; i &gt; 20).limit(50).collect(Collectors.toList());
+    //旧方法
+List&lt;Integer&gt; resList1 = new ArrayList&lt;&gt;();
+int num = 0;
+for(Integer i: list) {
+   if(num &gt; 50) {
+       break;
+   } else if(i &gt; 20) {
+       resList1.add(i);
+       num++;
+   }
+}
+//lambda
+List&lt;Integer&gt; resList2 = list.stream().filter(i -&gt; i &gt; 20).limit(50).collect(Collectors.toList());
+</code></pre>
+
+<ul>
+<li>将列表转换为流能够更好地利用多核的优势，直接将stream用parallelStream替代即可。</li>
+<li>stream中的还有很多的方法比如map、reduce、distinct、skep、findAny等很多方法，可以将这些方法进行流水线式拼接组合以满足自身的业务逻辑需求，在这不写太多例子了，自己动手实践吧。</li>
+</ul></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>var base_url = '../../../../../..';</script>
+        <script src="../../../../../../js/base.js"></script>
+        <script src="../../../../../../search/require.js"></script>
+        <script src="../../../../../../search/search.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">搜索</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                   输入关键词您想要看的内容.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="搜索..." id="mkdocs-search-query">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td><kbd>&larr;</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td><kbd>&rarr;</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    </body>
+</html>

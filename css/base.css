@@ -70,6 +70,7 @@ code {
 pre code {
     background: transparent;
     border: none;
+	white-space:pre;
 }
 
 a code {

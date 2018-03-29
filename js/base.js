@@ -34,10 +34,10 @@ $(document).ready(function() {
         var page;
         switch (key) {
             case 39:   // right arrow
-                page = $('[role="navigation"] a:contains(Next):first').prop('href');
+                page = $('[role="navigation"] a:contains(下一篇):first').prop('href');
                 break;
             case 37:   // left arrow
-                page = $('[role="navigation"] a:contains(Previous):first').prop('href');
+                page = $('[role="navigation"] a:contains(上一篇):first').prop('href');
                 break;
             case 83:   // s
                 e.preventDefault();
