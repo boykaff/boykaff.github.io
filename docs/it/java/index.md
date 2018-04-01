@@ -2,7 +2,7 @@
 
 #### java7
 
-- [fork-join框架翻译 18-03-18](java7/asynchronous_programming/18-03-18/fork-join框架翻译.md)
+- [fork-join框架翻译](java7/asynchronous_programming/18-03-18/fork-join框架翻译.md)
 - [fork-join示例篇 18-03-21](java7/asynchronous_programming/18-03-21/fork-join示例篇.md)
 
 #### java8

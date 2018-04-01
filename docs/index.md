@@ -10,7 +10,7 @@
 
 18/02
 
-- [lambda初识](java8/lambda/18-02-27/lambda初识.md)
+- [lambda初识]((it/java/java8/lambda/18-02-27/lambda初识.md)
 
 18/01
 
@@ -20,5 +20,4 @@
 ### 2017年
 17/12
 
-- [stream流浅析](java8/stream流/stream流浅析.md)
-- [首页](../../index.md)
+- [stream流浅析]((it/java/java8/stream流/stream流浅析.md)
