@@ -187,7 +187,7 @@
 <p>无它，译之备学。 <a href="http://cr.openjdk.java.net/~briangoetz/lambda/lambda-translation.html">译源传送门</a></p>
 </blockquote>
 <h4 id="1">1. 关于</h4>
-<p>本文概述了将lambda表达式和方法引用从Java源代码转换为字节码的策略。lambda表达式在 <a href="https://jcp.org/en/jsr/detail?id=335">JSR 335</a> 进行了详细说明并且在Lambda的 <a href="http://openjdk.java.net/projects/lambda/">OpenJDK</a>中得以实现，可以在 [ <code>State of the Lambda &lt;http://cr.openjdk.java.net/~briangoetz/lambda/lambda-state-4.html&gt;</code>__ ] 一文中对该语言特性有一个整体认识。本文将主要分析编译器在遇到lambda表达式时要如何转换为字节码以及java运行时如何参与评估lambda表达式，文中的大部分内容会涉及到函数式接口的转换机制。</p>
+<p>本文概述了将lambda表达式和方法引用从Java源代码转换为字节码的策略。lambda表达式在 <a href="https://jcp.org/en/jsr/detail?id=335">JSR 335</a> 进行了详细说明并且在Lambda的 <a href="http://openjdk.java.net/projects/lambda/">OpenJDK</a>中得以实现，可以在 《<a href="http://cr.openjdk.java.net/~briangoetz/lambda/lambda-state-4.html">State of the Lambda</a>》 一文中对该语言特性有一个整体认识。本文将主要分析编译器在遇到lambda表达式时要如何转换为字节码以及java运行时如何参与评估lambda表达式，文中的大部分内容会涉及到函数式接口的转换机制。</p>
 <p>函数式接口是java的lambda表达式的重要项，一个函数式接口包含一个non-Object(非对象)方法，例如：Runnable、Comparator等(java库常用这些接口进行回调操作)。</p>
 <p>lambda表达式只能出现在它们将被分配给类型为函数式接口的变量的地方，如：</p>
 <pre><code>Runnable r = () -&gt; { System.out.println(&quot;hello&quot;); };
@@ -207,7 +207,7 @@
 </ul>
 <p>读者们应该对<a href="https://jcp.org/en/jsr/detail?id=292">JSR-292</a>的特性有一定的了解，转换模式还假设了一个新特性，它正在由 JSR-292 专家组为Java SE8指定:一个用于对常量方法处理的反射的API。</p>
 <h4 id="2">2. 转化策略</h4>
-<p>能够将lambda表达式转化为字节流的方法有多种，类似于内部类、方法句柄、动态代理等。当然这些方法都有利有弊，在选择策略时，有两个相互制约的目标:通过不提交特定策略、在类文件表示中提供稳定性来最大化以后优化的灵活性。我们可以通过使用[ <code>JSR-292 &lt;https://jcp.org/en/jsr/detail?id=292&gt;</code>__ ]的invokedynamic特性来实现这两个目标，从而将字节码中lambda创建的二进制表示与在运行时评估lambda表达式的机制分离开来。我们不是生成字节码来创建实现lambda表达式的对象(比如调用内部类的构造器)，而是描述构造lambda的方法，并将实际的构建委托给程序运行时来完成。该方法在invokedynamic指令的静态和动态参数列表中进行编码。</p>
+<p>能够将lambda表达式转化为字节流的方法有多种，类似于内部类、方法句柄、动态代理等。当然这些方法都有利有弊，在选择策略时，有两个相互制约的目标:通过不提交特定策略、在类文件表示中提供稳定性来最大化以后优化的灵活性。我们可以通过使用<a href="https://jcp.org/en/jsr/detail?id=292">JSR-292</a>的invokedynamic特性来实现这两个目标，从而将字节码中lambda创建的二进制表示与在运行时评估lambda表达式的机制分离开来。我们不是生成字节码来创建实现lambda表达式的对象(比如调用内部类的构造器)，而是描述构造lambda的方法，并将实际的构建委托给程序运行时来完成。该方法在invokedynamic指令的静态和动态参数列表中进行编码。</p>
 <p>使用invokedynamic可以推迟转化策略的选择至运行时，运行时实现可以自由地选择策略来评估lambda表达式。运行时实现选择隐藏在标准化(即平台规范的一部分)用于lambda结构的API，这样静态编译器就可以发出对这个API的调用，JRE的实现可以选择它们的首选策略。invokedynamic机制允许在没有这种延迟绑定方法且可能增加性能成本的情况下完成这项工作。</p>
 <p>当编译器遇到lambda表达式时，它会先将该表达式的body体弱化(提取)为一个方法，该方法的参数列表和返回类型同lambda表达式的相匹配，可能会附带一些参数(用于从词法作用域内捕获值)，当lambda表达式被捕获时，将产生一个invokedynamic调用站点，当被调用时，它会返回一个由lambda转换成的函数式接口实例，这个调用站点称为lambda工厂。lambda工厂的动态参数是从词法作用域中获捕获到的值，lambda工厂的启动方法是java运行时库中的标准方法，叫做lambda metafactory(lambda元工厂)，静态引导参数在编译时捕获关于lambda的信息(它将被转换的函数式接口，对desugared lambda体的方法句柄，以及关于SAM类型是否可序列化等信息)。</p>
 <p>方法引用与lambda表达式的处理方式相同，但大多数方法引用不需要被到一个新方法里;我们可以简单地为引用的方法加载一个常量方法句柄，并将其传递给metafactory。</p>

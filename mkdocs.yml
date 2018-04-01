@@ -1,0 +1,25 @@
+site_name: 个人博客
+theme: flatly
+pages:
+- 主页: index.md
+- hello-IT:
+    - java: 
+        - java index: it/java/index.md
+        - java 7: 
+            - 多线程框架:
+                - fork-join框架翻译: it/java/java7/asynchronous_programming/18-03-18/fork-join框架翻译.md
+                - fork-join示例篇: it/java/java7/asynchronous_programming/18-03-21/fork-join示例篇.md
+        - java8:
+            - lambda:
+                - lambda初识: it/java/java8/lambda/18-02-27/lambda初识.md
+                - lambda原理篇(译): it/java/java8/lambda/18-03-07/lambda原理篇(译).md
+            - stream流: 
+                - stream流浅析-1: it/java/java8/stream/18-03-10/stream流浅析-1.md          
+    - tools:
+        - tools index: it/tools/index.md
+        - postman:
+            - 安装与学习: it/tools/postman/18-01-21/安装与学习.md
+            - postman测试: it/tools/postman/18-01-27/postman测试.md
+    - python: it/python/index.md
+       
+- 关于我: about_me.md
