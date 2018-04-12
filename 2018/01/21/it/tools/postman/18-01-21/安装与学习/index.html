@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="postman-为接口测试而生时间: 2018年01月21日  自17年毕业，在成都*IT公司上班近半年了，之前做过一段时间web前端开发，后转做api接口对接开发了，postman是基于谷歌浏览器的API调试、Http请求的工具，以之前的测试工作也是基于这个工具的，由于项目处于开发的前期阶段，许多功能方案都不太稳定，虽说提供的api接口比较稳定，但涉及到后端api的具体实现可能有很大的变动，每次">
+<meta property="og:type" content="article">
+<meta property="og:title" content="postman-为接口测试而生">
+<meta property="og:url" content="http://yoursite.com/2018/01/21/it/tools/postman/18-01-21/安装与学习/index.html">
+<meta property="og:site_name" content="大道至简">
+<meta property="og:description" content="postman-为接口测试而生时间: 2018年01月21日  自17年毕业，在成都*IT公司上班近半年了，之前做过一段时间web前端开发，后转做api接口对接开发了，postman是基于谷歌浏览器的API调试、Http请求的工具，以之前的测试工作也是基于这个工具的，由于项目处于开发的前期阶段，许多功能方案都不太稳定，虽说提供的api接口比较稳定，但涉及到后端api的具体实现可能有很大的变动，每次">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/images/1.png">
+<meta property="og:image" content="http://yoursite.com/images/2.png">
+<meta property="og:updated_time" content="2018-04-12T04:10:31.593Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="postman-为接口测试而生">
+<meta name="twitter:description" content="postman-为接口测试而生时间: 2018年01月21日  自17年毕业，在成都*IT公司上班近半年了，之前做过一段时间web前端开发，后转做api接口对接开发了，postman是基于谷歌浏览器的API调试、Http请求的工具，以之前的测试工作也是基于这个工具的，由于项目处于开发的前期阶段，许多功能方案都不太稳定，虽说提供的api接口比较稳定，但涉及到后端api的具体实现可能有很大的变动，每次">
+<meta name="twitter:image" content="http://yoursite.com/images/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/01/21/it/tools/postman/18-01-21/安装与学习/"/>
+
+
+
+
+
+  <title>postman-为接口测试而生 | 大道至简</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">大道至简</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-首页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于我">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于我
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/21/it/tools/postman/18-01-21/安装与学习/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="boyka">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大道至简">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">postman-为接口测试而生</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-21T00:00:00+08:00">
+                2018-01-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="postman-为接口测试而生"><a href="#postman-为接口测试而生" class="headerlink" title="postman-为接口测试而生"></a>postman-为接口测试而生</h3><p>时间: 2018年01月21日</p>
+<blockquote>
+<p>自17年毕业，在成都*IT公司上班近半年了，之前做过一段时间web前端开发，后转做api接口对接开发了，postman是基于谷歌浏览器的API调试、Http请求的工具，以之前的测试工作也是基于这个工具的，由于项目处于开发的前期阶段，许多功能方案都不太稳定，虽说提供的api接口比较稳定，但涉及到后端api的具体实现可能有很大的变动，每次调动完可能需涉及到几十个api接口的测试，需要为一个个的接口更改依赖参数才能测试，心真累啊，近受测试组大佬陆哥的点拨，才伊始发现原来这款工具如此牛逼哄哄，果断深入学习学习，感受一下几十个api经过简单的配置更改便可以刷刷刷一键完成自动化测试的快感。</p>
+</blockquote>
+<h4 id="1-下载安装"><a href="#1-下载安装" class="headerlink" title="1. 下载安装"></a>1. 下载安装</h4><ul>
+<li>直接去官网上下载就行了，根据自己的需求下载对应的postman版本 <a href="https://www.getpostman.com/" target="_blank" rel="noopener">postman官网下载</a> , 我是下载安装版的，直接运行下载的.exe进行安装(作为开发人员，我想这些简单的操作必然轻车熟路吧)，安装好后，注册一个账号，就可以使用了，当然，也可以安装基于chrome浏览器的扩展插件方式进行安装,可以参考这位同学的操作 <a href="http://blog.csdn.net/water_0815/article/details/53263643" target="_blank" rel="noopener">chrome安装postman插件</a> 。</li>
+<li>安装好后，发送一条简单的http请求，看看低调奢华的请求界面：</li>
+</ul>
+<center><br><img src="/images/1.png" alt="1"><br></center>
+
+<p>浅浅的观望了一下，整体上这两版都实现了基本的测试功能模块，，app版的似乎更全、更丰富，简单的对比就是Pre-requst除了两者在写法上略有不同，还有就是app版的要多很多可操作项，能够在执行本条请求前检测其他所依赖的请求，比如有一个学生选课API接口，做功能性测试时可以通过发送http请求来先获取数据库中的某一学生ID和某一课程ID，具体提供的对比如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">插件版：</span><br><span class="line"></span><br><span class="line">//清除某一全局变量</span><br><span class="line">postman.clearGlobalVariable(&quot;variable_key&quot;); </span><br><span class="line"></span><br><span class="line">//清除某一环境变量</span><br><span class="line">postman.clearEnvironmentVariable(&quot;variable_key&quot;); </span><br><span class="line"></span><br><span class="line">//设置全局变量</span><br><span class="line">postman.setGlobalVariable(&quot;variable_key&quot;, &quot;variable_value&quot;);</span><br><span class="line"> </span><br><span class="line">//设置环境变量</span><br><span class="line">postman.setEnvironmentVariable(&quot;variable_key&quot;, &quot;variable_value&quot;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app版：</span><br><span class="line"></span><br><span class="line">//清除某一全局变量</span><br><span class="line">pm.globals.unset(&quot;variable_key&quot;);     </span><br><span class="line"></span><br><span class="line">//清除某一环境变量</span><br><span class="line">pm.environment.unset(&quot;variable_key&quot;); </span><br><span class="line"></span><br><span class="line">//获取全局变量</span><br><span class="line">pm.globals.get(&quot;variable_key&quot;);       </span><br><span class="line"> </span><br><span class="line">//获取局部变量</span><br><span class="line">pm.variables.get(&quot;variable_key&quot;);     </span><br><span class="line"> </span><br><span class="line">//获取环境变量</span><br><span class="line">pm.environment.get(&quot;variable_key&quot;);   </span><br><span class="line"></span><br><span class="line">//发送其他http请求</span><br><span class="line">pm.sendRequest(&quot;https://postman-echo.com/get&quot;, function (err, response) &#123;</span><br><span class="line">	console.log(response.json());</span><br><span class="line">&#125;);                                    </span><br><span class="line"></span><br><span class="line">//设置全局变量</span><br><span class="line">pm.globals.set(&quot;variable_key&quot;, &quot;variable_value&quot;); </span><br><span class="line"> </span><br><span class="line">//设置局部变量</span><br><span class="line">pm.globals.set(&quot;variable_key&quot;, &quot;variable_value&quot;);  </span><br><span class="line"></span><br><span class="line">//设置环境变量</span><br><span class="line">pm.environment.set(&quot;variable_key&quot;, &quot;variable_value&quot;);</span><br></pre></td></tr></table></figure>
+<h4 id="2-主界面简介"><a href="#2-主界面简介" class="headerlink" title="2. 主界面简介"></a>2. 主界面简介</h4><center><br><img src="/images/2.png" alt="2"><br></center>
+
+
+<h5 id="功能点介绍："><a href="#功能点介绍：" class="headerlink" title="功能点介绍："></a>功能点介绍：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">- 1. 数据导入：可以导入测试集合，环境变量等已经存在的数据文件；</span><br><span class="line">- 2. 批量执行器：可以对多条测试用例或多个测试集合进行批量测试；</span><br><span class="line">- 3. 历史请求记录；</span><br><span class="line">- 4. 测试用例集合，可对一个项目的测试用例按照功能模块划分，便于管理；</span><br><span class="line">- 5. 单条测试用例详细操作tab；</span><br><span class="line">- 6. 团队共享区域；</span><br><span class="line">- 7. 选择环境变量集；</span><br><span class="line">- 8. 配置、分享(付费) 多作用域的环境变量；</span><br><span class="line">- 9. 包括GET、PUT、POST、DELETE、PATCH、HEAD等15种HTTP的请求方法选择；</span><br><span class="line">- 10. 请求url；</span><br><span class="line">- 11. 请求url参数设置；</span><br><span class="line">- 12. 发送请求；</span><br><span class="line">- 13. 保存/另存请求；</span><br><span class="line">- 14. 历史cookie集；</span><br><span class="line">- 15. 多语言转换，可以将postman请求转换为java、python等语言的请求；</span><br><span class="line">- 16. Authoriation，设置请求认证；</span><br><span class="line">- 17. 设置请求头；</span><br><span class="line">- 18. 设置请求体；</span><br><span class="line">- 19. Pre-request，发送请求前执行的脚本，可以在该模块设置环境变量，动态参数等（*）；</span><br><span class="line">- 20. test测试点，对请求结果进行分析和处理(*)；</span><br><span class="line">- 21. 响应体；</span><br><span class="line">- 22. 请求返回的cookie信息</span><br><span class="line">- 23.响应头；</span><br><span class="line">- 24. test测试结果(忘写编码了，就编号23旁边)；</span><br><span class="line">- 25.响应状态码。</span><br></pre></td></tr></table></figure>
+<p>这一篇博文先简单记录到这吧，下一篇详细整理一下环境变量设置和如何复用度较高的测试用例集。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/28/it/tools/postman/18-01-27/postman测试/" rel="prev" title="postman接口测试操作">
+                postman接口测试操作 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">boyka</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#postman-为接口测试而生"><span class="nav-number">1.</span> <span class="nav-text">postman-为接口测试而生</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-下载安装"><span class="nav-number">1.1.</span> <span class="nav-text">1. 下载安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-主界面简介"><span class="nav-number">1.2.</span> <span class="nav-text">2. 主界面简介</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#功能点介绍："><span class="nav-number">1.2.1.</span> <span class="nav-text">功能点介绍：</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">boyka</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
