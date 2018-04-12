@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="lambda初识时间: 2018年02月27日  java繁琐的语法也被摒垢已久，在java8中引入的lambda这一个非常重要的特性。这标志着Java往函数式编程迈进了一小步，java程序猿也可以写出简单优雅的代码了。  1. 函数一等公民等级由来 或许可以说这么说，如果没有将函数进行一等公民，java8中stream、lambda这些新的特性根本无从谈起，函数一等功民化并非由java8独家首创">
+<meta property="og:type" content="article">
+<meta property="og:title" content="大道至简">
+<meta property="og:url" content="http://yoursite.com/2018/04/12/it/java/java8/lambda/18-02-27/lambda初识/index.html">
+<meta property="og:site_name" content="大道至简">
+<meta property="og:description" content="lambda初识时间: 2018年02月27日  java繁琐的语法也被摒垢已久，在java8中引入的lambda这一个非常重要的特性。这标志着Java往函数式编程迈进了一小步，java程序猿也可以写出简单优雅的代码了。  1. 函数一等公民等级由来 或许可以说这么说，如果没有将函数进行一等公民，java8中stream、lambda这些新的特性根本无从谈起，函数一等功民化并非由java8独家首创">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-04-01T18:15:57.200Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="大道至简">
+<meta name="twitter:description" content="lambda初识时间: 2018年02月27日  java繁琐的语法也被摒垢已久，在java8中引入的lambda这一个非常重要的特性。这标志着Java往函数式编程迈进了一小步，java程序猿也可以写出简单优雅的代码了。  1. 函数一等公民等级由来 或许可以说这么说，如果没有将函数进行一等公民，java8中stream、lambda这些新的特性根本无从谈起，函数一等功民化并非由java8独家首创">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/04/12/it/java/java8/lambda/18-02-27/lambda初识/"/>
+
+
+
+
+
+  <title> | 大道至简</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">大道至简</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-首页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于我">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于我
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/12/it/java/java8/lambda/18-02-27/lambda初识/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="boyka">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大道至简">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline"></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-12T11:06:08+08:00">
+                2018-04-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="lambda初识"><a href="#lambda初识" class="headerlink" title="lambda初识"></a>lambda初识</h3><p>时间: 2018年02月27日</p>
+<blockquote>
+<p>java繁琐的语法也被摒垢已久，在java8中引入的lambda这一个非常重要的特性。这标志着Java往函数式编程迈进了一小步，java程序猿也可以写出简单优雅的代码了。</p>
+</blockquote>
+<h4 id="1-函数一等公民等级由来"><a href="#1-函数一等公民等级由来" class="headerlink" title="1. 函数一等公民等级由来"></a>1. 函数一等公民等级由来</h4><ul>
+<li>或许可以说这么说，如果没有将函数进行一等公民，java8中stream、lambda这些新的特性根本无从谈起，函数一等功民化并非由java8独家首创，早在python、javascript、scala等语言中运用得轻车熟路。在传统的一些语言，比如c/c++/c#以及java8之前的语言中，整个编程语言的核心就在于操作值，so，值被当作一等公民，拥有能够进行赋值、传参、返回等操作，与此相对，方法和类等概念就被冠以二等功名的头衔，所谓二等，必然就主起辅助作用。</li>
+</ul>
+<h4 id="2-匿名内部类和lambda"><a href="#2-匿名内部类和lambda" class="headerlink" title="2. 匿名内部类和lambda"></a>2. 匿名内部类和lambda</h4><ul>
+<li>函数作为实参进行传递在c/c++中非常常见(表现为指针形式)，在java中则需要利用匿名内部类，先看一组简单的线程实现代码对比：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> new Thread(new Runnable() &#123;</span><br><span class="line">	@Override</span><br><span class="line">	public void run() &#123;</span><br><span class="line">		System.out.println(&quot;匿名内部类式创建线程!&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;).start();</span><br><span class="line"></span><br><span class="line">new Thread(() -&gt; System.out.println(&quot;lambda式创建线程 !&quot;)).start();</span><br></pre></td></tr></table></figure>
+<ul>
+<li>输出结果:</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">匿名内部类式创建线程!</span><br><span class="line">lambda式创建线程 !</span><br></pre></td></tr></table></figure>
+<ul>
+<li>可以看出，lambda式将操作行为参数化，实现现成的方式较匿名内部类着实简单太多了，而且代码的可读性也好不少。</li>
+</ul>
+<h4 id="3-lambda和函数式接口"><a href="#3-lambda和函数式接口" class="headerlink" title="3. lambda和函数式接口"></a>3. lambda和函数式接口</h4><ul>
+<li><p>如上面一个例子中，Runnable作为一个接口，仅包含一个run方法，但必须要写一大堆啰里啰嗦的代码，在JDK中，还有很多比如Callable、ActionListener等，java8中将这样的接口进行简化，即函数式接口，表达形式： ()-&gt; {}。</p>
+<ul>
+<li>(), 表示参数列表；</li>
+<li>{}，lambda主体，即要实现的代码逻辑；</li>
+<li>-&gt;, 将参数和lambda主体分开。</li>
+</ul>
+</li>
+<li><p>比如：</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">//Callable</span><br><span class="line">//旧api      </span><br><span class="line">Callable&lt;String&gt; c1 = new Callable&lt;String&gt;() &#123;</span><br><span class="line">	@Override</span><br><span class="line">	public String call() throws Exception &#123;</span><br><span class="line">		return &quot;done&quot;;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line">//java8</span><br><span class="line"> Callable&lt;String&gt; c2 = () -&gt; &quot;done&quot;;</span><br><span class="line"></span><br><span class="line">//comparator比较器</span><br><span class="line">//旧api      </span><br><span class="line">Comparator&lt;String&gt; c3 = new Comparator&lt;String&gt;() &#123;</span><br><span class="line">	@Override</span><br><span class="line">	public int compare(String s1, String s2) &#123;</span><br><span class="line">		return s1.compareToIgnoreCase(s2);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line">//java8 </span><br><span class="line">Comparator&lt;String&gt; c2 = (s1, s2) -&gt; s1.compareToIgnoreCase(s2);</span><br></pre></td></tr></table></figure>
+<h4 id="4-lambda在集合中的一些应用"><a href="#4-lambda在集合中的一些应用" class="headerlink" title="4. lambda在集合中的一些应用"></a>4. lambda在集合中的一些应用</h4><ul>
+<li>再看一道例子：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// code:</span><br><span class="line">List&lt;Integer&gt; list = Arrays.asList(1, 4, 5, 6, 2, 3);</span><br><span class="line">for(Integer i: list) &#123;</span><br><span class="line">	System.out.print(i + &quot;  &quot;);</span><br><span class="line">&#125;</span><br><span class="line">// result:</span><br><span class="line">1</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>上面这道例子使用了外部迭代方法遍历并打印列表原始，外部迭代在可以说是之前对数据列表最常进行的操作之一，但外部迭代有如下不足之处：</p>
+<ul>
+<li>只能顺序处理数据；</li>
+<li>不能充分利用CPU多核优势；</li>
+<li>不利于编译器的优化工作。</li>
+</ul>
+</li>
+<li><p>在java8中，将外部迭代转换为内部迭代,同样能够输入相同的结果:</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//可以写成：</span><br><span class="line">list.forEach(i -&gt; System.out::println(i));</span><br><span class="line">//甚至可以写成 </span><br><span class="line">list.forEach(System.out::println);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>此外，java8中对集合的操作进行了进一步的丰富，在Collection集合类中添加了stream方法，这两个方法会将Collection的实例转换为数据流(关于流将会在后面进一步展开学习)，将lambda和stream结合起来使用，在进行数据的流水线化处理时优势极为明显。</li>
+<li>又来例子：获取列表中前50个大于20的数据的列表：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">//旧方法</span><br><span class="line">List&lt;Integer&gt; resList1 = new ArrayList&lt;&gt;();</span><br><span class="line">int num = 0;</span><br><span class="line">for(Integer i: list) &#123;</span><br><span class="line">   if(num &gt; 50) &#123;</span><br><span class="line">	   break;</span><br><span class="line">   &#125; else if(i &gt; 20) &#123;</span><br><span class="line">	   resList1.add(i);</span><br><span class="line">	   num++;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line">//lambda</span><br><span class="line">List&lt;Integer&gt; resList2 = list.stream().filter(i -&gt; i &gt; 20).limit(50).collect(Collectors.toList());</span><br><span class="line">	//旧方法</span><br><span class="line">List&lt;Integer&gt; resList1 = new ArrayList&lt;&gt;();</span><br><span class="line">int num = 0;</span><br><span class="line">for(Integer i: list) &#123;</span><br><span class="line">   if(num &gt; 50) &#123;</span><br><span class="line">	   break;</span><br><span class="line">   &#125; else if(i &gt; 20) &#123;</span><br><span class="line">	   resList1.add(i);</span><br><span class="line">	   num++;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line">//lambda</span><br><span class="line">List&lt;Integer&gt; resList2 = list.stream().filter(i -&gt; i &gt; 20).limit(50).collect(Collectors.toList());</span><br></pre></td></tr></table></figure>
+<ul>
+<li>将列表转换为流能够更好地利用多核的优势，直接将stream用parallelStream替代即可。</li>
+<li>stream中的还有很多的方法比如map、reduce、distinct、skep、findAny等很多方法，可以将这些方法进行流水线式拼接组合以满足自身的业务逻辑需求，在这不写太多例子了，自己动手实践吧。</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/12/it/java/java7/asynchronous_programming/18-03-21/fork-join示例篇/" rel="next" title="">
+                <i class="fa fa-chevron-left"></i> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/12/it/java/java8/lambda/18-03-07/lambda原理篇(译)/" rel="prev" title="">
+                 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">boyka</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#lambda初识"><span class="nav-number">1.</span> <span class="nav-text">lambda初识</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-函数一等公民等级由来"><span class="nav-number">1.1.</span> <span class="nav-text">1. 函数一等公民等级由来</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-匿名内部类和lambda"><span class="nav-number">1.2.</span> <span class="nav-text">2. 匿名内部类和lambda</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-lambda和函数式接口"><span class="nav-number">1.3.</span> <span class="nav-text">3. lambda和函数式接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-lambda在集合中的一些应用"><span class="nav-number">1.4.</span> <span class="nav-text">4. lambda在集合中的一些应用</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">boyka</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
