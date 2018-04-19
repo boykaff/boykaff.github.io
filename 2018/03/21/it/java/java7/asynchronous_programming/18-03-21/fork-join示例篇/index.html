@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="java,fork/join," />
 
 
 
@@ -79,17 +79,18 @@
 
 
 
-<meta name="description" content="fork/join示例篇时间: 2018年3月21日 根据fork/join思想构造一个并行递归批改试卷的示例（示例程序中用1s代替1小时休眠（拼命批改）进行计算）： 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626">
+<meta name="description" content="根据fork/join思想构造一个并行递归批改试卷的示例（示例程序中用1s代替1小时休眠（拼命批改）进行计算）： 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576">
+<meta name="keywords" content="java,fork&#x2F;join">
 <meta property="og:type" content="article">
 <meta property="og:title" content="fork&#x2F;join示例篇">
 <meta property="og:url" content="http://yoursite.com/2018/03/21/it/java/java7/asynchronous_programming/18-03-21/fork-join示例篇/index.html">
 <meta property="og:site_name" content="大道至简">
-<meta property="og:description" content="fork/join示例篇时间: 2018年3月21日 根据fork/join思想构造一个并行递归批改试卷的示例（示例程序中用1s代替1小时休眠（拼命批改）进行计算）： 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626">
+<meta property="og:description" content="根据fork/join思想构造一个并行递归批改试卷的示例（示例程序中用1s代替1小时休眠（拼命批改）进行计算）： 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-04-12T04:11:59.316Z">
+<meta property="og:updated_time" content="2018-04-19T17:10:09.835Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="fork&#x2F;join示例篇">
-<meta name="twitter:description" content="fork/join示例篇时间: 2018年3月21日 根据fork/join思想构造一个并行递归批改试卷的示例（示例程序中用1s代替1小时休眠（拼命批改）进行计算）： 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626">
+<meta name="twitter:description" content="根据fork/join思想构造一个并行递归批改试卷的示例（示例程序中用1s代替1小时休眠（拼命批改）进行计算）： 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576">
 
 
 
@@ -210,6 +211,16 @@
         </li>
       
         
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-关于我">
           <a href="/about/" rel="section">
             
@@ -292,6 +303,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -319,8 +352,7 @@
       
 
       
-        <h3 id="fork-join示例篇"><a href="#fork-join示例篇" class="headerlink" title="fork/join示例篇"></a>fork/join示例篇</h3><p>时间: 2018年3月21日</p>
-<p>根据fork/join思想构造一个并行递归批改试卷的示例（示例程序中用1s代替1小时休眠（拼命批改）进行计算）：</p>
+        <p>根据fork/join思想构造一个并行递归批改试卷的示例（示例程序中用1s代替1小时休眠（拼命批改）进行计算）：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br></pre></td><td class="code"><pre><span class="line">package forkjoin;</span><br><span class="line"></span><br><span class="line">import java.util.ArrayList;</span><br><span class="line">import java.util.Arrays;</span><br><span class="line">import java.util.List;</span><br><span class="line">import java.util.concurrent.ExecutionException;</span><br><span class="line">import java.util.concurrent.ForkJoinPool;</span><br><span class="line">import java.util.concurrent.ForkJoinTask;</span><br><span class="line">import java.util.concurrent.RecursiveTask;</span><br><span class="line"></span><br><span class="line">import static java.util.stream.Collectors.toList;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * fork-join的简单易用</span><br><span class="line"> * </span><br><span class="line"> * 2018/3/20</span><br><span class="line"> *</span><br><span class="line"> * @author boyka</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 任务类:批改的一套试卷或试卷的一部分</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">class Task &#123;</span><br><span class="line">	private String name;  //任务名</span><br><span class="line">	private String level; //困难等级</span><br><span class="line">	private Long useTime; //预计花费时间</span><br><span class="line">	private List&lt;Task&gt; subTaskList; //子任务列表</span><br><span class="line"></span><br><span class="line">	public Task(String name, String level, Long useTime, List&lt;Task&gt; subTaskList) &#123;</span><br><span class="line">		this.name = name;</span><br><span class="line">		this.level = level;</span><br><span class="line">		this.useTime = useTime;</span><br><span class="line">		this.subTaskList = subTaskList;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public String getName() &#123;</span><br><span class="line">		return name;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public void setName(String name) &#123;</span><br><span class="line">		this.name = name;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public String getLevel() &#123;</span><br><span class="line">		return level;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public void setLevel(String level) &#123;</span><br><span class="line">		this.level = level;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public Long getUseTime() &#123;</span><br><span class="line">		return useTime;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public void setUseTime(Long useTime) &#123;</span><br><span class="line">		this.useTime = useTime;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public List&lt;Task&gt; getSubTaskList() &#123;</span><br><span class="line">		return subTaskList;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public void setSubTaskList(List&lt;Task&gt; subTaskList) &#123;</span><br><span class="line">		this.subTaskList = subTaskList;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 任务操作类:进行试卷批改操作</span><br><span class="line"> */</span><br><span class="line">public class ForkJoinTest extends RecursiveTask&lt;Long&gt; &#123;</span><br><span class="line">	private final static String EASY = &quot;easy&quot;;</span><br><span class="line">	private final static String DIFFICULT = &quot;difficult&quot;;</span><br><span class="line">	private Task task;</span><br><span class="line"></span><br><span class="line">	private ForkJoinTest(Task task) &#123;</span><br><span class="line">		this.task = task;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	protected Long compute() &#123;</span><br><span class="line">		Long useTimes = 0L;</span><br><span class="line">		//容易，一个同学能够改得完了</span><br><span class="line">		if (EASY.equals(task.getLevel())) &#123;</span><br><span class="line">			useTimes = task.getUseTime();</span><br><span class="line">			try &#123;</span><br><span class="line">				Thread.sleep(task.getUseTime() * 1000);</span><br><span class="line">			&#125; catch (InterruptedException e) &#123;</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			//任务量大，将批改试卷任务按任务量细分后让多个童鞋去(工作线程)完成</span><br><span class="line">			if (null != task &amp;&amp; null != task.getSubTaskList()) &#123;</span><br><span class="line">				useTimes = task.getSubTaskList()</span><br><span class="line">						.stream()</span><br><span class="line">						.map(t -&gt; new ForkJoinTest(t).fork())</span><br><span class="line">						.collect(toList())</span><br><span class="line">						.stream()</span><br><span class="line">						.mapToLong(t -&gt; t.join())</span><br><span class="line">						.sum();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		return useTimes;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	// 测试</span><br><span class="line">	public static void main(String[] args) throws ExecutionException, InterruptedException &#123;</span><br><span class="line">		long startTime = System.currentTimeMillis();</span><br><span class="line">		ForkJoinPool forkJoinPool = new ForkJoinPool();</span><br><span class="line">		ForkJoinTest mainForkJoin = new ForkJoinTest(ForkJoinTest.initTasks());</span><br><span class="line">		ForkJoinTask&lt;Long&gt; result = forkJoinPool.submit(mainForkJoin);</span><br><span class="line">		System.out.println(&quot;BOSS一个人批改用时：&quot; + result.get() + &quot; H&quot;);</span><br><span class="line">		System.out.println(&quot;多个童鞋一起改用时： &quot; + (System.currentTimeMillis() - startTime) / 1000 + &quot; H&quot;);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	//构造简易批改试卷任务树</span><br><span class="line">	private static Task initTasks() &#123;</span><br><span class="line">		//微机</span><br><span class="line">		Task wjTask1 = new Task(&quot;微机选择+填空题&quot;, EASY, 4L, new ArrayList&lt;&gt;());</span><br><span class="line">		Task wjTask2 = new Task(&quot;微机大题&quot;, EASY, 3L, null);</span><br><span class="line">		Task wjTask = new Task(&quot;算法试卷&quot;, DIFFICULT, null, Arrays.asList(wjTask1, wjTask2));</span><br><span class="line">		//网络</span><br><span class="line">		Task wlTask = new Task(&quot;网络&quot;, EASY, 6L, null);</span><br><span class="line"></span><br><span class="line">		//算法</span><br><span class="line">		Task sfTask1 = new Task(&quot;算法前3道&quot;, EASY, 4L, null);</span><br><span class="line">		Task sfTask2 = new Task(&quot;算法后2道&quot;, EASY, 4L, null);</span><br><span class="line">		Task sfTask = new Task(&quot;算法试卷&quot;, DIFFICULT, null, Arrays.asList(sfTask1, sfTask2));</span><br><span class="line"></span><br><span class="line">		return new Task(&quot;所有试卷&quot;, DIFFICULT, null, Arrays.asList(wjTask, wlTask, sfTask));</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>测试结果：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">BOSS一个人批改用时：21 H</span><br><span class="line">多个童鞋一起改用时： 6 H</span><br></pre></td></tr></table></figure>
@@ -348,6 +380,14 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag"># java</a>
+          
+            <a href="/tags/fork-join/" rel="tag"># fork/join</a>
+          
+        </div>
       
 
       
@@ -422,17 +462,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -454,7 +485,25 @@
             
 
             
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
             
 
           </nav>
@@ -474,22 +523,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#fork-join示例篇"><span class="nav-number">1.</span> <span class="nav-text">fork/join示例篇</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       

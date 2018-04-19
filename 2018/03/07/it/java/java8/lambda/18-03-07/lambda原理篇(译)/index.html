@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="java,lambda," />
 
 
 
@@ -80,13 +80,14 @@
 
 
 <meta name="description" content="lambda表达式原理篇(译)时间: 2018年3月7日  无它，译之备学。 译源传送门  1. 关于本文概述了将lambda表达式和方法引用从Java源代码转换为字节码的策略。lambda表达式在 JSR 335 进行了详细说明并且在Lambda的 OpenJDK中得以实现，可以在 《State of the Lambda》 一文中对该语言特性有一个整体认识。本文将主要分析编译器在遇到lambd">
+<meta name="keywords" content="java,lambda">
 <meta property="og:type" content="article">
 <meta property="og:title" content="lambda表达式原理篇(译)">
 <meta property="og:url" content="http://yoursite.com/2018/03/07/it/java/java8/lambda/18-03-07/lambda原理篇(译)/index.html">
 <meta property="og:site_name" content="大道至简">
 <meta property="og:description" content="lambda表达式原理篇(译)时间: 2018年3月7日  无它，译之备学。 译源传送门  1. 关于本文概述了将lambda表达式和方法引用从Java源代码转换为字节码的策略。lambda表达式在 JSR 335 进行了详细说明并且在Lambda的 OpenJDK中得以实现，可以在 《State of the Lambda》 一文中对该语言特性有一个整体认识。本文将主要分析编译器在遇到lambd">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-04-12T04:14:48.519Z">
+<meta property="og:updated_time" content="2018-04-19T17:10:48.703Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="lambda表达式原理篇(译)">
 <meta name="twitter:description" content="lambda表达式原理篇(译)时间: 2018年3月7日  无它，译之备学。 译源传送门  1. 关于本文概述了将lambda表达式和方法引用从Java源代码转换为字节码的策略。lambda表达式在 JSR 335 进行了详细说明并且在Lambda的 OpenJDK中得以实现，可以在 《State of the Lambda》 一文中对该语言特性有一个整体认识。本文将主要分析编译器在遇到lambd">
@@ -210,6 +211,16 @@
         </li>
       
         
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-关于我">
           <a href="/about/" rel="section">
             
@@ -291,6 +302,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -432,6 +465,14 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag"># java</a>
+          
+            <a href="/tags/lambda/" rel="tag"># lambda</a>
+          
+        </div>
+      
 
       
       
@@ -537,7 +578,25 @@
             
 
             
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
             
 
           </nav>
@@ -567,7 +626,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#lambda表达式原理篇-译"><span class="nav-number">1.</span> <span class="nav-text">lambda表达式原理篇(译)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-关于"><span class="nav-number">1.1.</span> <span class="nav-text">1. 关于</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-依赖和符号"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1. 依赖和符号</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-转化策略"><span class="nav-number">1.2.</span> <span class="nav-text">2. 转化策略</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-提取-lambda-body"><span class="nav-number">1.3.</span> <span class="nav-text">3. 提取 lambda body</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-提取示例–“无状态”-lambda"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1. 提取示例–“无状态” lambda</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-提取实例——lambdas捕获不可变的值"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2. 提取实例——lambdas捕获不可变的值</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-1-捕获-lambda"><span class="nav-number">1.3.3.</span> <span class="nav-text">4.1. 捕获 lambda</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-2-静态方法-VS-实例方法"><span class="nav-number">1.3.4.</span> <span class="nav-text">4.2. 静态方法 VS 实例方法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-3-方法引用捕获"><span class="nav-number">1.3.5.</span> <span class="nav-text">4.3. 方法引用捕获</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-4-可变参数-Varargs"><span class="nav-number">1.3.6.</span> <span class="nav-text">4.4. 可变参数 (Varargs)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-5-适应性"><span class="nav-number">1.3.7.</span> <span class="nav-text">4.5. 适应性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-6-metafactory-变体"><span class="nav-number">1.3.8.</span> <span class="nav-text">4.6. metafactory 变体</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-序列化"><span class="nav-number">1.4.</span> <span class="nav-text">5. 序列化</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#5-1-可达性"><span class="nav-number">1.4.1.</span> <span class="nav-text">5.1. 可达性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-2-类缓存-Class-caching"><span class="nav-number">1.4.2.</span> <span class="nav-text">5.2/ 类缓存(Class caching)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-3-性能影响-Performance-impact"><span class="nav-number">1.4.3.</span> <span class="nav-text">5.3. 性能影响(Performance impact)</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-其他-Miscellaneous"><span class="nav-number">1.5.</span> <span class="nav-text">6. 其他(Miscellaneous)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#6-1-桥接方法"><span class="nav-number">1.5.1.</span> <span class="nav-text">6.1. 桥接方法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-2-toString"><span class="nav-number">1.5.2.</span> <span class="nav-text">6.2. toString</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#lambda表达式原理篇-译"><span class="nav-text">lambda表达式原理篇(译)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-关于"><span class="nav-text">1. 关于</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-依赖和符号"><span class="nav-text">1.1. 依赖和符号</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-转化策略"><span class="nav-text">2. 转化策略</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-提取-lambda-body"><span class="nav-text">3. 提取 lambda body</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-提取示例–“无状态”-lambda"><span class="nav-text">3.1. 提取示例–“无状态” lambda</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-提取实例——lambdas捕获不可变的值"><span class="nav-text">3.2. 提取实例——lambdas捕获不可变的值</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-1-捕获-lambda"><span class="nav-text">4.1. 捕获 lambda</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-2-静态方法-VS-实例方法"><span class="nav-text">4.2. 静态方法 VS 实例方法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-3-方法引用捕获"><span class="nav-text">4.3. 方法引用捕获</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-4-可变参数-Varargs"><span class="nav-text">4.4. 可变参数 (Varargs)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-5-适应性"><span class="nav-text">4.5. 适应性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-6-metafactory-变体"><span class="nav-text">4.6. metafactory 变体</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-序列化"><span class="nav-text">5. 序列化</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#5-1-可达性"><span class="nav-text">5.1. 可达性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-2-类缓存-Class-caching"><span class="nav-text">5.2/ 类缓存(Class caching)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-3-性能影响-Performance-impact"><span class="nav-text">5.3. 性能影响(Performance impact)</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-其他-Miscellaneous"><span class="nav-text">6. 其他(Miscellaneous)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#6-1-桥接方法"><span class="nav-text">6.1. 桥接方法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-2-toString"><span class="nav-text">6.2. toString</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>

@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="java,stream," />
 
 
 
@@ -80,20 +80,21 @@
 
 
 <meta name="description" content="stream流原理浅析时间: 2018年3月10日  java8中提供了强大的stream流处理，通过其提供的例如过滤(filter)、映射(map)、截取(limit)、收集(collect)等一系列方法的组合，可以很好的解决对集合数据的复杂操作，仅以此篇对stream流水线式组合原理进行浅析，望知其然并知其所以然。  文档目录 1.对比小示例 2.stream流的操作类型和惰性求值 3.str">
+<meta name="keywords" content="java,stream">
 <meta property="og:type" content="article">
 <meta property="og:title" content="stream流原理浅析">
 <meta property="og:url" content="http://yoursite.com/2018/03/10/it/java/java8/stream/18-03-10/stream流浅析-1/index.html">
 <meta property="og:site_name" content="大道至简">
 <meta property="og:description" content="stream流原理浅析时间: 2018年3月10日  java8中提供了强大的stream流处理，通过其提供的例如过滤(filter)、映射(map)、截取(limit)、收集(collect)等一系列方法的组合，可以很好的解决对集合数据的复杂操作，仅以此篇对stream流水线式组合原理进行浅析，望知其然并知其所以然。  文档目录 1.对比小示例 2.stream流的操作类型和惰性求值 3.str">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://yoursite.com/2018/03/10/it/java/java8/stream/18-03-10/stream流浅析-1/images/2018-03-10-001.jpg">
-<meta property="og:image" content="http://yoursite.com/2018/03/10/it/java/java8/stream/18-03-10/stream流浅析-1/images/2018-03-10-002.jpg">
-<meta property="og:image" content="http://yoursite.com/2018/03/10/it/java/java8/stream/18-03-10/stream流浅析-1/images/2018-03-11-001.jpg">
-<meta property="og:updated_time" content="2018-04-12T04:18:05.589Z">
+<meta property="og:image" content="http://yoursite.com/images/2018-03-10-001.jpg">
+<meta property="og:image" content="http://yoursite.com/images/2018-03-10-002.jpg">
+<meta property="og:image" content="http://yoursite.com/images/2018-03-11-001.jpg">
+<meta property="og:updated_time" content="2018-04-19T17:10:21.398Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="stream流原理浅析">
 <meta name="twitter:description" content="stream流原理浅析时间: 2018年3月10日  java8中提供了强大的stream流处理，通过其提供的例如过滤(filter)、映射(map)、截取(limit)、收集(collect)等一系列方法的组合，可以很好的解决对集合数据的复杂操作，仅以此篇对stream流水线式组合原理进行浅析，望知其然并知其所以然。  文档目录 1.对比小示例 2.stream流的操作类型和惰性求值 3.str">
-<meta name="twitter:image" content="http://yoursite.com/2018/03/10/it/java/java8/stream/18-03-10/stream流浅析-1/images/2018-03-10-001.jpg">
+<meta name="twitter:image" content="http://yoursite.com/images/2018-03-10-001.jpg">
 
 
 
@@ -214,6 +215,16 @@
         </li>
       
         
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-关于我">
           <a href="/about/" rel="section">
             
@@ -296,6 +307,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -364,11 +397,11 @@
 <li>每个Stage可以理解成为是通过双向链表进行链接</li>
 </ul>
 <p>即：</p>
-<center><br><img src="images/2018-03-10-001.jpg" alt="2018-03-10-001"><br></center>
+<center><br><img src="/images/2018-03-10-001.jpg" alt="2018-03-10-001"><br></center>
 
 
 <p>再放一张各操作的继承结构图：</p>
-<center><br><img src="images/2018-03-10-002.jpg" alt="2018-03-10-002"><br></center>
+<center><br><img src="/images/2018-03-10-002.jpg" alt="2018-03-10-002"><br></center>
 
 <p><strong>stage0:</strong> 将eployees转换为流，实际上产生了一个Head，这个Head相当于双向链表的链头</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//step1: 调用Collection的stream方法产生一个流</span></span><br><span class="line"><span class="function"><span class="keyword">default</span> Stream&lt;E&gt; <span class="title">stream</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> StreamSupport.stream(spliterator(), <span class="keyword">false</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//step2: 调用StreamSupport的stream方法</span></span><br><span class="line"> <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">Stream&lt;T&gt; <span class="title">stream</span><span class="params">(Spliterator&lt;T&gt; spliterator, <span class="keyword">boolean</span> parallel)</span> </span>&#123;</span><br><span class="line">	Objects.requireNonNull(spliterator);</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> ReferencePipeline.Head&lt;&gt;(spliterator,</span><br><span class="line">										StreamOpFlag.fromCharacteristics(spliterator),</span><br><span class="line">										parallel);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//step3 创建Head，并通过supper初始化继承链上对应的AbstractPipeline相关属性</span></span><br><span class="line">AbstractPipeline(Spliterator&lt;?&gt; source, <span class="keyword">int</span> sourceFlags, <span class="keyword">boolean</span> parallel) &#123;</span><br><span class="line">	<span class="comment">//当前Stage置为null</span></span><br><span class="line">	<span class="keyword">this</span>.previousStage = <span class="keyword">null</span>;</span><br><span class="line">	<span class="comment">//设置数据source</span></span><br><span class="line">	<span class="keyword">this</span>.sourceSpliterator = source;</span><br><span class="line">	<span class="keyword">this</span>.sourceStage = <span class="keyword">this</span>;</span><br><span class="line">	<span class="keyword">this</span>.sourceOrOpFlags = sourceFlags &amp; StreamOpFlag.STREAM_MASK;</span><br><span class="line">	<span class="comment">// The following is an optimization of:</span></span><br><span class="line">	<span class="comment">// StreamOpFlag.combineOpFlags(sourceOrOpFlags, StreamOpFlag.INITIAL_OPS_VALUE);</span></span><br><span class="line">	<span class="keyword">this</span>.combinedFlags = (~(sourceOrOpFlags &lt;&lt; <span class="number">1</span>)) &amp; StreamOpFlag.INITIAL_OPS_VALUE;</span><br><span class="line">	<span class="keyword">this</span>.depth = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">this</span>.parallel = parallel;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -383,7 +416,7 @@
 <p><strong>Stage4:</strong> collect</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> &lt;R, A&gt; <span class="function">R <span class="title">collect</span><span class="params">(Collector&lt;? <span class="keyword">super</span> P_OUT, A, R&gt; collector)</span> </span>&#123;</span><br><span class="line">	A container;</span><br><span class="line">	<span class="keyword">if</span> (isParallel() &amp;&amp; ...) &#123;</span><br><span class="line">		<span class="comment">//并行方式</span></span><br><span class="line">		container = collector.supplier().get();</span><br><span class="line">		BiConsumer&lt;A, ? <span class="keyword">super</span> P_OUT&gt; accumulator = collector.accumulator();</span><br><span class="line">		forEach(u -&gt; accumulator.accept(container, u));</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="comment">//串行方式</span></span><br><span class="line">		container = evaluate(ReduceOps.makeRef(collector));</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> collector.characteristics().contains(Collector.Characteristics.IDENTITY_FINISH)</span><br><span class="line">		   ? (R) container</span><br><span class="line">		   : collector.finisher().apply(container);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>collect的调用过程相对比较复杂，用流程图进行简要介绍(主要介绍串行方式)：</p>
-<center><br><img src="images/2018-03-11-001.jpg" alt="2018-03-11-001"><br></center>
+<center><br><img src="/images/2018-03-11-001.jpg" alt="2018-03-11-001"><br></center>
 
 <p>在本文给出的示例中，各个中间操作的accept方法具体执行时间是在collect阶段来完成的，更具体的就是执行了action.accept(e)，这也正好印证了stream流的惰性计算过程。换句话说，这一流式计算过程也实际上就是调用各个Stage中的accept方法过程。</p>
 <h4 id="4-小结"><a href="#4-小结" class="headerlink" title="4. 小结"></a>4. 小结</h4><p>本片博客介绍的内容也不过stream流中的冰山一角，可能其中有理解不准确的，下一篇准备研究一下串并行之间的工作原理的不同之处以及串并转换过程。</p>
@@ -402,6 +435,14 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag"># java</a>
+          
+            <a href="/tags/stream/" rel="tag"># stream</a>
+          
+        </div>
       
 
       
@@ -508,7 +549,25 @@
             
 
             
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
             
 
           </nav>
@@ -538,7 +597,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#stream流原理浅析"><span class="nav-number">1.</span> <span class="nav-text">stream流原理浅析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#文档目录"><span class="nav-number">1.1.</span> <span class="nav-text">文档目录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-对比小示例"><span class="nav-number">1.2.</span> <span class="nav-text">1. 对比小示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-stream流的操作类型和惰性求值"><span class="nav-number">1.3.</span> <span class="nav-text">2. stream流的操作类型和惰性求值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-stream源代码浅析"><span class="nav-number">1.4.</span> <span class="nav-text">3. stream源代码浅析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-小结"><span class="nav-number">1.5.</span> <span class="nav-text">4. 小结</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-参考"><span class="nav-number">1.6.</span> <span class="nav-text">5.参考</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#stream流原理浅析"><span class="nav-text">stream流原理浅析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#文档目录"><span class="nav-text">文档目录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-对比小示例"><span class="nav-text">1. 对比小示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-stream流的操作类型和惰性求值"><span class="nav-text">2. stream流的操作类型和惰性求值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-stream源代码浅析"><span class="nav-text">3. stream源代码浅析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-小结"><span class="nav-text">4. 小结</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-参考"><span class="nav-text">5.参考</span></a></li></ol></li></ol></div>
             
 
           </div>

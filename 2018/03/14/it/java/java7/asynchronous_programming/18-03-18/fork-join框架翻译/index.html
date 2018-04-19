@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="java,fork/join," />
 
 
 
@@ -80,6 +80,7 @@
 
 
 <meta name="description" content="项目中用到的CompletableFuture异步编程较多，欲研究一下其中的原理，了解到其底层使用的是java7中的fork/join框架，巧又觅得大师(Doug Lea)的文章[A Java Fork/Join Framework]，翻译一下前面部分内容。  摘要这篇文章描述了一种支持并行编程风格的java框架的设计、实现和性能，通过递归将其划分为能够并行处理的子任务，等待计算并组装结果，这种">
+<meta name="keywords" content="java,fork&#x2F;join">
 <meta property="og:type" content="article">
 <meta property="og:title" content="java fork&#x2F;join框架（译）">
 <meta property="og:url" content="http://yoursite.com/2018/03/14/it/java/java7/asynchronous_programming/18-03-18/fork-join框架翻译/index.html">
@@ -88,7 +89,7 @@
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://yoursite.com/images/2018-03-18-001.jpg">
 <meta property="og:image" content="http://yoursite.com/images/2018-03-18-002.jpg">
-<meta property="og:updated_time" content="2018-04-12T03:24:40.806Z">
+<meta property="og:updated_time" content="2018-04-19T17:13:09.063Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java fork&#x2F;join框架（译）">
 <meta name="twitter:description" content="项目中用到的CompletableFuture异步编程较多，欲研究一下其中的原理，了解到其底层使用的是java7中的fork/join框架，巧又觅得大师(Doug Lea)的文章[A Java Fork/Join Framework]，翻译一下前面部分内容。  摘要这篇文章描述了一种支持并行编程风格的java框架的设计、实现和性能，通过递归将其划分为能够并行处理的子任务，等待计算并组装结果，这种">
@@ -213,6 +214,16 @@
         </li>
       
         
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-关于我">
           <a href="/about/" rel="section">
             
@@ -294,6 +305,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -386,6 +419,14 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag"># java</a>
+          
+            <a href="/tags/fork-join/" rel="tag"># fork/join</a>
+          
+        </div>
       
 
       
@@ -492,7 +533,25 @@
             
 
             
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
             
 
           </nav>
@@ -522,7 +581,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#摘要"><span class="nav-number">1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#介绍"><span class="nav-number">2.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设计"><span class="nav-number">3.</span> <span class="nav-text">设计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#工作窃取-Work-Stealing"><span class="nav-number">3.1.</span> <span class="nav-text">工作窃取(Work-Stealing)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现"><span class="nav-number">4.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#双端队列-Deques"><span class="nav-number">4.1.</span> <span class="nav-text">双端队列(Deques)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#窃取和空闲"><span class="nav-number">4.2.</span> <span class="nav-text">窃取和空闲</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#摘要"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#介绍"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设计"><span class="nav-text">设计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#工作窃取-Work-Stealing"><span class="nav-text">工作窃取(Work-Stealing)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现"><span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#双端队列-Deques"><span class="nav-text">双端队列(Deques)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#窃取和空闲"><span class="nav-text">窃取和空闲</span></a></li></ol></li></ol></div>
             
 
           </div>

@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="java,CompletableFuture," />
 
 
 
@@ -79,17 +79,20 @@
 
 
 
-<meta name="description" content="CompletableFuture浅入浅出时间：2018年04月06日  前一篇博客简单使用了CompletableFuture中的几个API，简单清爽地解决了一个多线程编程的小示例，不得不说该异步编程框架在实际开发中是起着极大的作用，最初在项目中使用时总是对thenApppy()和thenCompose()方法比较迷惑，什么时候该用前者，什么时候该用后者，后来大抵也了解了两者的使用场景，不过依然">
+<meta name="description" content="前一篇博客简单使用了CompletableFuture中的几个API，简单清爽地解决了一个多线程编程的小示例，不得不说该异步编程框架在实际开发中是起着极大的作用，最初在项目中使用时总是对thenApppy()和thenCompose()方法比较迷惑，什么时候该用前者，什么时候该用后者，后来大抵也了解了两者的使用场景，不过依然没有对该框架有一个整体的认识，借该博文整理一下个人对Completabl">
+<meta name="keywords" content="java,CompletableFuture">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CompletableFuture浅入浅出">
 <meta property="og:url" content="http://yoursite.com/2018/04/06/it/java/java8/异步编程/18-04-06/CompletableFuture浅入浅出/index.html">
 <meta property="og:site_name" content="大道至简">
-<meta property="og:description" content="CompletableFuture浅入浅出时间：2018年04月06日  前一篇博客简单使用了CompletableFuture中的几个API，简单清爽地解决了一个多线程编程的小示例，不得不说该异步编程框架在实际开发中是起着极大的作用，最初在项目中使用时总是对thenApppy()和thenCompose()方法比较迷惑，什么时候该用前者，什么时候该用后者，后来大抵也了解了两者的使用场景，不过依然">
+<meta property="og:description" content="前一篇博客简单使用了CompletableFuture中的几个API，简单清爽地解决了一个多线程编程的小示例，不得不说该异步编程框架在实际开发中是起着极大的作用，最初在项目中使用时总是对thenApppy()和thenCompose()方法比较迷惑，什么时候该用前者，什么时候该用后者，后来大抵也了解了两者的使用场景，不过依然没有对该框架有一个整体的认识，借该博文整理一下个人对Completabl">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-04-12T04:19:27.924Z">
+<meta property="og:image" content="http://yoursite.com/images/2018-04-09.png">
+<meta property="og:updated_time" content="2018-04-19T17:07:44.271Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CompletableFuture浅入浅出">
-<meta name="twitter:description" content="CompletableFuture浅入浅出时间：2018年04月06日  前一篇博客简单使用了CompletableFuture中的几个API，简单清爽地解决了一个多线程编程的小示例，不得不说该异步编程框架在实际开发中是起着极大的作用，最初在项目中使用时总是对thenApppy()和thenCompose()方法比较迷惑，什么时候该用前者，什么时候该用后者，后来大抵也了解了两者的使用场景，不过依然">
+<meta name="twitter:description" content="前一篇博客简单使用了CompletableFuture中的几个API，简单清爽地解决了一个多线程编程的小示例，不得不说该异步编程框架在实际开发中是起着极大的作用，最初在项目中使用时总是对thenApppy()和thenCompose()方法比较迷惑，什么时候该用前者，什么时候该用后者，后来大抵也了解了两者的使用场景，不过依然没有对该框架有一个整体的认识，借该博文整理一下个人对Completabl">
+<meta name="twitter:image" content="http://yoursite.com/images/2018-04-09.png">
 
 
 
@@ -210,6 +213,16 @@
         </li>
       
         
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-关于我">
           <a href="/about/" rel="section">
             
@@ -292,6 +305,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -319,17 +354,30 @@
       
 
       
-        <h3 id="CompletableFuture浅入浅出"><a href="#CompletableFuture浅入浅出" class="headerlink" title="CompletableFuture浅入浅出"></a>CompletableFuture浅入浅出</h3><p>时间：2018年04月06日</p>
-<blockquote>
+        <blockquote>
 <p><a href="../18-04-05/CompletableFuture使用的简单小例.md">前一篇博客</a>简单使用了CompletableFuture中的几个API，简单清爽地解决了一个多线程编程的小示例，不得不说该异步编程框架在实际开发中是起着极大的作用，最初在项目中使用时总是对thenApppy()和thenCompose()方法比较迷惑，什么时候该用前者，什么时候该用后者，后来大抵也了解了两者的使用场景，不过依然没有对该框架有一个整体的认识，借该博文整理一下个人对CompletableFuture框架的理解。</p>
 </blockquote>
 <h4 id="1-简谈Future接口"><a href="#1-简谈Future接口" class="headerlink" title="1. 简谈Future接口"></a>1. 简谈Future接口</h4><p>Future接口在Java5中已有引入，主要是解决需要获取多线程(实现Callable接口的线程)的返回值的问题，看一个简单示例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Callable&lt;String&gt; callable = () -&gt; &quot;ok&quot;;</span><br><span class="line">ExecutorService executor = Executors.newSingleThreadExecutor();</span><br><span class="line">//主线程需要callable线程的结果，先拿到一个未来的Future</span><br><span class="line">Future&lt;String&gt; future = executor.submit(callable); </span><br><span class="line">//有了结果后再根据get方法取真实的结果,当然如果此时callable线程如果没有执行完get方法会阻塞执行完，如果执行完则直接返回结果或抛出异常</span><br><span class="line">System.out.println(future.get());</span><br></pre></td></tr></table></figure>
-<p>输出结果:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ok</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Callable&lt;String&gt; callable = () -&gt; <span class="string">"ok"</span>;</span><br><span class="line">ExecutorService executor = Executors.newSingleThreadExecutor();</span><br><span class="line"><span class="comment">//主线程需要callable线程的结果，先拿到一个未来的Future</span></span><br><span class="line">Future&lt;String&gt; future = executor.submit(callable); </span><br><span class="line"><span class="comment">//有了结果后再根据get方法取真实的结果,当然如果此时callable线程如果没有执行完get方法会阻塞执行完，如果执行完则直接返回结果或抛出异常</span></span><br><span class="line">System.out.println(future.get());</span><br></pre></td></tr></table></figure>
+<p>输出结果:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ok</span><br></pre></td></tr></table></figure></p>
 <p>Future能够正确获取到子线程产生的结果数据，但如果通过future.get()拿取数据时，callable线程并没有执行完，调用线程便会阻塞直到执行结束，或者通过isDone()方法轮询查看执行结果。</p>
 <h4 id="2-CompletableFuture类"><a href="#2-CompletableFuture类" class="headerlink" title="2. CompletableFuture类"></a>2. CompletableFuture类</h4><p>CompletableFuture类实现了Future和CompletionStage两个接口，提供了Future所有旧的获取线程的返回值的api，不过在CompletableFuture框架中，这种get()或isDone()的获取方式不建议使用。</p>
-<p>个人把CompletableFuture框架的api进行如下划分：</p>
+<p>CompletebleFuture类对外提供的api接口主要有上图中的三大类：Future接口方法，CompletionStage接口方法，以及自身新定义的三个主要的静态方法。个人把CompletableFuture框架的api进行如下划分：</p>
+<center><br>    <img src="/images/2018-04-09.png" width="60%"><br> </center>
 
+
+
+<h5 id="2-1-实现Future接口方法"><a href="#2-1-实现Future接口方法" class="headerlink" title="2.1 实现Future接口方法"></a>2.1 实现Future接口方法</h5><h5 id="2-2-静态方法"><a href="#2-2-静态方法" class="headerlink" title="2.2 静态方法"></a>2.2 静态方法</h5><p>CompletableFuture类提供的静态方法主要包括supplyAsync、runAsync和allOf方法，前两个方法主要用来创建一个新的异步线程，第三个方法主要是实现等待多个异步线程的同步，以便于做下一步操作，接下来，分析一下这三个方法。</p>
+<p><strong>SupplyAsync方法</strong>：</p>
+<p>该方法重载了两个方法，主要的区别在于是否需要指定任务执行器：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;U&gt; <span class="function">CompletableFuture&lt;U&gt; <span class="title">supplyAsync</span><span class="params">(Supplier&lt;U&gt; supplier)</span></span>&#123;......&#125; </span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;U&gt; <span class="function">CompletableFuture&lt;U&gt; <span class="title">supplyAsync</span><span class="params">(Supplier&lt;U&gt; supplier, Executor executor)</span></span>&#123;......&#125;</span><br></pre></td></tr></table></figure></p>
+<p>先分析一下无指定线程执行器的supplyAsync方法内部源码的运作流程，该方法调用了内部一个静态方法：asyncSupplyStage(asyncPool, supplier), 其中，asyncPool是通过判断useCommonPool变量是否为true，如果为true，则使用ForkJoinPool中默认的common线程池，然后看asyncSupplyStage方法，里面的实现很简单：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> &lt;U&gt; <span class="function">CompletableFuture&lt;U&gt; <span class="title">asyncSupplyStage</span><span class="params">(Executor e, Supplier&lt;U&gt; f)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (f == <span class="keyword">null</span>) <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();</span><br><span class="line">    CompletableFuture&lt;U&gt; d = <span class="keyword">new</span> CompletableFuture&lt;U&gt;();</span><br><span class="line">    e.execute(<span class="keyword">new</span> AsyncSupply&lt;U&gt;(d, f));</span><br><span class="line">    <span class="keyword">return</span> d;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>其中，AsyncSupply是一个继承了ForkJoinTask的类，并且实现了Runnable接口，该方法new了一个CompletableFuture，将其提交给ForkJoinPool执行，然后返回CompletableFuture实例的引用。</p>
+<p><strong>runAsync方法</strong></p>
+<p>runAsync方法作用同supplyAsync类似，只是改方法接收的是一个Runnable类型的参数，所以调用该方法不会产生返回值。这而不做过多赘述。</p>
+<p><strong>allOf方法</strong></p>
+<p>allOf方法值得好好分析一下，这个方法在实际的项目开发中用得灰常多，能够对多个异步操作进行同步，当所有传入的异步操作均结束后会产生一个新的异步CompletableFuture来继续执行新的操作，当其中有一个异步操作产生异常，那么该方法也会抛出一个异常，这个方法仅调用一个addTree方法并直接将该方法的返回值进行返回，看看addTree方法的源代码结构：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">CompletableFuture&lt;Void&gt; d = <span class="keyword">new</span> CompletableFuture&lt;Void&gt;();</span><br><span class="line">        <span class="keyword">if</span> (lo &gt; hi) <span class="comment">// empty</span></span><br><span class="line">            d.result = NIL;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            CompletableFuture&lt;?&gt; a, b;</span><br><span class="line">            <span class="keyword">int</span> mid = (lo + hi) &gt;&gt;&gt; <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">if</span> ((a = (lo == mid ? cfs[lo] :</span><br><span class="line">                      andTree(cfs, lo, mid))) == <span class="keyword">null</span> ||</span><br><span class="line">                (b = (lo == hi ? a : (hi == mid+<span class="number">1</span>) ? cfs[hi] :</span><br><span class="line">                      andTree(cfs, mid+<span class="number">1</span>, hi)))  == <span class="keyword">null</span>)</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();</span><br><span class="line">            <span class="keyword">if</span> (!d.biRelay(a, b)) &#123;</span><br><span class="line">                BiRelay&lt;?,?&gt; c = <span class="keyword">new</span> BiRelay&lt;&gt;(d, a, b);</span><br><span class="line">                a.bipush(b, c);</span><br><span class="line">                c.tryFire(SYNC);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> d;</span><br></pre></td></tr></table></figure></p>
+<p><code>为什么默认使用ForkJoinPool类型的commonPool线程池?</code></p>
+<h5 id="2-3-实现CompletionStage接口方法"><a href="#2-3-实现CompletionStage接口方法" class="headerlink" title="2.3 实现CompletionStage接口方法"></a>2.3 实现CompletionStage接口方法</h5>
       
     </div>
     
@@ -343,6 +391,14 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag"># java</a>
+          
+            <a href="/tags/CompletableFuture/" rel="tag"># CompletableFuture</a>
+          
+        </div>
       
 
       
@@ -445,7 +501,25 @@
             
 
             
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
             
 
           </nav>
@@ -475,7 +549,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#CompletableFuture浅入浅出"><span class="nav-number">1.</span> <span class="nav-text">CompletableFuture浅入浅出</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-简谈Future接口"><span class="nav-number">1.1.</span> <span class="nav-text">1. 简谈Future接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-CompletableFuture类"><span class="nav-number">1.2.</span> <span class="nav-text">2. CompletableFuture类</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-简谈Future接口"><span class="nav-text">1. 简谈Future接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-CompletableFuture类"><span class="nav-text">2. CompletableFuture类</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-实现Future接口方法"><span class="nav-text">2.1 实现Future接口方法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-静态方法"><span class="nav-text">2.2 静态方法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-3-实现CompletionStage接口方法"><span class="nav-text">2.3 实现CompletionStage接口方法</span></a></li></ol></li></ol></div>
             
 
           </div>

@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="java,lambda," />
 
 
 
@@ -80,13 +80,14 @@
 
 
 <meta name="description" content="java繁琐的语法也被摒垢已久，在java8中引入的lambda这一个非常重要的特性。这标志着Java往函数式编程迈进了一小步，java程序猿也可以写出简单优雅的代码了。  1. 函数一等公民等级由来 或许可以说这么说，如果没有将函数进行一等公民，java8中stream、lambda这些新的特性根本无从谈起，函数一等功民化并非由java8独家首创，早在python、javascript、sca">
+<meta name="keywords" content="java,lambda">
 <meta property="og:type" content="article">
 <meta property="og:title" content="lambda初识">
 <meta property="og:url" content="http://yoursite.com/2018/02/27/it/java/java8/lambda/18-02-27/lambda初识/index.html">
 <meta property="og:site_name" content="大道至简">
 <meta property="og:description" content="java繁琐的语法也被摒垢已久，在java8中引入的lambda这一个非常重要的特性。这标志着Java往函数式编程迈进了一小步，java程序猿也可以写出简单优雅的代码了。  1. 函数一等公民等级由来 或许可以说这么说，如果没有将函数进行一等公民，java8中stream、lambda这些新的特性根本无从谈起，函数一等功民化并非由java8独家首创，早在python、javascript、sca">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-04-12T04:13:22.000Z">
+<meta property="og:updated_time" content="2018-04-19T17:10:59.692Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="lambda初识">
 <meta name="twitter:description" content="java繁琐的语法也被摒垢已久，在java8中引入的lambda这一个非常重要的特性。这标志着Java往函数式编程迈进了一小步，java程序猿也可以写出简单优雅的代码了。  1. 函数一等公民等级由来 或许可以说这么说，如果没有将函数进行一等公民，java8中stream、lambda这些新的特性根本无从谈起，函数一等功民化并非由java8独家首创，早在python、javascript、sca">
@@ -210,6 +211,16 @@
         </li>
       
         
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-关于我">
           <a href="/about/" rel="section">
             
@@ -291,6 +302,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -387,6 +420,14 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag"># java</a>
+          
+            <a href="/tags/lambda/" rel="tag"># lambda</a>
+          
+        </div>
       
 
       
@@ -493,7 +534,25 @@
             
 
             
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
             
 
           </nav>
@@ -523,7 +582,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-函数一等公民等级由来"><span class="nav-number">1.</span> <span class="nav-text">1. 函数一等公民等级由来</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-匿名内部类和lambda"><span class="nav-number">2.</span> <span class="nav-text">2. 匿名内部类和lambda</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-lambda和函数式接口"><span class="nav-number">3.</span> <span class="nav-text">3. lambda和函数式接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-lambda在集合中的一些应用"><span class="nav-number">4.</span> <span class="nav-text">4. lambda在集合中的一些应用</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-函数一等公民等级由来"><span class="nav-text">1. 函数一等公民等级由来</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-匿名内部类和lambda"><span class="nav-text">2. 匿名内部类和lambda</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-lambda和函数式接口"><span class="nav-text">3. lambda和函数式接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-lambda在集合中的一些应用"><span class="nav-text">4. lambda在集合中的一些应用</span></a></li></ol></div>
             
 
           </div>

@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="java,CompletableFuture," />
 
 
 
@@ -80,13 +80,14 @@
 
 
 <meta name="description" content="CompletableFuture使用的简单小例时间： 2018年04月05日  记得之前从知乎上看到过一个关于程序猿的笑话：有一个程序猿遇到一个问题，后来决定用多线程的方式来解决，再后来他两个问题有了。  1. 异步小案例 刚入职公司时在公司的CE小组，那个时候刚毕业没多久，Java8这套以前没怎么用过(现在Java10都已经出来了)，记得印象比较深的一次，同组的远哥(现在ali大佬)给我和其他">
+<meta name="keywords" content="java,CompletableFuture">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CompletableFuture使用的简单小例">
 <meta property="og:url" content="http://yoursite.com/2018/04/05/it/java/java8/异步编程/18-04-05/CompletableFuture使用的简单小例/index.html">
 <meta property="og:site_name" content="大道至简">
 <meta property="og:description" content="CompletableFuture使用的简单小例时间： 2018年04月05日  记得之前从知乎上看到过一个关于程序猿的笑话：有一个程序猿遇到一个问题，后来决定用多线程的方式来解决，再后来他两个问题有了。  1. 异步小案例 刚入职公司时在公司的CE小组，那个时候刚毕业没多久，Java8这套以前没怎么用过(现在Java10都已经出来了)，记得印象比较深的一次，同组的远哥(现在ali大佬)给我和其他">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-04-12T04:19:07.115Z">
+<meta property="og:updated_time" content="2018-04-19T17:10:38.532Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CompletableFuture使用的简单小例">
 <meta name="twitter:description" content="CompletableFuture使用的简单小例时间： 2018年04月05日  记得之前从知乎上看到过一个关于程序猿的笑话：有一个程序猿遇到一个问题，后来决定用多线程的方式来解决，再后来他两个问题有了。  1. 异步小案例 刚入职公司时在公司的CE小组，那个时候刚毕业没多久，Java8这套以前没怎么用过(现在Java10都已经出来了)，记得印象比较深的一次，同组的远哥(现在ali大佬)给我和其他">
@@ -210,6 +211,16 @@
         </li>
       
         
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-关于我">
           <a href="/about/" rel="section">
             
@@ -292,6 +303,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -360,6 +393,14 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag"># java</a>
+          
+            <a href="/tags/CompletableFuture/" rel="tag"># CompletableFuture</a>
+          
+        </div>
       
 
       
@@ -466,7 +507,25 @@
             
 
             
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
             
 
           </nav>
@@ -496,7 +555,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#CompletableFuture使用的简单小例"><span class="nav-number">1.</span> <span class="nav-text">CompletableFuture使用的简单小例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-异步小案例"><span class="nav-number">1.1.</span> <span class="nav-text">1. 异步小案例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-下一步"><span class="nav-number">1.2.</span> <span class="nav-text">2. 下一步</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#CompletableFuture使用的简单小例"><span class="nav-text">CompletableFuture使用的简单小例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-异步小案例"><span class="nav-text">1. 异步小案例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-下一步"><span class="nav-text">2. 下一步</span></a></li></ol></li></ol></div>
             
 
           </div>
