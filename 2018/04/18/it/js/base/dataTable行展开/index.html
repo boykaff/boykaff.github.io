@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="测试,postman," />
+  <meta name="keywords" content="js,dataTable," />
 
 
 
@@ -79,25 +79,20 @@
 
 
 
-<meta name="description" content="其实和部分其他同事一样，使用postman在做接口测试时候，需要对每个测试的接口都要进行一些参数配置，这些参数配置是相互独立的，即使相同的参数项，都要进行分别配置，我想，作为接口开发人员，可能不太把关注点放在接口测试的效率上，但每次开发时进行功能迭代或者模块修改后的测试工作可能得花上个把小时才能把自己负责的接口依次轮一遍，这还不包括处理接口出现错误的时间，so，开发自测还是相当重要的。  1.">
-<meta name="keywords" content="测试,postman">
+<meta name="description" content="最近结合项目组业务要设计并实现一个购物车模块，这波主要充当一下前端的角色，购物车下单成功后要进入到已下单的列表，在列表中，可以查看每个订单具体的购物详情。这主要利用jquery中的dataTable进行订单行数据的展开详细数据展示功能，其实效果很简单，麻烦在业务逻辑的实现(仅简单记录备忘，大神请绕行)。  先展示一下要做成的样子：  项目中使用了vue.js，所以大致按vue的来说说。 订单列表">
+<meta name="keywords" content="js,dataTable">
 <meta property="og:type" content="article">
-<meta property="og:title" content="postman接口测试操作">
-<meta property="og:url" content="http://yoursite.com/2018/01/28/it/tools/postman/18-01-27/postman测试/index.html">
+<meta property="og:title" content="DataTable行展开">
+<meta property="og:url" content="http://yoursite.com/2018/04/18/it/js/base/dataTable行展开/index.html">
 <meta property="og:site_name" content="大道至简">
-<meta property="og:description" content="其实和部分其他同事一样，使用postman在做接口测试时候，需要对每个测试的接口都要进行一些参数配置，这些参数配置是相互独立的，即使相同的参数项，都要进行分别配置，我想，作为接口开发人员，可能不太把关注点放在接口测试的效率上，但每次开发时进行功能迭代或者模块修改后的测试工作可能得花上个把小时才能把自己负责的接口依次轮一遍，这还不包括处理接口出现错误的时间，so，开发自测还是相当重要的。  1.">
+<meta property="og:description" content="最近结合项目组业务要设计并实现一个购物车模块，这波主要充当一下前端的角色，购物车下单成功后要进入到已下单的列表，在列表中，可以查看每个订单具体的购物详情。这主要利用jquery中的dataTable进行订单行数据的展开详细数据展示功能，其实效果很简单，麻烦在业务逻辑的实现(仅简单记录备忘，大神请绕行)。  先展示一下要做成的样子：  项目中使用了vue.js，所以大致按vue的来说说。 订单列表">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://yoursite.com/images/2018-01-27-001.png">
-<meta property="og:image" content="http://yoursite.com/images/2018-01-27-002.png">
-<meta property="og:image" content="http://yoursite.com/images/2018-01-27-003.png">
-<meta property="og:image" content="http://yoursite.com/images/2018-01-27-004.png">
-<meta property="og:image" content="http://yoursite.com/images/2018-01-27-005.png">
-<meta property="og:image" content="http://yoursite.com/images/2018-01-27-006.png">
-<meta property="og:updated_time" content="2018-04-19T17:09:01.054Z">
+<meta property="og:image" content="http://yoursite.com/images/2018-04-18-001.jpg">
+<meta property="og:updated_time" content="2018-04-20T00:25:04.881Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="postman接口测试操作">
-<meta name="twitter:description" content="其实和部分其他同事一样，使用postman在做接口测试时候，需要对每个测试的接口都要进行一些参数配置，这些参数配置是相互独立的，即使相同的参数项，都要进行分别配置，我想，作为接口开发人员，可能不太把关注点放在接口测试的效率上，但每次开发时进行功能迭代或者模块修改后的测试工作可能得花上个把小时才能把自己负责的接口依次轮一遍，这还不包括处理接口出现错误的时间，so，开发自测还是相当重要的。  1.">
-<meta name="twitter:image" content="http://yoursite.com/images/2018-01-27-001.png">
+<meta name="twitter:title" content="DataTable行展开">
+<meta name="twitter:description" content="最近结合项目组业务要设计并实现一个购物车模块，这波主要充当一下前端的角色，购物车下单成功后要进入到已下单的列表，在列表中，可以查看每个订单具体的购物详情。这主要利用jquery中的dataTable进行订单行数据的展开详细数据展示功能，其实效果很简单，麻烦在业务逻辑的实现(仅简单记录备忘，大神请绕行)。  先展示一下要做成的样子：  项目中使用了vue.js，所以大致按vue的来说说。 订单列表">
+<meta name="twitter:image" content="http://yoursite.com/images/2018-04-18-001.jpg">
 
 
 
@@ -127,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/01/28/it/tools/postman/18-01-27/postman测试/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/04/18/it/js/base/dataTable行展开/"/>
 
 
 
 
 
-  <title>postman接口测试操作 | 大道至简</title>
+  <title>DataTable行展开 | 大道至简</title>
   
 
 
@@ -270,7 +265,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/28/it/tools/postman/18-01-27/postman测试/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/18/it/js/base/dataTable行展开/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="boyka">
@@ -287,7 +282,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">postman接口测试操作</h1>
+          <h1 class="post-title" itemprop="name headline">DataTable行展开</h1>
         
 
         <div class="post-meta">
@@ -299,8 +294,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-28T00:00:00+08:00">
-                2018-01-28
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-18T00:00:00+08:00">
+                2018-04-18
               </time>
             
 
@@ -322,8 +317,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/测试/" itemprop="url" rel="index">
-                    <span itemprop="name">测试</span>
+                  <a href="/categories/js/" itemprop="url" rel="index">
+                    <span itemprop="name">js</span>
                   </a>
                 </span>
 
@@ -360,38 +355,16 @@
 
       
         <blockquote>
-<p>其实和部分其他同事一样，使用postman在做接口测试时候，需要对每个测试的接口都要进行一些参数配置，这些参数配置是相互独立的，即使相同的参数项，都要进行分别配置，我想，作为接口开发人员，可能不太把关注点放在接口测试的效率上，但每次开发时进行功能迭代或者模块修改后的测试工作可能得花上个把小时才能把自己负责的接口依次轮一遍，这还不包括处理接口出现错误的时间，so，开发自测还是相当重要的。</p>
+<p>最近结合项目组业务要设计并实现一个购物车模块，这波主要充当一下前端的角色，购物车下单成功后要进入到已下单的列表，在列表中，可以查看每个订单具体的购物详情。这主要利用jquery中的dataTable进行订单行数据的展开详细数据展示功能，其实效果很简单，麻烦在业务逻辑的实现(仅简单记录备忘，大神请绕行)。</p>
 </blockquote>
-<h4 id="1-环境变量"><a href="#1-环境变量" class="headerlink" title="1. 环境变量"></a>1. 环境变量</h4><ul>
-<li>postman根据变量作用域的不同可分为全局变量(global variable)、环境变量(environment variable)、局部变量(local variable)。故名思议，很简单，在postman这个测试环境中，全局变量表示一旦设定一个变量为全局的，那么，所有的测试项目都可以使用这个变量；环境变量在测试尤其是在批量测试时，必须要进行选择，我觉得一个测试项目对应一个环境变量配置集合，一般可以把根URL这类型的东西放在环境变量里，设置全局变量或局部变量可以提高变量的公用性，各个测试项目的环境变量应分开以避免混淆；局部变量在请求的预处理pre-request和请求结果处理test里面用得较多。</li>
-</ul>
-<center><br><img src="/images/2018-01-27-001.png" alt="1"><br></center>
-
-<h4 id="2-Pre-request"><a href="#2-Pre-request" class="headerlink" title="2. Pre-request"></a>2. Pre-request</h4><ul>
-<li>前文有讲，Pre-request能够在进行正式的http请求之前进行一些预处理操作，postman的这个特性大有益处，比如设置环境变量、检测数据的有效性等，在我实际开发的自测过程中，遇到的问题是，项目多个人员一起开发测试的时候，大家经常会去手动清空redis里面缓存的用户认证token信息，token失效便自然需要重新获取有效的token值了，那么Pre-request的作用就体现出来了，我们可以在这个脚本里面自动验证token是否过期，如果过期，则获取一个新的token值；还有就是比如你想要自动化的修改某一条数据的属性，要自动化的完成，那这条数据对应的ID号就必须自动获取，其实也比较简单，就是在发送这条PUT请求之前可以先查询该数据列表，然后从其中选择一条有效数据的ID并提前设置到环境变量中，那么在真正发送url请求的时候这个ID值就可以从刚设置的环境变量中获取咧，Pre-request是支持原生js的，要玩这个你得会点简单的js，当然作为开发人员你即使不会也分分钟能上手（^^），配合js，Pre-request脚本里基本基本的CURD操作都能够很好的处理，下面以生成一个studentId为例，先查询出有效的studentId，然后将其设置到环境变量中studentId中，如下：</li>
-</ul>
-<center><br><img src="/images/2018-01-27-002.png" alt="2"><br></center>
-
-<h4 id="3-Test"><a href="#3-Test" class="headerlink" title="3. Test"></a>3. Test</h4><ul>
-<li>Test脚本可以对请求的结果进行处理，相比于Pre-request的Snippets就丰富多了，包括如检查状态码、检查响应串、验证JSON、检查header、限制应答时间等，最常用的就是判断CURD的结果的状态码是否和预定义的一致，比如创建成功使用CREATED(201)、查询修改成功OK(200)、删除成功可用NO-CONTENT(204)等,可以从右侧快捷菜单栏中选择预存的一些常用方法快速生成相应的Test结果功能测试点：</li>
-</ul>
-<center><br><img src="/images/2018-01-27-003.png" alt="3"><br></center>
-
-<h4 id="4-Collection-Runner"><a href="#4-Collection-Runner" class="headerlink" title="4. Collection Runner"></a>4. Collection Runner</h4><ul>
-<li>当接口需要迭代测试时，Collection Runner批量运行功能就发挥了巨大作用，可以简单的选择需要运行的请求集合，点击Run，然后便可以对这个集合里面的接口进行测试了，Runner测试的最小单位可以是Folder，即Collection测试集合里最小的一个模块测试文件夹，再选择你所配置的环境变量，仅这两步，然后点击Run按钮后就可以进行批量测试了。</li>
-</ul>
-<center><br><img src="/images/2018-01-27-004.png" alt="4"><br></center>
-
-<center><br><img src="/images/2018-01-27-005.png" alt="5"><br></center>
-
-<ul>
-<li>Runner测试结果的展示也非常的友好和直观，除了对测试集合的测试功能点的成功和失败格式进行统计，还详细展示了批量请求的各成功和失败的case，这样我们就能聚焦处理fail的case而可以不过于关注成功的case了。</li>
-</ul>
-<center><br><img src="/images/2018-01-27-006.png" alt="6"><br></center>
-
-<ul>
-<li>小伙伴们，postman赶快用起来！！！</li>
-</ul>
+<p>先展示一下要做成的样子：</p>
+<p><img src="/images/2018-04-18-001.jpg" alt=""></p>
+<p>项目中使用了vue.js，所以大致按vue的来说说。</p>
+<p>订单列表数据展示html页面：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"> <span class="tag">&lt;<span class="name">table</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">thead</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">th</span>&gt;</span> ID <span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">th</span>&gt;</span> 标题2 <span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">th</span>&gt;</span> 标题... <span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">thead</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">tbody</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">tr</span> <span class="attr">v-for</span>=<span class="string">"(index, order) in orders"</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">v-on:click</span>=<span class="string">"rowClick(index, order)"</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">	 <span class="tag">&lt;<span class="name">td</span>&gt;</span> 信息 <span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">td</span>&gt;</span> 信息... <span class="tag">&lt;/<span class="name">td</span>&gt;</span>   </span><br><span class="line"> <span class="tag">&lt;/<span class="name">tbody</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>在对应的vue实例的methods方法集中添加rowClick方法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">rowClick: <span class="function"><span class="keyword">function</span>(<span class="params">index, order</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> _self = <span class="keyword">this</span>;</span><br><span class="line">	<span class="keyword">var</span> row = _self.tableObject.row(index)  <span class="comment">//tableObject为vue实例的一个data属性并已经设置对应值</span></span><br><span class="line">	<span class="keyword">if</span> (row.child.isShown()) &#123;</span><br><span class="line">		row.child.hide();</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		row.child(formateOrderDetail(order)).show()</span><br><span class="line">	&#125;</span><br><span class="line">&#125;，</span><br><span class="line"></span><br><span class="line">formateOrderDetail: <span class="function"><span class="keyword">function</span>(<span class="params">order</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> data = 得到order里面所有条目记录并添加适当的html标记便于显示</span><br><span class="line">	<span class="keyword">return</span> data;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>就这样，达到了想要的效果，结束</p>
 
       
     </div>
@@ -409,9 +382,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/测试/" rel="tag"># 测试</a>
+            <a href="/tags/js/" rel="tag"># js</a>
           
-            <a href="/tags/postman/" rel="tag"># postman</a>
+            <a href="/tags/dataTable/" rel="tag"># dataTable</a>
           
         </div>
       
@@ -424,8 +397,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/01/21/it/tools/postman/18-01-21/安装与学习/" rel="next" title="postman-为接口测试而生">
-                <i class="fa fa-chevron-left"></i> postman-为接口测试而生
+              <a href="/2018/04/06/it/java/java8/异步编程/18-04-06/CompletableFuture浅入浅出/" rel="next" title="CompletableFuture浅入浅出">
+                <i class="fa fa-chevron-left"></i> CompletableFuture浅入浅出
               </a>
             
           </div>
@@ -433,10 +406,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/02/27/it/java/java8/lambda/18-02-27/lambda初识/" rel="prev" title="lambda初识">
-                lambda初识 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -488,17 +457,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -558,22 +518,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-环境变量"><span class="nav-text">1. 环境变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-Pre-request"><span class="nav-text">2. Pre-request</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-Test"><span class="nav-text">3. Test</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-Collection-Runner"><span class="nav-text">4. Collection Runner</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
