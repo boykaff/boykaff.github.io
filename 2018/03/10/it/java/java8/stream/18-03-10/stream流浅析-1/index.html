@@ -90,7 +90,7 @@
 <meta property="og:image" content="http://yoursite.com/images/2018-03-10-001.jpg">
 <meta property="og:image" content="http://yoursite.com/images/2018-03-10-002.jpg">
 <meta property="og:image" content="http://yoursite.com/images/2018-03-11-001.jpg">
-<meta property="og:updated_time" content="2018-04-19T17:10:21.398Z">
+<meta property="og:updated_time" content="2018-04-21T00:36:01.227Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="stream流原理浅析">
 <meta name="twitter:description" content="stream流原理浅析时间: 2018年3月10日  java8中提供了强大的stream流处理，通过其提供的例如过滤(filter)、映射(map)、截取(limit)、收集(collect)等一系列方法的组合，可以很好的解决对集合数据的复杂操作，仅以此篇对stream流水线式组合原理进行浅析，望知其然并知其所以然。  文档目录 1.对比小示例 2.stream流的操作类型和惰性求值 3.str">
@@ -376,11 +376,10 @@
 <p>两种方式都能得出相同的结果即：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">"Tom"</span>, <span class="string">"Lucy"</span>, <span class="string">"Green"</span>]</span><br></pre></td></tr></table></figure>
 <p>上面示例可以看出，两种方式在获取满足要求的员工名字列表的判断逻辑相去不大，比较年龄-&gt;映射名字-&gt;判断数量；但stream函数式风格各个处理阶段分工明确，有条不絮，比如再加上名字不重复的前3个名字(按列表顺序)，stream中直接在limit()方法前挂一个distinct()即可，而集合处理方式的代码复杂度无疑大大增强。</p>
-<h4 id="2-stream流的操作类型和惰性求值"><a href="#2-stream流的操作类型和惰性求值" class="headerlink" title="2. stream流的操作类型和惰性求值"></a>2. stream流的操作类型和惰性求值</h4><p>stream流的操作可粗分为两种：中间操作和终端操作。中间操作仅记录了操作，只有在终端操作时才会触发真正的计算过程；终端操作又可以分为短路与非短路操作，前者是指遇到某些符合条件的元素就可以得到最终结果；而后者是指必须处理所有元素才能得到最终结果。<br>细分如下表<a href="http://www.cnblogs.com/CarpenterLee/p/6637118.html" target="_blank" rel="noopener">引用传送门</a>：</p>
-<p>+——————————————————————————————————–+<br>|                                                   Stream操作分类                                       |<br>+========================+==================+============================================================+<br>|                        | 无状态(Stateless)| unordered filter map mapToInt mapToLong mapToDouble        |<br>|中间操作(Intermediate   |                  | flatMap flatMapToInt flatMapToLong flatMapToDouble peek    |    </p>
-<ul>
-<li>operations)            +——————+————————————————————+<br>|                        | 有状态(Stateful) | distinct sorted limit skip                                 |<br>+————————+——————+————————————————————+<br>|结束操作(Intermediate   | 非短路操作       | forEach forEachOrdered toArray reduce collect max min count|<br>| operations)            +——————+————————————————————+<br>|                        | 短路操作         |anyMatch allMatch noneMatch findFirst findAny               |<br>+————————+——————+————————————————————+</li>
-</ul>
+<h4 id="2-stream流的操作类型和惰性求值"><a href="#2-stream流的操作类型和惰性求值" class="headerlink" title="2. stream流的操作类型和惰性求值"></a>2. stream流的操作类型和惰性求值</h4><p>stream流的操作可粗分为两种：中间操作和终端操作。中间操作仅记录了操作，只有在终端操作时才会触发真正的计算过程；终端操作又可以分为短路与非短路操作，前者是指遇到某些符合条件的元素就可以得到最终结果；而后者是指必须处理所有元素才能得到最终结果。<br>细分如下表<a href="http://www.cnblogs.com/CarpenterLee/p/6637118.html" target="_blank" rel="noopener">引用传送门</a>： </p>
+<table><tr><br><th colspan="3">Stream操作分类</th><br></tr><br><tr><br>    <td rowspan="2"> 中间操作(Intermediate operations</td><br>    <td>无状态(Stateless)</td><br>    <td>unordered filter map mapToInt mapToLong mapToDouble</td><br></tr><br><tr><br>    <td>有状态(Stateful)</td><br>    <td>distinct sorted limit skip</td><br></tr><br><tr><br>    <td rowspan="2"> 结束操作(Intermediate operations)</td><br>    <td>非短路操作</td><br>    <td>forEach forEachOrdered toArray reduce collect max min count</td><br></tr><br><tr><br>    <td>短路操作</td><br>    <td>anyMatch allMatch noneMatch findFirst findAny</td><br></tr><br></table>
+
+
 <p>惰性求值：惰性，懒惰也，啥意思？看个例子先：<br>示例2 惰性求值：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Stream&lt;String&gt; nameStream = employees.stream().filter(x -&gt; x.getAge() &gt; <span class="number">25</span>)</span><br><span class="line">			.map(student -&gt; &#123;</span><br><span class="line">				System.out.println(student.getName());</span><br><span class="line">				<span class="keyword">return</span> student.getName();</span><br><span class="line">			&#125;).limit(<span class="number">3</span>);</span><br><span class="line">	System.out.println(<span class="string">"--------------"</span>);</span><br><span class="line">	nameStream.collect(toList());</span><br></pre></td></tr></table></figure>
 <p>结果:</p>
@@ -542,7 +541,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -553,7 +552,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -564,7 +563,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
