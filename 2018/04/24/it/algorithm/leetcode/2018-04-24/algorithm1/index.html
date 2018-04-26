@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="leetcode,algorithm," />
+  <meta name="keywords" content="LeetCode,algorithm," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="题目： 12345678910Given an array of integers, return indices of the two numbers such that they add up to a specific target.You may assume that each input would have exactly one solution, and you may not">
-<meta name="keywords" content="leetcode,algorithm">
+<meta name="description" content="title： 123Given an array of integers, return indices of the two numbers such that they add up to a specific target.You may assume that each input would have exactly one solution, and you may not use t">
+<meta name="keywords" content="LeetCode,algorithm">
 <meta property="og:type" content="article">
 <meta property="og:title" content="1. Two Sum">
 <meta property="og:url" content="http://yoursite.com/2018/04/24/it/algorithm/leetcode/2018-04-24/algorithm1/index.html">
 <meta property="og:site_name" content="大道至简">
-<meta property="og:description" content="题目： 12345678910Given an array of integers, return indices of the two numbers such that they add up to a specific target.You may assume that each input would have exactly one solution, and you may not">
+<meta property="og:description" content="title： 123Given an array of integers, return indices of the two numbers such that they add up to a specific target.You may assume that each input would have exactly one solution, and you may not use t">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-04-24T15:22:40.469Z">
+<meta property="og:updated_time" content="2018-04-26T18:33:34.608Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="1. Two Sum">
-<meta name="twitter:description" content="题目： 12345678910Given an array of integers, return indices of the two numbers such that they add up to a specific target.You may assume that each input would have exactly one solution, and you may not">
+<meta name="twitter:description" content="title： 123Given an array of integers, return indices of the two numbers such that they add up to a specific target.You may assume that each input would have exactly one solution, and you may not use t">
 
 
 
@@ -315,8 +315,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
                   </a>
                 </span>
 
@@ -352,10 +352,12 @@
       
 
       
-        <p><strong>题目：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Given an array of integers, return indices of the two numbers such that they add up to a specific target.</span><br><span class="line"></span><br><span class="line">You may assume that each input would have exactly one solution, and you may not use the same element twice.</span><br><span class="line"></span><br><span class="line">Example:</span><br><span class="line"></span><br><span class="line">Given nums = [2, 7, 11, 15], target = 9,</span><br><span class="line"></span><br><span class="line">Because nums[0] + nums[1] = 2 + 7 = 9,</span><br><span class="line">return [0, 1].</span><br></pre></td></tr></table></figure>
-<p><strong>解题思路：</strong></p>
+        <p><strong>title：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Given an array of integers, return indices of the two numbers such that they add up to a specific target.</span><br><span class="line"></span><br><span class="line">You may assume that each input would have exactly one solution, and you may not use the same element twice.</span><br></pre></td></tr></table></figure>
+<p><strong>Example</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Given nums = [2, 7, 11, 15], target = 9,</span><br><span class="line"></span><br><span class="line">Because nums[0] + nums[1] = 2 + 7 = 9,</span><br><span class="line">return [0, 1].</span><br></pre></td></tr></table></figure></p>
+<p><strong>idea</strong></p>
 <p>LeetCode第一题，自然不会太难，题中没有对时间或空间复杂度做太大限制，可利用开辟Map类型的新存储空间，将元素和下标进行一一对应，在进行列表循环遍历匹配时，在Map中寻找目标元素和当前元素的差值是否存在，若存在则返回两元素对应的下标即可。</p>
+<p><strong>code</strong></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">int</span>[] twoSum(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> target) &#123;</span><br><span class="line">	<span class="keyword">int</span>[] indexs = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">2</span>];</span><br><span class="line">	<span class="keyword">int</span> len = nums.length;</span><br><span class="line">	Map&lt;Integer, Integer&gt; numsMap = <span class="keyword">new</span> HashMap&lt;&gt;(<span class="number">16</span>);</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">	    numsMap.put(nums[i], i);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; len; j++) &#123;</span><br><span class="line">	    <span class="keyword">int</span> otherValue = target - nums[j];</span><br><span class="line">	    <span class="keyword">if</span> (numsMap.containsKey(otherValue) &amp;&amp; numsMap.get(otherValue) != j) &#123;</span><br><span class="line">	        indexs[<span class="number">0</span>] = j;</span><br><span class="line">	        indexs[<span class="number">1</span>] = numsMap.get(otherValue);</span><br><span class="line">	        <span class="keyword">return</span> indexs;</span><br><span class="line">	    &#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> indexs;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Accept: 10ms</span><br></pre></td></tr></table></figure>
 
@@ -375,7 +377,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/leetcode/" rel="tag"># leetcode</a>
+            <a href="/tags/LeetCode/" rel="tag"># LeetCode</a>
           
             <a href="/tags/algorithm/" rel="tag"># algorithm</a>
           
@@ -399,6 +401,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/27/it/algorithm/leetcode/2018-04-27/2018-04-27/" rel="prev" title="3. Longest Substring Without Repeating Characters">
+                3. Longest Substring Without Repeating Characters <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -466,7 +472,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
