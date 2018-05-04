@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="大道至简">
 <meta property="og:description" content="不懂Redis，你能说自己在IT界混？ —— 简要整理了解视频自学一些概念和重要思想。  01   NoSQL(Not Only SQL)  Memcached+MySQL+垂直拆分  Mysql主从读写分离  Redis -&amp;gt; 社交网络  Redis - Memache   02   增删字段对比  CAP-ACID  KV + Cache + Persistance  《淘宝技术十年》">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-04-25T15:46:06.753Z">
+<meta property="og:updated_time" content="2018-05-04T13:37:20.153Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redis入门指南问题简记">
 <meta name="twitter:description" content="不懂Redis，你能说自己在IT界混？ —— 简要整理了解视频自学一些概念和重要思想。  01   NoSQL(Not Only SQL)  Memcached+MySQL+垂直拆分  Mysql主从读写分离  Redis -&amp;gt; 社交网络  Redis - Memache   02   增删字段对比  CAP-ACID  KV + Cache + Persistance  《淘宝技术十年》">
@@ -389,6 +389,44 @@
 <p>聚合模型：KV、Bson、列簇、图形</p>
 <p>07</p>
 <p>Redis和事务控制</p>
+<p>09</p>
+<ul>
+<li>redis支持16个数据库，可以看redis.conf文件</li>
+</ul>
+<pre>
+# Set the number of databases. The default database is DB 0, you can select
+# a different one on a per-connection basis using SELECT <dbid> where
+# dbid is a number between 0 and 'databases'-1
+databases 16
+</dbid></pre>
+
+<p>可以通过<strong>select (database index)</strong> 进行库的选择。</p>
+<p>库与库之间存在什么关联？</p>
+<p>清除当前库和清除所有库： flushdb,flushall</p>
+<p>10</p>
+<ul>
+<li><p>redis五大数据类型 String List Set Hash Zset(带分数)</p>
+</li>
+<li><p>Redis操作如何实现原子性？</p>
+</li>
+<li><p>setex(set with expire)、setnx(set if not exist)</p>
+</li>
+<li><p>mset/mget/msetnx</p>
+</li>
+<li><p>redis需注意unit：如k和kb分别代表1000 bityes和1024bityes</p>
+</li>
+<li><p>redis.conf文件剖析</p>
+<ul>
+<li>redis日子级别（debug，werbos，notice，warning）</li>
+<li>过期策略 </li>
+</ul>
+</li>
+</ul>
+<p>18 持久化</p>
+<ul>
+<li>rdb： Snapshot快照，数据临时文件持久化替换， dump机制及备份、恢复(shutdown, flushall等迅速生成dump文件)</li>
+<li>aof(better)</li>
+</ul>
 
       
     </div>
@@ -499,7 +537,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

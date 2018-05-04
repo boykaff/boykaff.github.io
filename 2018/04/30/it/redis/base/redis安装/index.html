@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Redis," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="在Linux环境下搭建redis。  1. 基本环境 VMware11 CentOS 6.5 Redis 4.06  CentOS系统最好保证能够连接外网，因为安装过程中可能需要下载一些依赖组件，比如GCC等。Redis直接在官网上下载。至于什么版本，大家随意，满足个人需求即可。 2. 安装步骤 将下载的Redis压缩文件存放在指定位置，本教程Redis位置在/usr/local/redis之下">
+<meta name="keywords" content="Redis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="部署redis单机环境">
+<meta property="og:url" content="http://yoursite.com/2018/04/30/it/redis/base/redis安装/index.html">
+<meta property="og:site_name" content="大道至简">
+<meta property="og:description" content="在Linux环境下搭建redis。  1. 基本环境 VMware11 CentOS 6.5 Redis 4.06  CentOS系统最好保证能够连接外网，因为安装过程中可能需要下载一些依赖组件，比如GCC等。Redis直接在官网上下载。至于什么版本，大家随意，满足个人需求即可。 2. 安装步骤 将下载的Redis压缩文件存放在指定位置，本教程Redis位置在/usr/local/redis之下">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-04-30T06:57:08.463Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="部署redis单机环境">
+<meta name="twitter:description" content="在Linux环境下搭建redis。  1. 基本环境 VMware11 CentOS 6.5 Redis 4.06  CentOS系统最好保证能够连接外网，因为安装过程中可能需要下载一些依赖组件，比如GCC等。Redis直接在官网上下载。至于什么版本，大家随意，满足个人需求即可。 2. 安装步骤 将下载的Redis压缩文件存放在指定位置，本教程Redis位置在/usr/local/redis之下">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/04/30/it/redis/base/redis安装/"/>
+
+
+
+
+
+  <title>部署redis单机环境 | 大道至简</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">大道至简</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-首页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于我">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于我
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/30/it/redis/base/redis安装/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="boyka">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大道至简">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">部署redis单机环境</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-30T00:00:00+08:00">
+                2018-04-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Redis/" itemprop="url" rel="index">
+                    <span itemprop="name">Redis</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>在Linux环境下搭建redis。</p>
+</blockquote>
+<h3 id="1-基本环境"><a href="#1-基本环境" class="headerlink" title="1. 基本环境"></a>1. 基本环境</h3><ul>
+<li>VMware11</li>
+<li>CentOS 6.5</li>
+<li>Redis 4.06</li>
+</ul>
+<p>CentOS系统最好保证能够连接外网，因为安装过程中可能需要下载一些依赖组件，比如GCC等。Redis直接在<a href="https://redis.io/download" target="_blank" rel="noopener">官网</a>上下载。至于什么版本，大家随意，满足个人需求即可。</p>
+<h3 id="2-安装步骤"><a href="#2-安装步骤" class="headerlink" title="2. 安装步骤"></a>2. 安装步骤</h3><ul>
+<li>将下载的Redis压缩文件存放在指定位置，本教程Redis位置在/usr/local/redis之下，执行tar解压缩命令。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@boykaff redis]# wget http://download.redis.io/releases/redis-4.0.6.tar.gz</span><br><span class="line">[root@boykaff redis]# tar -zxvf redis-4.0.6.tar.gz</span><br></pre></td></tr></table></figure>
+<p>得到文件目录:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[root@boykaff redis-4.0.6]# ll</span><br><span class="line">总用量 288</span><br><span class="line">-rw-rw-r--.  1 root root 142334 12月  5 01:01 00-RELEASENOTES</span><br><span class="line">-rw-rw-r--.  1 root root     53 12月  5 01:01 BUGS</span><br><span class="line">-rw-rw-r--.  1 root root   1815 12月  5 01:01 CONTRIBUTING</span><br><span class="line">-rw-rw-r--.  1 root root   1487 12月  5 01:01 COPYING</span><br><span class="line">drwxrwxr-x.  6 root root   4096 12月  5 01:01 deps</span><br><span class="line">-rw-rw-r--.  1 root root     11 12月  5 01:01 INSTALL</span><br><span class="line">-rw-rw-r--.  1 root root    151 12月  5 01:01 Makefile</span><br><span class="line">-rw-rw-r--.  1 root root   4223 12月  5 01:01 MANIFESTO</span><br><span class="line">-rw-rw-r--.  1 root root  20543 12月  5 01:01 README.md</span><br><span class="line">-rw-rw-r--.  1 root root  57764 12月  5 01:01 redis.conf</span><br><span class="line">-rwxrwxr-x.  1 root root    271 12月  5 01:01 runtest</span><br><span class="line">-rwxrwxr-x.  1 root root    280 12月  5 01:01 runtest-cluster</span><br><span class="line">-rwxrwxr-x.  1 root root    281 12月  5 01:01 runtest-sentinel</span><br><span class="line">-rw-rw-r--.  1 root root   7606 12月  5 01:01 sentinel.conf</span><br><span class="line">drwxrwxr-x.  3 root root   4096 12月  5 01:01 src</span><br><span class="line">drwxrwxr-x. 10 root root   4096 12月  5 01:01 tests</span><br><span class="line">drwxrwxr-x.  8 root root   4096 12月  5 01:01 utils</span><br></pre></td></tr></table></figure>
+<ul>
+<li>在命令行直接执行<strong>make</strong>命令对redis源码进行编译，可能存在gcc依赖缺失问题，执行下面命令可安装gcc。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@boykaff redis-4.0.6]# yum install gcc-c++</span><br></pre></td></tr></table></figure>
+<p> 继续执行<strong>make</strong>过程中可能会出现“jemalloc/jemalloc.h”错误，这是因为之前由于在没有gcc的情况下执行 <strong>make</strong> 命令而产生的一些残存目录，执行<strong>make distclean</strong>后再执行<strong>make</strong>即可。</p>
+<ul>
+<li>编译成功后，进入src目录，执行make install安装redis</li>
+</ul>
+<h3 id="3-Redis配置"><a href="#3-Redis配置" class="headerlink" title="3. Redis配置"></a>3. Redis配置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@boykaff redis-4.0.6]# cp redis.conf redis.conf_bak</span><br><span class="line">[root@boykaff redis-4.0.6]# vim redis.conf</span><br></pre></td></tr></table></figure>
+<p>修改是否为后台运行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">daemonize yes</span><br></pre></td></tr></table></figure>
+<h3 id="4-启动redis"><a href="#4-启动redis" class="headerlink" title="4. 启动redis"></a>4. 启动redis</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@boykaff src]# cd /usr/local/redis/redis-4.0.6/src</span><br><span class="line">[root@boykaff src]# ./redis-server /usr/local/redis/redis-4.0.6/redis.conf</span><br><span class="line">65747:C 30 Apr 14:27:47.610 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo</span><br><span class="line">65747:C 30 Apr 14:27:47.611 # Redis version=4.0.6, bits=64, commit=00000000, modified=0, pid=65747, just started</span><br><span class="line">65747:C 30 Apr 14:27:47.611 # Configuration loaded</span><br></pre></td></tr></table></figure>
+<h3 id="5-加入开机自启动："><a href="#5-加入开机自启动：" class="headerlink" title="5.加入开机自启动："></a>5.加入开机自启动：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@boykaff src]# echo &quot;/usr/local/redis/redis-4.0.6/src/redis-server /usr/local/redis/redis-4.0.6/redis.conf&quot; &gt;&gt; /etc/rc.local</span><br></pre></td></tr></table></figure>
+<h3 id="5-redis-cli连接"><a href="#5-redis-cli连接" class="headerlink" title="5. redis-cli连接"></a>5. redis-cli连接</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@boykaff src]# redis-cli</span><br><span class="line">127.0.0.1:6379&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="6-简单测试"><a href="#6-简单测试" class="headerlink" title="6. 简单测试"></a>6. 简单测试</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; set str &apos;hello redis&apos;</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; get str</span><br><span class="line">&quot;hello redis&quot;</span><br><span class="line"></span><br><span class="line">设置和获取均成功</span><br></pre></td></tr></table></figure>
+<ul>
+<li>还可以简单看一下redis的性能:</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">[root@boykaff src]# ./redis-benchmark</span><br><span class="line">====== PING_INLINE ======</span><br><span class="line">  100000 requests completed in 1.36 seconds</span><br><span class="line">  50 parallel clients</span><br><span class="line">  3 bytes payload</span><br><span class="line">  keep alive: 1</span><br><span class="line"></span><br><span class="line">97.92% &lt;= 1 milliseconds</span><br><span class="line">99.64% &lt;= 2 milliseconds</span><br><span class="line">99.88% &lt;= 3 milliseconds</span><br><span class="line">99.95% &lt;= 4 milliseconds</span><br><span class="line">99.99% &lt;= 5 milliseconds</span><br><span class="line">100.00% &lt;= 6 milliseconds</span><br><span class="line">100.00% &lt;= 6 milliseconds</span><br><span class="line">73421.44 requests per second</span><br><span class="line"></span><br><span class="line">====== PING_BULK ======</span><br><span class="line">  100000 requests completed in 1.84 seconds</span><br><span class="line">  50 parallel clients</span><br><span class="line">  3 bytes payload</span><br><span class="line">  keep alive: 1</span><br><span class="line"></span><br><span class="line">95.91% &lt;= 1 milliseconds</span><br><span class="line">99.79% &lt;= 2 milliseconds</span><br><span class="line">99.95% &lt;= 3 milliseconds</span><br><span class="line">99.98% &lt;= 4 milliseconds</span><br><span class="line">100.00% &lt;= 4 milliseconds</span><br><span class="line">54318.30 requests per second</span><br><span class="line"></span><br><span class="line">====== SET ======</span><br><span class="line">  100000 requests completed in 1.46 seconds</span><br><span class="line">  50 parallel clients</span><br><span class="line">  3 bytes payload</span><br><span class="line">  keep alive: 1</span><br><span class="line"></span><br><span class="line">97.32% &lt;= 1 milliseconds</span><br><span class="line">99.45% &lt;= 2 milliseconds</span><br><span class="line">99.78% &lt;= 3 milliseconds</span><br><span class="line">99.92% &lt;= 4 milliseconds</span><br><span class="line">99.94% &lt;= 5 milliseconds</span><br><span class="line">99.95% &lt;= 6 milliseconds</span><br><span class="line">99.95% &lt;= 10 milliseconds</span><br><span class="line">99.98% &lt;= 11 milliseconds</span><br><span class="line">100.00% &lt;= 11 milliseconds</span><br><span class="line">68399.45 requests per second</span><br><span class="line"></span><br><span class="line">====== GET ======</span><br><span class="line">  100000 requests completed in 1.40 seconds</span><br><span class="line">  50 parallel clients</span><br><span class="line">  3 bytes payload</span><br><span class="line">  keep alive: 1</span><br><span class="line"></span><br><span class="line">98.84% &lt;= 1 milliseconds</span><br><span class="line">99.88% &lt;= 2 milliseconds</span><br><span class="line">99.97% &lt;= 3 milliseconds</span><br><span class="line">100.00% &lt;= 3 milliseconds</span><br><span class="line">71326.68 requests per second</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Redis/" rel="tag"># Redis</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/27/it/algorithm/leetcode/2018-04-27/2018-04-27/" rel="next" title="3. Longest Substring Without Repeating Characters">
+                <i class="fa fa-chevron-left"></i> 3. Longest Substring Without Repeating Characters
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">boyka</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-基本环境"><span class="nav-text">1. 基本环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-安装步骤"><span class="nav-text">2. 安装步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Redis配置"><span class="nav-text">3. Redis配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-启动redis"><span class="nav-text">4. 启动redis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-加入开机自启动："><span class="nav-text">5.加入开机自启动：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-redis-cli连接"><span class="nav-text">5. redis-cli连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-简单测试"><span class="nav-text">6. 简单测试</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">boyka</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
