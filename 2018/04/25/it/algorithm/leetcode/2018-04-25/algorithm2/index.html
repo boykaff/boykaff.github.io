@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="title： 123Given an array of integers, return indices of the two numbers such that they add up to a specific target.You may assume that each input would have exactly one solution, and you may not use t">
+<meta name="description" content="problem You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and">
 <meta name="keywords" content="LeetCode,algorithm">
 <meta property="og:type" content="article">
-<meta property="og:title" content="1. Two Sum">
-<meta property="og:url" content="http://yoursite.com/2018/04/24/it/algorithm/leetcode/2018-04-24/algorithm1/index.html">
+<meta property="og:title" content="2. Two Sum">
+<meta property="og:url" content="http://yoursite.com/2018/04/25/it/algorithm/leetcode/2018-04-25/algorithm2/index.html">
 <meta property="og:site_name" content="大道至简">
-<meta property="og:description" content="title： 123Given an array of integers, return indices of the two numbers such that they add up to a specific target.You may assume that each input would have exactly one solution, and you may not use t">
+<meta property="og:description" content="problem You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-04-30T06:44:10.209Z">
+<meta property="og:updated_time" content="2018-05-10T14:33:03.655Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="1. Two Sum">
-<meta name="twitter:description" content="title： 123Given an array of integers, return indices of the two numbers such that they add up to a specific target.You may assume that each input would have exactly one solution, and you may not use t">
+<meta name="twitter:title" content="2. Two Sum">
+<meta name="twitter:description" content="problem You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/04/24/it/algorithm/leetcode/2018-04-24/algorithm1/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/04/25/it/algorithm/leetcode/2018-04-25/algorithm2/"/>
 
 
 
 
 
-  <title>1. Two Sum | 大道至简</title>
+  <title>2. Two Sum | 大道至简</title>
   
 
 
@@ -263,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/24/it/algorithm/leetcode/2018-04-24/algorithm1/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/25/it/algorithm/leetcode/2018-04-25/algorithm2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="boyka">
@@ -280,7 +280,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">1. Two Sum</h1>
+          <h1 class="post-title" itemprop="name headline">2. Two Sum</h1>
         
 
         <div class="post-meta">
@@ -292,8 +292,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-24T00:00:00+08:00">
-                2018-04-24
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-25T00:00:00+08:00">
+                2018-04-25
               </time>
             
 
@@ -302,28 +302,6 @@
             
           </span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -352,15 +330,23 @@
       
 
       
-        <p><strong>title：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Given an array of integers, return indices of the two numbers such that they add up to a specific target.</span><br><span class="line"></span><br><span class="line">You may assume that each input would have exactly one solution, and you may not use the same element twice.</span><br></pre></td></tr></table></figure>
-<p><strong>Example</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Given nums = [2, 7, 11, 15], target = 9,</span><br><span class="line"></span><br><span class="line">Because nums[0] + nums[1] = 2 + 7 = 9,</span><br><span class="line">return [0, 1].</span><br></pre></td></tr></table></figure></p>
-<p><strong>idea</strong></p>
-<p>LeetCode第一题，自然不会太难，题中没有对时间或空间复杂度做太大限制，可利用开辟Map类型的新存储空间，将元素和下标进行一一对应，在进行列表循环遍历匹配时，在Map中寻找目标元素和当前元素的差值是否存在，若存在则返回两元素对应的下标即可。</p>
-<p><strong>code</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">int</span>[] twoSum(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> target) &#123;</span><br><span class="line">	<span class="keyword">int</span>[] indexs = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">2</span>];</span><br><span class="line">	<span class="keyword">int</span> len = nums.length;</span><br><span class="line">	Map&lt;Integer, Integer&gt; numsMap = <span class="keyword">new</span> HashMap&lt;&gt;(<span class="number">16</span>);</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">	    numsMap.put(nums[i], i);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; len; j++) &#123;</span><br><span class="line">	    <span class="keyword">int</span> otherValue = target - nums[j];</span><br><span class="line">	    <span class="keyword">if</span> (numsMap.containsKey(otherValue) &amp;&amp; numsMap.get(otherValue) != j) &#123;</span><br><span class="line">	        indexs[<span class="number">0</span>] = j;</span><br><span class="line">	        indexs[<span class="number">1</span>] = numsMap.get(otherValue);</span><br><span class="line">	        <span class="keyword">return</span> indexs;</span><br><span class="line">	    &#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> indexs;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Accept: 10ms</span><br></pre></td></tr></table></figure>
+        <p><strong>problem</strong></p>
+<p>You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.</p>
+<p>You may assume the two numbers do not contain any leading zero, except the number 0 itself.</p>
+<p><strong>example</strong></p>
+<pre>
+Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)
+Output: 7 -> 0 -> 8
+Explanation: 342 + 465 = 807.
+</pre>
 
+<p><strong>tags</strong></p>
+<p>链表、求和</p>
+<p><strong>idea</strong></p>
+<p>这个题的难度明显比上一道的加法题有所提升，考虑不周全，提交5把才通过，后来换了一种解题思路，一次性通过。</p>
+<p>题目本身还是好理解，变相求和，将两链表的各节点依次相加，产生的数据除以10作为该位的数字，对10取余作为进位数字，并把对应位的数字存放在较长链的对应位上，最后直接将较长的链作为返回的链表(可能根据实际需求，添加一个新节点，存储最终计算后产生的最后一个进位数字)。</p>
+<p><strong>code</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * public class ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode next;</span></span><br><span class="line"><span class="comment"> *     ListNode(int x) &#123; val = x; &#125;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> ListNode <span class="title">addTwoNumbers</span><span class="params">(ListNode l1, ListNode l2)</span> </span>&#123;</span><br><span class="line">          ListNode p = l1, q = l2, sumNode, tempNode;</span><br><span class="line">          <span class="comment">//先判断哪个链表较长</span></span><br><span class="line">            <span class="keyword">while</span> (<span class="keyword">null</span> != p &amp;&amp; <span class="keyword">null</span> != q) &#123;</span><br><span class="line">                p = p.next;</span><br><span class="line">                q = q.next;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">          <span class="comment">//将sumNode赋值给较长的链，即以较长链作为最终数据存储的链</span></span><br><span class="line">          tempNode = sumNode = (<span class="keyword">null</span> != p ? l1 : l2);</span><br><span class="line"></span><br><span class="line">           <span class="comment">//进位数字</span></span><br><span class="line">            <span class="keyword">int</span> c = <span class="number">0</span>;</span><br><span class="line">            <span class="comment">//重新复位到两链表起始位置</span></span><br><span class="line">            p = l1;</span><br><span class="line">            q = l2;</span><br><span class="line">            <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (<span class="keyword">null</span> != p) &#123;</span><br><span class="line">                    c += p.val;</span><br><span class="line">                    p = p.next;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> ( <span class="keyword">null</span> != q) &#123;</span><br><span class="line">                    c += q.val;</span><br><span class="line">                    q = q.next;</span><br><span class="line">                &#125;</span><br><span class="line">                tempNode.val = c % <span class="number">10</span>;</span><br><span class="line">                c /= <span class="number">10</span>;</span><br><span class="line">                tempNode = tempNode.next;</span><br><span class="line">               <span class="comment">//两链表均遍历完跳出循环</span></span><br><span class="line">                <span class="keyword">if</span> ( <span class="keyword">null</span> == p &amp;&amp; <span class="keyword">null</span> == q) &#123;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">    </span><br><span class="line">            <span class="comment">//给最后一个产生的新进位生成一个新节点进行存储</span></span><br><span class="line">            <span class="keyword">if</span> (c != <span class="number">0</span>) &#123;</span><br><span class="line">                tempNode = sumNode;</span><br><span class="line">                <span class="keyword">while</span> (<span class="keyword">null</span> != tempNode.next) &#123;</span><br><span class="line">                    tempNode = tempNode.next;</span><br><span class="line">                &#125;</span><br><span class="line">                tempNode.next = <span class="keyword">new</span> ListNode(c);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">         <span class="keyword">return</span>  sumNode;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -392,8 +378,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/04/21/it/redis/base/Redis自学/" rel="next" title="Redis入门指南问题简记">
-                <i class="fa fa-chevron-left"></i> Redis入门指南问题简记
+              <a href="/2018/04/24/it/algorithm/leetcode/2018-04-24/algorithm1/" rel="next" title="1. Two Sum">
+                <i class="fa fa-chevron-left"></i> 1. Two Sum
               </a>
             
           </div>
@@ -402,8 +388,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/04/25/it/algorithm/leetcode/2018-04-25/algorithm2/" rel="prev" title="2. Two Sum">
-                2. Two Sum <i class="fa fa-chevron-right"></i>
+              <a href="/2018/04/27/it/algorithm/leetcode/2018-04-27/2018-04-27/" rel="prev" title="3. Longest Substring Without Repeating Characters">
+                3. Longest Substring Without Repeating Characters <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
