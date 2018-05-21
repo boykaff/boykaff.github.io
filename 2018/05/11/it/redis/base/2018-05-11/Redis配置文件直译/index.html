@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="大道至简">
 <meta property="og:description" content="简要翻译理解一下redis的配置文件，看看redis的灵魂之源的强大之处。不要讲废话，开始你的表演。  Redis配置文件示例 注意为了读取配置文件，Redis需要将改配置文件作为启动的第一个参数：  1# ./redis-server /path/to/redis.conf  单位：在需要的时候，可以以通常的1k 5GB 4M等形式指定需要的内存大小：123456# 1k =&amp;gt; 1000">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-05-12T16:36:53.587Z">
+<meta property="og:updated_time" content="2018-05-21T16:15:42.351Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="redis.conf配置文件直译">
 <meta name="twitter:description" content="简要翻译理解一下redis的配置文件，看看redis的灵魂之源的强大之处。不要讲废话，开始你的表演。  Redis配置文件示例 注意为了读取配置文件，Redis需要将改配置文件作为启动的第一个参数：  1# ./redis-server /path/to/redis.conf  单位：在需要的时候，可以以通常的1k 5GB 4M等形式指定需要的内存大小：123456# 1k =&amp;gt; 1000">
@@ -369,7 +369,7 @@
 <p>如果你想要重写一些配置选项，最好是在最后行使用 include指令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># include /path/to/local.conf</span><br><span class="line"># include /path/to/other.conf</span><br></pre></td></tr></table></figure></p>
 <h4 id="MODULES"><a href="#MODULES" class="headerlink" title="MODULES"></a>MODULES</h4><p>启动时模块加载。可以使用多个loadmodule指令，如果服务器不能够进行模块的加载时此操作将会被中止。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># loadmodule /path/to/my_module.so</span><br><span class="line"># loadmodule /path/to/other_module.so</span><br></pre></td></tr></table></figure>
-<h3 id="NETWORK"><a href="#NETWORK" class="headerlink" title="NETWORK"></a>NETWORK</h3><p>默认情况下，如果没有指定“bind”配置指令，Redis会监听服务器上所有网络接口的连接。可以通过“bind”配置指令监听一个或多个选定的接口，该指令使用一个或多个IP地址，例如：</p>
+<h3 id="网络-NETWORK"><a href="#网络-NETWORK" class="headerlink" title="网络 NETWORK"></a>网络 NETWORK</h3><p>默认情况下，如果没有指定“bind”配置指令，Redis会监听服务器上所有网络接口的连接。可以通过“bind”配置指令监听一个或多个选定的接口，该指令使用一个或多个IP地址，例如：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># bind 192.168.1.100 10.0.0.1</span><br><span class="line"># bind 127.0.0.1 ::1</span><br></pre></td></tr></table></figure>
 <p><strong>提示</strong>：如果运行Redis的计算机服务器是直接暴露在互联网上，那么绑定所有的接口就是一个非常危险的操作，并且会向所有人暴露实例。所以默认情况下我们取消了以下绑定指令，这会强制使得Redis只去监听IPv4的回路地址（这就意味着Redis仅接受运行在同一台计算机上的客户端连接）。</p>
 <p>如果你确定想要将你的实例用来监听所有的接口，请注释掉下面这一行</p>
@@ -379,7 +379,99 @@
 <li>服务器未明确地使用”bind”指令绑定IP地址；</li>
 <li>未配置密码。</li>
 </ul>
-
+<p>服务器只接受从Pv4和IPv6 回路地址连接的客户机的连接，地址是127.0.0.1和::1，以及来自Unix域套接字。</p>
+<p>默认请求下，保护模式是处于开启状态，当你希望其他主机的客户端连接到Redis服务，即使在没有配置身份认证也没有使用“bind”指令明确列出特定的接口集，那么你可以禁用该模式。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># protected-mode yes</span><br></pre></td></tr></table></figure>
+<p>接收指定端口的连接，默认是6379，如果指定了端口0，MAMERedis将不会监听TCP套接字</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">port 6379</span><br></pre></td></tr></table></figure>
+<p>TCP监听代办事项</p>
+<p>在高并发请求环境下你需要一个高backlog来避免客户端连接过于缓慢的问题。注意，Linux内核默认将其截断为/proc/sys/net/core/somaxconn的值，从而确保提高somaxconn和tcp_max_syn_backlog的值，以获得预期的效果。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcp-backlog 511</span><br></pre></td></tr></table></figure>
+<p>Unix 套接字</p>
+<p>为Unix套接字指定一条路径来侦听连接。此配置无默认设置，所以Redis在没有指定Unix套接字路径的情况下降不会进行侦听</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># unixsocket /tmp/redis.sock</span><br><span class="line"># unixsocketperm 700</span><br></pre></td></tr></table></figure>
+<p>在N秒钟闲置的情况下关闭连接（0代表禁用）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">timeout 0</span><br></pre></td></tr></table></figure></p>
+<p>TCP保活时间（TCP keepalive）</p>
+<p>如果为非0值，则使用SO_KEEPALIVE在没有通信的情况下向客户发送TCP协议。这是比较有用的，有如下两个原因：</p>
+<ul>
+<li>探测消亡的连接对</li>
+<li>从中间的网络设备的角度来获取连接存活状态(翻译有点问题)</li>
+</ul>
+<p>在Linux环境下，指定值（以秒为单位）是用于发送ACKs的周期，注意，要关闭连接需要两倍的时间，在其他系统的内核中，周期取决于内核的配置。</p>
+<p>300s是一个比较合理的取值，Redis 3.2.1将这个值作为默认值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcp-keepalive 300</span><br></pre></td></tr></table></figure>
+<h3 id="通用-GENERAL"><a href="#通用-GENERAL" class="headerlink" title="通用 GENERAL"></a>通用 GENERAL</h3><p>Redis在默认情况下以不以守护进程方式运行，在需要的情况下可以设置“yes”使其生效，注意，Redis在监控的时候将会写一个/var/run/redis.pid的文件。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">daemonize yes</span><br></pre></td></tr></table></figure></p>
+<p>如果从upstart或systemd运行Redis，那么Redis能够和监控树进行交互，选项：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#   supervised no      - 无监控交互</span><br><span class="line">#   supervised upstart - signal upstart by putting Redis into SIGSTOP mode</span><br><span class="line">#   supervised systemd - signal systemd by writing READY=1 to $NOTIFY_SOCKET</span><br><span class="line">#   supervised auto    - detect upstart or systemd method based on</span><br></pre></td></tr></table></figure>
+<p>注意：这些监控方法只表示“程序已就绪”。不会让你的监控程序处于连续的激活状态</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">supervised no</span><br></pre></td></tr></table></figure>
+<p>如果指定了pid文件，Redis在启动时进行指定，并在退出时将其删除。</p>
+<p>如果服务不是以守护进程方式运行，如果配置文件没有指定，则不会创建pid文件；反之，将会创建pid文件，即使未进行指定，默认为”/var/run/redis.pid”。<br>创建一个pid文件是很有效的：如果Redis不能进行创建，也不会发生什么错误，Redis服务能够正常地启动和运行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pidfile /var/run/redis_6379.pid</span><br></pre></td></tr></table></figure>
+<p>指定服务的冗余级别，可选项如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># debug (a lot of information, useful for development/testing)</span><br><span class="line"># verbose (many rarely useful info, but not a mess like the debug level)</span><br><span class="line"># notice (moderately verbose, what you want in production probably)</span><br><span class="line"># warning (only very important / critical messages are logged)</span><br><span class="line">loglevel notice</span><br></pre></td></tr></table></figure>
+<p>指定日志文件名。即使是空字符串也能使Redis在标准输出中记录日志，注意，如果你是用的标准输出而不是守护进程记录日志，日志将会发送到/dev/null</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">logfile &quot;&quot;</span><br></pre></td></tr></table></figure>
+<p>为了能记录系统日志，可以将’syslog-enabled’的值为 yes，还可以根据你的需求舍弃其他系统日志参数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># syslog-enabled no</span><br><span class="line"></span><br><span class="line"># Specify the syslog identity.</span><br><span class="line"># syslog-ident redis</span><br><span class="line"></span><br><span class="line"># Specify the syslog facility. Must be USER or between LOCAL0-LOCAL7.</span><br><span class="line"># syslog-facility local0</span><br></pre></td></tr></table></figure>
+<p>设置数据库个数。默认的数据库是DB 0，可以通过 SELECT <dbid>选择要连接的数据库，dbid值介于0到 databases -1之间</dbid></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">databases 16</span><br></pre></td></tr></table></figure>
+<h3 id="快照-SNAPSHOTTING"><a href="#快照-SNAPSHOTTING" class="headerlink" title="快照 SNAPSHOTTING"></a>快照 SNAPSHOTTING</h3><p>保存数据库到硬盘：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">save &lt;seconds&gt; &lt;changes&gt;</span><br></pre></td></tr></table></figure>
+<p>该命令将保存数据库，需要指定秒数和写的条数，<br>以下示例用来保存：</p>
+<ul>
+<li>900秒（15分钟）内至少有一条数据发生改变；</li>
+<li>300秒（5分钟）内至少有10条数据发生改变；</li>
+<li>60秒内至少有10000条数据发生改变。</li>
+</ul>
+<p>注意：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">save 900 1</span><br><span class="line">save 300 10</span><br><span class="line">save 60 10000</span><br></pre></td></tr></table></figure></p>
+<p>如果启用了RDB快照(至少一个保存点)和最新的后台保存失败，默认情况下，Redis将停止接受写入。这将使用户意识到(以一种困难的方式)数据没有在磁盘上持久化，否则如果没有人会注意到，可能会导致发生一些灾难。</p>
+<p>如果后台保存过程将重新开始工作，Redis将自动允许再次写入。</p>
+<p>但是，如果您对Redis服务器和持久性设置了适当的监控，您可能希望禁用该特性，以便Redis在存在磁盘、权限等问题下能继续正常工作。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stop-writes-on-bgsave-error yes</span><br></pre></td></tr></table></figure>
+<p>在dump .rdb数据库中使用LZF压缩字符串对象，默认情况下，它设置为“yes”，因为它几乎总是成功的。如果你想在保存的<strong>孩子</strong>中保存一些CPU，设置为“no”，但是如果你有可压缩的值或键，数据集可能会更大。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rdbcompression yes</span><br></pre></td></tr></table></figure>
+<p>由于RDB的版本5是将CRC64校验和放在文件的末尾,这使得格式对损坏更有抵抗性，但是在保存和加载RDB文件时，有一个性能损失(大约10%)，可以禁用它以获得最大的性能。</p>
+<p>使用checksum禁用的RDB文件的校验和为0，这将通知加载代码跳过检查操作。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rdbchecksum yes</span><br></pre></td></tr></table></figure>
+<p>要转储数据库的文件名:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dbfilename dump.rdb</span><br></pre></td></tr></table></figure>
+<p>工作目录</p>
+<p>DB数据库将写在这个目录中，使用“dbfilename”配置指令指定上面指定的文件名。</p>
+<p>在这个目录下同样将创建扩展文件</p>
+<p>注意： 必须制定目录而非文件名</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dir ./</span><br></pre></td></tr></table></figure>
+<h3 id="复制-REPLICATION"><a href="#复制-REPLICATION" class="headerlink" title="复制 REPLICATION"></a>复制 REPLICATION</h3><p>主从复制。使用slaveof来让一个Redis实例从另一个Redis服务器复制数据。关于Redis复制，有如下需要了解：</p>
+<ul>
+<li><p>Redis是异步复制的，如果它与至少给定数量的从属节点没有关联，可以配置一个master来停止接受写入。</p>
+</li>
+<li><p>如果复制链接在相对较端的时间内丢失，从属节点可以与主服务器进行部分的重新同步。</p>
+</li>
+<li><p>自动化完成复制，无需用户干预，在网络分区后，从属节点会自动尝试重新连接主节点并与其重新同步。</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">slaveof &lt;masterip&gt; &lt;masterport&gt;</span><br></pre></td></tr></table></figure>
+<p>如果主节点是受密码保护的情况下，在启动同步复制进程之前，告知从节点需要进行身份验证，否则主将拒绝从属请求。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">masterauth &lt;master-password&gt;</span><br></pre></td></tr></table></figure>
+<p>当一个从属节点失去同主节点丢掉连接，或当复制仍在进行时，从属节点可以采取两种不同的方式进行操作:</p>
+<ul>
+<li>如果将“slave-serve-stale-data”设置为“yes”（默认），如果这是第一次同步，那么这个从属节点仍然会响应客户的请求，可能是过期数据，或者空数据集。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">slave-serve-stale-data yes</span><br></pre></td></tr></table></figure>
+<p>可以配置从节点是否接受写入操作。对一个从属实例进行写入操作可能有助于存储一些临时数据（因为写在一个从属节点上的数据在与主节点重新同步后会很容易被删除。），但如果客户机由于配置错误而写入该数据，则可能会导致一些问题。</p>
+<p>Redis 2.6之后默认从节点为只读。</p>
+<p>注意：只读从节点并不是设计在互联网上接触非可信客户端。它只是一个防止实例被滥用的保护层，默认情况下，只读从节点提供所有的管理操作命令，比如CONFIG,DEBUG等。在一定程度上，您可以通过使用“rename-command”来对所有的管理/危险命令进行隐藏，从而提高读取的安全性。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">slave-read-only yes</span><br></pre></td></tr></table></figure>
+<p>同步复制策略：硬盘或套接字</p>
+<p>提示： 无磁盘复制目前处于实验阶段</p>
+<p>新的奴隶和重新连接的奴隶不能继续复制过程只是接受差异部分数据，需要做所谓的“完全同步”。一个RDB文件从主节点传输到从节点，主要有两种方式：</p>
+<ul>
+<li>支持磁盘方式：主Redis节点创建一个新进程将RDB文件写到磁盘上，随后父进程将持续地将该文件传送到从节点。</li>
+<li>无磁盘方式：主Redis节点开启一个新线程直接将RDB文件通过Socket方式直接写到从节点，该过程不利用磁盘。</li>
+</ul>
+<p>使用磁盘支持的复制，在生成RDB文件时，只要当前生成RDB文件的子进程完成其工作，更多的从节点复制进程可以在排队和服务状态。使用无磁盘复制时，一旦传输开始，将会有新的从节点传输服务进入队列，并且在当前终止时将开始新的传输。</p>
+<p>当使用无磁盘     复制时，主节点服务在启动传输之前等待一个可配置的时间(以秒为单位)，希望多个从节点服务能够到达，并且传输是可以并行化的。在使用慢磁盘和快速(大带宽)网络时，无磁盘复制工作更好。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">repl-diskless-sync no</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -549,7 +641,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis配置文件示例"><span class="nav-text">Redis配置文件示例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#INCLUDES"><span class="nav-text">INCLUDES</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MODULES"><span class="nav-text">MODULES</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NETWORK"><span class="nav-text">NETWORK</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis配置文件示例"><span class="nav-text">Redis配置文件示例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#INCLUDES"><span class="nav-text">INCLUDES</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MODULES"><span class="nav-text">MODULES</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络-NETWORK"><span class="nav-text">网络 NETWORK</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通用-GENERAL"><span class="nav-text">通用 GENERAL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#快照-SNAPSHOTTING"><span class="nav-text">快照 SNAPSHOTTING</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复制-REPLICATION"><span class="nav-text">复制 REPLICATION</span></a></li></ol></div>
             
 
           </div>
