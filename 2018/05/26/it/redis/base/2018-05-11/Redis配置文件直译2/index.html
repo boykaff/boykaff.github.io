@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Redis," />
 
 
 
@@ -79,13 +79,18 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="大道至简">
-<meta property="og:url" content="http://yoursite.com/tags/CompletableFuture/index.html">
+<meta name="description" content="接前文，继续看看Redis配置文件所展现出的一些特性。 安全（SECURITY）Redis客户端在进行相关命令操作前需执行 AUTH 命令，这在不信任其他访问主机运行的redis服务器的环境中比较有用。">
+<meta name="keywords" content="Redis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="redis.conf配置文件直译（2）">
+<meta property="og:url" content="http://yoursite.com/2018/05/26/it/redis/base/2018-05-11/Redis配置文件直译2/index.html">
 <meta property="og:site_name" content="大道至简">
+<meta property="og:description" content="接前文，继续看看Redis配置文件所展现出的一些特性。 安全（SECURITY）Redis客户端在进行相关命令操作前需执行 AUTH 命令，这在不信任其他访问主机运行的redis服务器的环境中比较有用。">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-05-25T16:06:05.997Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="大道至简">
+<meta name="twitter:title" content="redis.conf配置文件直译（2）">
+<meta name="twitter:description" content="接前文，继续看看Redis配置文件所展现出的一些特性。 安全（SECURITY）Redis客户端在进行相关命令操作前需执行 AUTH 命令，这在不信任其他访问主机运行的redis服务器的环境中比较有用。">
 
 
 
@@ -115,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/CompletableFuture/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/05/26/it/redis/base/2018-05-11/Redis配置文件直译2/"/>
 
 
 
 
 
-  <title>Tag: CompletableFuture | 大道至简</title>
+  <title>redis.conf配置文件直译（2） | 大道至简</title>
   
 
 
@@ -140,7 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -244,82 +249,170 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>CompletableFuture<small>Tag</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/26/it/redis/base/2018-05-11/Redis配置文件直译2/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="boyka">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大道至简">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2018/04/06/it/java/java8/异步编程/18-04-06/CompletableFuture浅入浅出/" itemprop="url">
-              
-                <span itemprop="name">CompletableFuture浅入浅出</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">redis.conf配置文件直译（2）</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-04-06T00:00:00+08:00"
-              content="2018-04-06" >
-          04-06
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-26T00:00:00+08:00">
+                2018-05-26
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Redis/" itemprop="url" rel="index">
+                    <span itemprop="name">Redis</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
+      
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/04/05/it/java/java8/异步编程/18-04-05/CompletableFuture使用的简单小例/" itemprop="url">
-              
-                <span itemprop="name">CompletableFuture使用的简单小例</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-04-05T00:00:00+08:00"
-              content="2018-04-05" >
-          04-05
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+      
+        <p>接前文，继续看看Redis配置文件所展现出的一些特性。</p>
+<h3 id="安全（SECURITY）"><a href="#安全（SECURITY）" class="headerlink" title="安全（SECURITY）"></a>安全（SECURITY）</h3><p>Redis客户端在进行相关命令操作前需执行 AUTH <password>命令，这在不信任其他访问主机运行的redis服务器的环境中比较有用。</password></p>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Redis/" rel="tag"># Redis</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/11/it/redis/base/2018-05-11/Redis配置文件直译1/" rel="next" title="redis.conf配置文件直译（1）">
+                <i class="fa fa-chevron-left"></i> redis.conf配置文件直译（1）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -327,6 +420,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -347,8 +444,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -408,6 +514,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#安全（SECURITY）"><span class="nav-text">安全（SECURITY）</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -548,6 +670,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 

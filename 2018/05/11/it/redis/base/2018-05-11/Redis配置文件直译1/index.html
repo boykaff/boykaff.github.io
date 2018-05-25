@@ -82,14 +82,14 @@
 <meta name="description" content="简要翻译理解一下redis的配置文件，看看redis的灵魂之源的强大之处。不要讲废话，开始你的表演。  Redis配置文件示例 注意为了读取配置文件，Redis需要将改配置文件作为启动的第一个参数：  1# ./redis-server /path/to/redis.conf  单位：在需要的时候，可以以通常的1k 5GB 4M等形式指定需要的内存大小：123456# 1k =&amp;gt; 1000">
 <meta name="keywords" content="Redis">
 <meta property="og:type" content="article">
-<meta property="og:title" content="redis.conf配置文件直译">
-<meta property="og:url" content="http://yoursite.com/2018/05/11/it/redis/base/2018-05-11/Redis配置文件直译/index.html">
+<meta property="og:title" content="redis.conf配置文件直译（1）">
+<meta property="og:url" content="http://yoursite.com/2018/05/11/it/redis/base/2018-05-11/Redis配置文件直译1/index.html">
 <meta property="og:site_name" content="大道至简">
 <meta property="og:description" content="简要翻译理解一下redis的配置文件，看看redis的灵魂之源的强大之处。不要讲废话，开始你的表演。  Redis配置文件示例 注意为了读取配置文件，Redis需要将改配置文件作为启动的第一个参数：  1# ./redis-server /path/to/redis.conf  单位：在需要的时候，可以以通常的1k 5GB 4M等形式指定需要的内存大小：123456# 1k =&amp;gt; 1000">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-05-21T16:15:42.351Z">
+<meta property="og:updated_time" content="2018-05-25T16:04:17.342Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="redis.conf配置文件直译">
+<meta name="twitter:title" content="redis.conf配置文件直译（1）">
 <meta name="twitter:description" content="简要翻译理解一下redis的配置文件，看看redis的灵魂之源的强大之处。不要讲废话，开始你的表演。  Redis配置文件示例 注意为了读取配置文件，Redis需要将改配置文件作为启动的第一个参数：  1# ./redis-server /path/to/redis.conf  单位：在需要的时候，可以以通常的1k 5GB 4M等形式指定需要的内存大小：123456# 1k =&amp;gt; 1000">
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/05/11/it/redis/base/2018-05-11/Redis配置文件直译/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/05/11/it/redis/base/2018-05-11/Redis配置文件直译1/"/>
 
 
 
 
 
-  <title>redis.conf配置文件直译 | 大道至简</title>
+  <title>redis.conf配置文件直译（1） | 大道至简</title>
   
 
 
@@ -263,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/11/it/redis/base/2018-05-11/Redis配置文件直译/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/11/it/redis/base/2018-05-11/Redis配置文件直译1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="boyka">
@@ -280,7 +280,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">redis.conf配置文件直译</h1>
+          <h1 class="post-title" itemprop="name headline">redis.conf配置文件直译（1）</h1>
         
 
         <div class="post-meta">
@@ -472,6 +472,50 @@
 <p>使用磁盘支持的复制，在生成RDB文件时，只要当前生成RDB文件的子进程完成其工作，更多的从节点复制进程可以在排队和服务状态。使用无磁盘复制时，一旦传输开始，将会有新的从节点传输服务进入队列，并且在当前终止时将开始新的传输。</p>
 <p>当使用无磁盘     复制时，主节点服务在启动传输之前等待一个可配置的时间(以秒为单位)，希望多个从节点服务能够到达，并且传输是可以并行化的。在使用慢磁盘和快速(大带宽)网络时，无磁盘复制工作更好。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">repl-diskless-sync no</span><br></pre></td></tr></table></figure>
+<p>当开启了无磁盘复制方式，可以配置服务器等待的延迟，以生成将RDB通过套接字传输给从属的子节点。</p>
+<p>配置服务器延时是很重要的，因为一旦迁移开始，就不可能为到达的新从属节点服务，这将被排队等待下一个RDB传输，所以服务器等待延迟，以便让更多的从属节点到达。</p>
+<p>延迟时间需要指定到具体的分钟数，默认为5s，通过设置该项值为0能够可以马上启动传输操作。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">repl-diskless-sync-delay 5</span><br></pre></td></tr></table></figure></p>
+<p>从属节点以预定义的时间间隔向主节点发送ping信号。可以通过修改 repl_ping_slave_period选项进行设置，默认值是 10s。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># repl-ping-slave-period 10</span><br></pre></td></tr></table></figure>
+<p>通过以下选项设置复制超时：</p>
+<ul>
+<li>从从属节点角度来看，在同步过程中，批量传输I/O；</li>
+<li>从从属节点的角度看主节点服务超时(数据、pings)；</li>
+<li>从主节点的角度看从属节点超时(REPLCONF ACK pings)。</li>
+</ul>
+<p>重要的是要确保这个值大于指定的repl-ping-slave-period的值，否则每次在主服务器和从服务器之间的流量较低时，都会检测到超时。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># repl-timeout 60</span><br></pre></td></tr></table></figure>
+<p>在同步后在从节点上禁用TCP_NODELAY?</p>
+<p>如果选择 “yes”，Redis将使用更小的TCP包和更少的网络带宽来发送数据到从节点，但这会让从节点接收数据的延时更多，默认配置使用Linux内核最多可达40毫秒，相反，设置为 “no”则会加大复制过程的带宽消耗。默认情况下，我们优化的是低延迟，但是在非常高的交互情况下，或者当主节点和从属都很忙碌的时候，把这个变成“yes”可能更佳。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">repl-disable-tcp-nodelay no</span><br></pre></td></tr></table></figure>
+<p>选择复制backlog的大小。积压是一个缓冲区，当从属节点断开一段时间时，它会积累从属节点数据。当从节点需要从新连接时，无需全部重新同步，只需同步从节点在断开连接期间丢失的一部分就足够了。</p>
+<p>复制的backlog越大，从服务器断开的时间就越长，之后就能够执行部分的重新同步。</p>
+<p>在至少有一个从属连接时backlog只分配一次。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># repl-backlog-size 1mb</span><br></pre></td></tr></table></figure>
+<p>在一段时间内，如果主节点不再有连接从属节点，backlog将被释放。下面的选项配置所需的秒数，从最后一个从服务器断开的时间开始，等待释放的backlog缓冲区。</p>
+<p>注意：从节点没有设置backlog的超时操作，因为它们以后可能被提升为主节点，并且应该能够与从属节点正确地“部分地重新同步”，因此它们应该总是积累backlog。 值为0 代表不释放backlog块。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># repl-backlog-ttl 3600</span><br></pre></td></tr></table></figure>
+<p>从属节点的优先级是由Redis在INFO输出中发布的整数。Redis哨兵利用它来选择一个从节点，如果主节点不能正常工作，就可以把它提升为主节点。</p>
+<p>一个低优先级值的从属节点被认为是更好的晋升为主节点。举个例子，如果有三个有优先权的从属节点分别为10,100,25，哨兵会选择优先级为10的，这是最低的。</p>
+<p>但是，一个特殊的优先级0标志着从属节点不能成为主节点的角色，因此，优先级为0的从节点将永远不会被Redis哨兵选中来提升。<br>默认优先级为100。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">slave-priority 100</span><br></pre></td></tr></table></figure>
+<p>如果有少于N个从节点的连接，那么主人就有可能设置M s内停止接受写入操作。</p>
+<p>N个从节点需要处于 “online”状态。</p>
+<p>秒的时间差，必须是&lt;=指定的值，是由从节点收到的，通常是每秒钟发送。是由从节点那这个选项并不保证N个副本将接受写入，但是将限制在没有足够的从节点可用和在指定的秒数的情况下，丢失写入的窗口。</p>
+<p>例如，至少需要3个有滞后时间的从节点</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># min-slaves-to-write 3</span><br><span class="line"># min-slaves-max-lag 10</span><br></pre></td></tr></table></figure>
+<p>设置其中任何一个参数为 0将禁用该特性。默认情况下，min-slaves-to-write设置为0(特性禁用)，而min-slaves-max-lag设置为10。</p>
+<p>Redis能够同感多种方式获取连接从节点的IP地址和相应的端口号，例如“INFO replication”便提供了这个信息；在其他工具中，通过Redis Sentinel来发现从属实例；IP及端口信息可用的另一个地方是通过主节点的“ROLE”命令的输出。</p>
+<p>从节点相应IP地址和地址如下：</p>
+<ul>
+<li>IP： 该地址是自动检测的，通过检查从服务器使用的套接字的对等地址来连接主服务器。</li>
+<li>Port：在复制握手过程中，该端口是由从节点进行通信的，通常是从节点使用该端口来进行连接。</li>
+</ul>
+<p>使用了端口转发或网络地址转换（NAT），从节点就可以通过多IP和端口进行访问。</p>
+<p>下面的两个选项可以被一从节点所使用，以便向对应的主人报告一个特定的IP和端口集，可以通过INFO和ROLE都会报告这些值。</p>
+<p>如果需要重写端口或IP地址，则不需要使用这两个选项。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># slave-announce-ip 5.5.5.5</span><br><span class="line"># slave-announce-port 1234</span><br></pre></td></tr></table></figure>
+
       
     </div>
     
@@ -501,8 +545,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/05/10/it/algorithm/leetcode/2018-05-10/algorithm5/" rel="next" title="5. Longest Palindromic Substring">
-                <i class="fa fa-chevron-left"></i> 5. Longest Palindromic Substring
+              <a href="/2018/05/10/it/algorithm/leetcode/2018-05-10/algorithm7/" rel="next" title="7. Reverse Integer">
+                <i class="fa fa-chevron-left"></i> 7. Reverse Integer
               </a>
             
           </div>
@@ -510,6 +554,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/26/it/redis/base/2018-05-11/Redis配置文件直译2/" rel="prev" title="redis.conf配置文件直译（2）">
+                redis.conf配置文件直译（2） <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -586,7 +634,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
