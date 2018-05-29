@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="接前文，继续看看Redis配置文件所展现出的一些特性。 安全（SECURITY）Redis客户端在进行相关命令操作前需执行 AUTH 命令，这在不信任其他访问主机运行的redis服务器的环境中比较有用。">
+<meta name="description" content="接前文，继续看看Redis配置文件所展现出的一些特性。 安全（SECURITY）Redis客户端在进行相关命令操作前需执行 AUTH 命令，这在不信任其他访问主机运行的redis服务器的环境中比较有用。 对于向后兼容性，这应该保持注释，因为大多数人不需要auth。 提示：由于Redis是相当快的，一个外部用户可以在一个好的环境下每秒尝试150k个密码。这就意味着你需要设置一个健壮性较强的密码来保证">
 <meta name="keywords" content="Redis">
 <meta property="og:type" content="article">
 <meta property="og:title" content="redis.conf配置文件直译（2）">
 <meta property="og:url" content="http://yoursite.com/2018/05/26/it/redis/base/2018-05-11/Redis配置文件直译2/index.html">
 <meta property="og:site_name" content="大道至简">
-<meta property="og:description" content="接前文，继续看看Redis配置文件所展现出的一些特性。 安全（SECURITY）Redis客户端在进行相关命令操作前需执行 AUTH 命令，这在不信任其他访问主机运行的redis服务器的环境中比较有用。">
+<meta property="og:description" content="接前文，继续看看Redis配置文件所展现出的一些特性。 安全（SECURITY）Redis客户端在进行相关命令操作前需执行 AUTH 命令，这在不信任其他访问主机运行的redis服务器的环境中比较有用。 对于向后兼容性，这应该保持注释，因为大多数人不需要auth。 提示：由于Redis是相当快的，一个外部用户可以在一个好的环境下每秒尝试150k个密码。这就意味着你需要设置一个健壮性较强的密码来保证">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-05-25T16:06:05.997Z">
+<meta property="og:updated_time" content="2018-05-29T16:36:11.724Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="redis.conf配置文件直译（2）">
-<meta name="twitter:description" content="接前文，继续看看Redis配置文件所展现出的一些特性。 安全（SECURITY）Redis客户端在进行相关命令操作前需执行 AUTH 命令，这在不信任其他访问主机运行的redis服务器的环境中比较有用。">
+<meta name="twitter:description" content="接前文，继续看看Redis配置文件所展现出的一些特性。 安全（SECURITY）Redis客户端在进行相关命令操作前需执行 AUTH 命令，这在不信任其他访问主机运行的redis服务器的环境中比较有用。 对于向后兼容性，这应该保持注释，因为大多数人不需要auth。 提示：由于Redis是相当快的，一个外部用户可以在一个好的环境下每秒尝试150k个密码。这就意味着你需要设置一个健壮性较强的密码来保证">
 
 
 
@@ -354,6 +354,54 @@
       
         <p>接前文，继续看看Redis配置文件所展现出的一些特性。</p>
 <h3 id="安全（SECURITY）"><a href="#安全（SECURITY）" class="headerlink" title="安全（SECURITY）"></a>安全（SECURITY）</h3><p>Redis客户端在进行相关命令操作前需执行 AUTH <password>命令，这在不信任其他访问主机运行的redis服务器的环境中比较有用。</password></p>
+<p>对于向后兼容性，这应该保持注释，因为大多数人不需要auth。</p>
+<p>提示：由于Redis是相当快的，一个外部用户可以在一个好的环境下每秒尝试150k个密码。这就意味着你需要设置一个健壮性较强的密码来保证不会轻易的被破解。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># requirepass foobared</span><br></pre></td></tr></table></figure>
+<p>命令重命名</p>
+<p>在共享环境下可改变重要命令的名字。例如，CONFIG命名可以重命名成一些比较难猜测的名字，因此它仍然可以用于内部使用工具，但对于一般客户机来说是不可用的。</p>
+<p>例如：</p>
+<p>将命名Config 重命名为：<strong>b840fc02d524045429941cc15f59e41cb7be6c52</strong></p>
+<p>也可以通过将重命名为空字符串来杀死一个命名：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># rename-command CONFIG &quot;&quot;</span><br></pre></td></tr></table></figure>
+<p>请注意如果将命令更名记入AOF或传输给从节点可能会导致一些问题。</p>
+<h3 id="客户端-CLIENTS"><a href="#客户端-CLIENTS" class="headerlink" title="客户端 CLIENTS"></a>客户端 CLIENTS</h3><p>设置同时连接的客户端的最大数量。默认的连接限制数为1000，但是，如果Redis服务器不能配置进程文件的限制，允许指定的限制最大允许客户端的最大数量设置为当前的文件限制减去32。</p>
+<p>一旦达到连接上限，Redis将关闭新连接并发送一个“max number of clients reached”错误。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># maxclients 10000</span><br></pre></td></tr></table></figure>
+<h3 id="内存管理-MEMORY-MANAGEMENT"><a href="#内存管理-MEMORY-MANAGEMENT" class="headerlink" title="内存管理 MEMORY MANAGEMENT"></a>内存管理 MEMORY MANAGEMENT</h3><p>将内存限制设置为指定的字节数。达到的最大内存限制后Redis将尝试根据设置的过期回收策略移除相关的keys（详见maxmemory-policy）。</p>
+<p>如果Redis根据策略移除键操作失败或者策略被设置成为noeviction（停止迁移），Redis将开始对一些命令将使用更多的内存命令进行错误的应答，如set、LPUSH等，并将继续响应像GET这样的只读命令。</p>
+<p>当使用Redis作为LRU或LFU缓存时，这个选项通常很有用，或者为一个实例设置一个硬内存限制(使用“noeviction”策略)。</p>
+<p>警告:如果您有一个带有maxmemory的从节点实例，用于提供从节点实例的输出缓冲区的大小需要从使用的内存计数中减去, 所以当键被清理时由于网络问题、重新同步等情况就不会触发多次取值，相反，被填满删除键（keys）的实例缓冲区将会触发删除更多的keys，直到数据库被清空。</p>
+<p>总之，若干你有相关的从节点实例，那么可以为maxmemory设置一个较小的限制数值，这样操作系统上就会有一些空闲的RAM来作为实例的输出缓冲区（在设置了“noeviction”策略情况下是不需要的设置maxmemory了）。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># maxmemory &lt;bytes&gt;</span><br></pre></td></tr></table></figure>
+<p>最大内存策略：在达到最大内存限制时Redis如何选择移除keys，可以有如下5中方式：</p>
+<ul>
+<li>volatile-lru -&gt; 使用近似的LRU策略在键中作为过期设置；</li>
+<li>allkeys-lru -&gt; 使用近似的LRU策略清除所有键；</li>
+<li>volatile-lfu -&gt; 使用近似的LFU策略在键中作为过期设置；</li>
+<li>allkeys-lfu -&gt; 使用近似的LFU策略清除所有键；</li>
+<li>volatile-random -&gt; 在过期的键集合中进行随机删除</li>
+<li>allkeys-random -&gt; 随机删除一个key或多个key;</li>
+<li>volatile-ttl -&gt; 根据最近的过期时间删除key;</li>
+<li>noeviction -&gt; 不进行任何清理，针对写操作直接返回错误。</li>
+</ul>
+<p>LRU：最近最少使用<br>LFU：最不经常使用</p>
+<p>LRU、LFU和volatile-ttl均采用近似随机算法实现。</p>
+<p>注意： 针对上面所有的清理策略，Redis会在没有适合的键可以进行清理的情况下回返回错误。</p>
+<p>这些命令的的日期：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># set setnx setex append incr decr rpush lpush rpushx # lpushx linsert lset rpoplpush sadd sinter </span><br><span class="line">   # sinterstore sunion sunionstore sdiff sdiffstore zadd </span><br><span class="line">   # zincrby zunionstore zinterstore hset hsetnx hmset </span><br><span class="line">   # hincrby incrby decrby getset mset msetnx exec sort</span><br></pre></td></tr></table></figure>
+<p>默认情况：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">	# maxmemory-policy noeviction</span><br><span class="line">```	</span><br><span class="line"></span><br><span class="line">为了节约内存开销，LRU、LFU以及TTL算法都不是精确算法，而是近似算法，所以可以对其进行调整以获取速度或进度上的要求。 Redis默认选择5个键并挑选一个最近最少使用的，可以通过如下配置直接修改大小。</span><br><span class="line"></span><br><span class="line">设置为5一般可以取得比较好的结果，设置为10结果接近真实的LRU，但CPU消耗过大，设置为3最快但是精度不足。</span><br></pre></td></tr></table></figure>
+<pre><code># maxmemory-samples 5
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 懒释放 LAZY FREEING</span><br><span class="line"></span><br><span class="line">Redis可以通过两个原语来删除键，一种叫做DEL，是对象的阻塞删除，此时服务器将以同步的方式回收所分配对象的内存并停止处理新的命令。如果对象较小，删除所消耗的时间相比其他O(1)或O(log_N)的命令而言是很少的，但反之如果删除的对象包括很对元素（成千上万个），那么，服务将会阻塞很长的时间（甚至几秒）来完成删除操作。</span><br><span class="line"></span><br><span class="line">基于以上原因，Redis提供了非阻塞式删除原语，比如UNLINK（非阻塞删除）、FLUSHALL以及FLUASHDB命令，这些命令在常量的时间内完成。另一个线程将以尽可能快的速度在后台以增量方式释放对象。</span><br><span class="line"></span><br><span class="line">DEL、UNLINK以及FLUSHALL\FLUSHAB的异步操作均为用户可控的，应用程序的设计是为了理解何时使用一个或另一个方案，然而，Redis服务器有时需要删除键或将整个数据库刷新将为其它操作带来一些副作用，具体地说，Redis在以下场景中删除对象是独立于用户调用的：</span><br><span class="line"></span><br><span class="line">- 由于maxmemory和maxmemory策略配置，为了给新数据腾出空间，而不超过指定的内存限制，就会被收回。</span><br><span class="line">- 过期：当键是和必须从内存中删除的存活时间相关联</span><br><span class="line">- 由于命令的副作用，将数据存储在可能已经存在的键上。比如RENAME命令在重命名为另外一个名字的时候可能回删掉旧键所对应的内容。类似的</span><br><span class="line">SUNIONSTORE（将两个集合合并为一个进行存储）、对存储选项进行排序可能会删掉已经存在的键。SET命令本身删除指定键的任何旧内容，以便用指定的字符串替换它。</span><br><span class="line">- 在复制期间，当一个从属节点与主节点重新执行完全同步时，整个数据库的内容被删除，以便加载刚刚传输的RDB文件。</span><br><span class="line"></span><br><span class="line">针对上面的所有情况，默认删除对象都是以阻塞的方式进行的，当然你可以对不同的case进行配置以便于释放以非阻塞的方式释放内存，直接使用以下的命名：</span><br></pre></td></tr></table></figure>
+<pre><code>lazyfree-lazy-eviction no
+lazyfree-lazy-expire no
+lazyfree-lazy-server-del no
+slave-lazy-flush no
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">### 只追加模式 APPEND ONLY MODE</span><br><span class="line"></span><br><span class="line">Redis默认会异步地将数据集dump到磁盘上。这种方式能够适应于很多应用，但是，Redis进程的断电的问题可能会导致几分钟的写作失败（根据配置的保存点）。</span><br><span class="line"></span><br><span class="line">附加文件是一种替代的持久性模式，它提供了更好的持久性。例如使用默认数据fsync策略（可参看配置文件）。Redis可能在突发性事件比如断电的情况下丢失一秒内的写数据。</span><br><span class="line"></span><br><span class="line">AOF和RDB持久化可以同时启用，如果AOF在Redis启动时启用将会加载AOF文件，该文件能保证更好的持久性。</span><br><span class="line"></span><br><span class="line">可以通过http://redis.io/topics/persistence查看更多相关信息。</span><br></pre></td></tr></table></figure>
+<pre><code>appendonly no
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">追加文件命名（默认：appendonly.aof）</span><br></pre></td></tr></table></figure>
+<pre><code>appendfilename &quot;appendonly.aof&quot;
+</code></pre><p><code>`</code></p>
 
       
     </div>
@@ -384,7 +432,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/05/11/it/redis/base/2018-05-11/Redis配置文件直译1/" rel="next" title="redis.conf配置文件直译（1）">
+              <a href="/2018/05/11/it/redis/base/2018-05-11/Redis配置文件直译/" rel="next" title="redis.conf配置文件直译（1）">
                 <i class="fa fa-chevron-left"></i> redis.conf配置文件直译（1）
               </a>
             
@@ -469,7 +517,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-count">21</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -524,7 +572,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#安全（SECURITY）"><span class="nav-text">安全（SECURITY）</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#安全（SECURITY）"><span class="nav-text">安全（SECURITY）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#客户端-CLIENTS"><span class="nav-text">客户端 CLIENTS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内存管理-MEMORY-MANAGEMENT"><span class="nav-text">内存管理 MEMORY MANAGEMENT</span></a></li></ol></div>
             
 
           </div>
