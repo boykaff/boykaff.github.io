@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="大道至简">
 <meta property="og:description" content="接前文，继续看看Redis配置文件所展现出的一些特性。 安全（SECURITY）Redis客户端在进行相关命令操作前需执行 AUTH 命令，这在不信任其他访问主机运行的redis服务器的环境中比较有用。 对于向后兼容性，这应该保持注释，因为大多数人不需要auth。 提示：由于Redis是相当快的，一个外部用户可以在一个好的环境下每秒尝试150k个密码。这就意味着你需要设置一个健壮性较强的密码来保证">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-06-02T15:25:10.057Z">
+<meta property="og:updated_time" content="2018-06-02T16:42:48.040Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="redis.conf配置文件直译（2）">
 <meta name="twitter:description" content="接前文，继续看看Redis配置文件所展现出的一些特性。 安全（SECURITY）Redis客户端在进行相关命令操作前需执行 AUTH 命令，这在不信任其他访问主机运行的redis服务器的环境中比较有用。 对于向后兼容性，这应该保持注释，因为大多数人不需要auth。 提示：由于Redis是相当快的，一个外部用户可以在一个好的环境下每秒尝试150k个密码。这就意味着你需要设置一个健壮性较强的密码来保证">
@@ -388,37 +388,59 @@
 <p>LRU、LFU和volatile-ttl均采用近似随机算法实现。</p>
 <p>注意： 针对上面所有的清理策略，Redis会在没有适合的键可以进行清理的情况下回返回错误。</p>
 <p>这些命令的的日期：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># set setnx setex append incr decr rpush lpush rpushx # lpushx linsert lset rpoplpush sadd sinter </span><br><span class="line">   # sinterstore sunion sunionstore sdiff sdiffstore zadd </span><br><span class="line">   # zincrby zunionstore zinterstore hset hsetnx hmset </span><br><span class="line">   # hincrby incrby decrby getset mset msetnx exec sort</span><br></pre></td></tr></table></figure>
-<p>默认情况：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">	# maxmemory-policy noeviction</span><br><span class="line">```	</span><br><span class="line"></span><br><span class="line">为了节约内存开销，LRU、LFU以及TTL算法都不是精确算法，而是近似算法，所以可以对其进行调整以获取速度或进度上的要求。 Redis默认选择5个键并挑选一个最近最少使用的，可以通过如下配置直接修改大小。</span><br><span class="line"></span><br><span class="line">设置为5一般可以取得比较好的结果，设置为10结果接近真实的LRU，但CPU消耗过大，设置为3最快但是精度不足。</span><br></pre></td></tr></table></figure>
-<pre><code># maxmemory-samples 5
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 懒释放 LAZY FREEING</span><br><span class="line"></span><br><span class="line">Redis可以通过两个原语来删除键，一种叫做DEL，是对象的阻塞删除，此时服务器将以同步的方式回收所分配对象的内存并停止处理新的命令。如果对象较小，删除所消耗的时间相比其他O(1)或O(log_N)的命令而言是很少的，但反之如果删除的对象包括很对元素（成千上万个），那么，服务将会阻塞很长的时间（甚至几秒）来完成删除操作。</span><br><span class="line"></span><br><span class="line">基于以上原因，Redis提供了非阻塞式删除原语，比如UNLINK（非阻塞删除）、FLUSHALL以及FLUASHDB命令，这些命令在常量的时间内完成。另一个线程将以尽可能快的速度在后台以增量方式释放对象。</span><br><span class="line"></span><br><span class="line">DEL、UNLINK以及FLUSHALL\FLUSHAB的异步操作均为用户可控的，应用程序的设计是为了理解何时使用一个或另一个方案，然而，Redis服务器有时需要删除键或将整个数据库刷新将为其它操作带来一些副作用，具体地说，Redis在以下场景中删除对象是独立于用户调用的：</span><br><span class="line"></span><br><span class="line">- 由于maxmemory和maxmemory策略配置，为了给新数据腾出空间，而不超过指定的内存限制，就会被收回。</span><br><span class="line">- 过期：当键是和必须从内存中删除的存活时间相关联</span><br><span class="line">- 由于命令的副作用，将数据存储在可能已经存在的键上。比如RENAME命令在重命名为另外一个名字的时候可能回删掉旧键所对应的内容。类似的</span><br><span class="line">SUNIONSTORE（将两个集合合并为一个进行存储）、对存储选项进行排序可能会删掉已经存在的键。SET命令本身删除指定键的任何旧内容，以便用指定的字符串替换它。</span><br><span class="line">- 在复制期间，当一个从属节点与主节点重新执行完全同步时，整个数据库的内容被删除，以便加载刚刚传输的RDB文件。</span><br><span class="line"></span><br><span class="line">针对上面的所有情况，默认删除对象都是以阻塞的方式进行的，当然你可以对不同的case进行配置以便于释放以非阻塞的方式释放内存，直接使用以下的命名：</span><br></pre></td></tr></table></figure>
-<pre><code>lazyfree-lazy-eviction no
-lazyfree-lazy-expire no
-lazyfree-lazy-server-del no
-slave-lazy-flush no
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">### 只追加模式 APPEND ONLY MODE</span><br><span class="line"></span><br><span class="line">Redis默认会异步地将数据集dump到磁盘上。这种方式能够适应于很多应用，但是，Redis进程的断电的问题可能会导致几分钟的写作失败（根据配置的保存点）。</span><br><span class="line"></span><br><span class="line">附加文件是一种替代的持久性模式，它提供了更好的持久性。例如使用默认数据fsync策略（可参看配置文件）。Redis可能在突发性事件比如断电的情况下丢失一秒内的写数据。</span><br><span class="line"></span><br><span class="line">AOF和RDB持久化可以同时启用，如果AOF在Redis启动时启用将会加载AOF文件，该文件能保证更好的持久性。</span><br><span class="line"></span><br><span class="line">可以通过http://redis.io/topics/persistence查看更多相关信息。</span><br></pre></td></tr></table></figure>
-<pre><code>appendonly no
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">追加文件命名（默认：appendonly.aof）</span><br></pre></td></tr></table></figure>
-<pre><code>appendfilename &quot;appendonly.aof&quot;
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">fsync()通知操作系统执行数据的硬盘持久化写入操作而不用继续等待输出缓冲区里积累更多的数据，一些操作系统会将数据刷新到磁盘上，另外一些操作系统可能并不保证立马执行。</span><br><span class="line"></span><br><span class="line">Redis支持三种不同的模式：</span><br><span class="line"></span><br><span class="line">- no：no fsync（无帧同步脉冲），仅让操作系统在需要的时候执行数据刷新，该方式较快；</span><br><span class="line">- always： 在每次写操作后都fsync到日志里，该模式较慢，但安全性最高；</span><br><span class="line">- everysec：以秒为单位进行fsync操作，是一种较为折中的方式。</span><br><span class="line"></span><br><span class="line">默认是采取“everysec”模式，在速度和数据的安全性上的折中考虑是比较正确的处理方式。可以设置为“no”，这样操作系统能在需要的时候讲输出缓冲区里的数据进行flush固化，或者使用“always”方式比较慢，但比“everysec”更安全，这都取决于你自己的判决。</span><br><span class="line">如果不确定，那就使用“everysec”模式吧。</span><br></pre></td></tr></table></figure>
-<pre><code># appendfsync always
-appendfsync everysec
-# appendfsync no
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">如果将AOF策略设置为always或是everysec模式，后台的存储进程将会对磁盘做大量的I/O操作，在一些Linux配置中，Redis调用fsync()可能会阻塞相当长的时间。请注意，目前没有对此进行修复，因为即使在不同的线程中执行fsync也会阻塞我们的同步写的调用。</span><br><span class="line"></span><br><span class="line">为了缓和这个问题，可以在程序处于BGSAVE或BGREWRITEAOF时使用以下选项来防止fsync()在主进程中被调用。</span><br><span class="line"></span><br><span class="line">这就是说当另一个子进程在执行保存时，Redis的持久化相当于是“appendfsync none”。实际上，这意味着在最坏的情况下可能会丢失30秒的日志，</span><br><span class="line"></span><br><span class="line">如果你有延迟问题，把它变成“yes”。否则，从持久性性的角度来看，设置为“no”最安全的选择。</span><br></pre></td></tr></table></figure>
-<pre><code>no-appendfsync-on-rewrite no
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">自动复写只扩展文件。当AOF日志大小以指定的百分比增长时，Redis能够y隐式调用BGREWRITEAOF自动重写日志文件。</span><br><span class="line"></span><br><span class="line">这是如何工作的呢：Redis记录下了最后一次重写操作对应的AOF文件大小（如果在重启后没有发生重写操作，在启动时使用AOF的大小）。</span><br><span class="line"></span><br><span class="line">用这个基础打下对比于当前的大小，如果当前的size大于一个指定的百分比，将会触发重写操作。还需要指定要重写的AOF文件的最小的size，这样就能够有效地避免，这对于避免重写AOF文件是很有用的，即使已经达到了百分比的增加，但是它仍然是很小的。</span><br><span class="line"></span><br><span class="line">指定百分比为0，可禁用自动AOF重写特性。</span><br></pre></td></tr></table></figure>
-<pre><code>auto-aof-rewrite-percentage 100
-auto-aof-rewrite-min-size 64mb
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">在启动Redis的过程中，当AOF数据被加载会内存时，可能会发现AOF文件的末尾被截断了，当Redis运行的系统崩溃时，这种情况可能会发生，特别是当ext4文件系统在没有data=ordered选项的情况下被挂载时（然而，当Redis本身崩溃或中断但操作系统仍然正常工作时，这种情况不会发生）。</span><br><span class="line"></span><br><span class="line">Redis可以在出现错误时退出，也可以加载尽可能多的数据(现在是默认值)，如果在末尾发现AOF文件被截断，则启动。以下选项控制此行为。</span><br><span class="line"></span><br><span class="line">如果将“aof-load-truncated”设置为yes，加载被截断的AOF文件，Redis服务器开始发出日志来通知用户事件。反之，如果该选项被设为no，服务器将以错误中止并拒绝启动。当设置为no时，用户需要在重新启动服务器之前使用“redis-check-aof”实用程序修复AOF文件。</span><br><span class="line"></span><br><span class="line">注意：如果AOF文件中间被损坏，Redis服务器同样会以error方式退出。此选项仅适用于Redis试图从AOF文件中读取更多数据，但却找不到足够的字节数据的情况。</span><br></pre></td></tr></table></figure>
-<pre><code>aof-load-truncated yes
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">当重写AOF文件时，Redis可以在AOF文件中使用RDB作为开始来更快地重写和恢复。当打开此选项时，重写的AOF文件由两个不同部分组成：</span><br></pre></td></tr></table></figure>
-<pre><code>#   [RDB file][AOF tail]
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">当载入Redis时识别出AOF文件是以“REDIS”字符串开头并加载前缀RDB文件，随后继续加载AOF尾部。</span><br><span class="line"></span><br><span class="line">默认情况下，为了避免格式更改的意外，是处于关闭的，但是在某些时候会被用作默认值。</span><br></pre></td></tr></table></figure>
-<pre><code>aof-use-rdb-preamble no
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### LUA脚本 lUA SCRIPTING</span><br><span class="line"></span><br><span class="line">LUA脚本的最大执行时间在毫秒级，如果达到最大的执行时间，Redis将记录脚本在最大允许的时间之后仍会继续执行，并开始以错误的方式响应查询。当一个长时间运行的脚本草除了最大执行时间后只有SCRIPT KILL和SHUTDOWN NOSAVE命令可以使用。第一个可以用来停止一个尚未调用写命令的脚本。第二个是关闭服务器的唯一方法，因为脚本已经发出了write命令，但是用户不想等待脚本的自然终止。将其设置为0或负数将会一直执行。</span><br></pre></td></tr></table></figure>
-<pre><code>lua-time-limit 5000
-</code></pre><p><code>`</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># set setnx setex append incr decr rpush lpush rpushx</span><br><span class="line"># lpushx linsert lset rpoplpush sadd sinter </span><br><span class="line">   # sinterstore sunion sunionstore sdiff sdiffstore zadd </span><br><span class="line">   # zincrby zunionstore zinterstore hset hsetnx hmset </span><br><span class="line">   # hincrby incrby decrby getset mset msetnx exec sort</span><br></pre></td></tr></table></figure>
+<p>默认情况：# maxmemory-policy noeviction</p>
+<p>为了节约内存开销，LRU、LFU以及TTL算法都不是精确算法，而是近似算法，所以可以对其进行调整以获取速度或进度上的要求。 Redis默认选择5个键并挑选一个最近最少使用的，可以通过如下配置直接修改大小。</p>
+<p>设置为5一般可以取得比较好的结果，设置为10结果接近真实的LRU，但CPU消耗过大，设置为3最快但是精度不足。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># maxmemory-samples 5</span><br></pre></td></tr></table></figure>
+<h3 id="懒释放-LAZY-FREEING"><a href="#懒释放-LAZY-FREEING" class="headerlink" title="懒释放 LAZY FREEING"></a>懒释放 LAZY FREEING</h3><p>Redis可以通过两个原语来删除键，一种叫做DEL，是对象的阻塞删除，此时服务器将以同步的方式回收所分配对象的内存并停止处理新的命令。如果对象较小，删除所消耗的时间相比其他O(1)或O(log_N)的命令而言是很少的，但反之如果删除的对象包括很对元素（成千上万个），那么，服务将会阻塞很长的时间（甚至几秒）来完成删除操作。</p>
+<p>基于以上原因，Redis提供了非阻塞式删除原语，比如UNLINK（非阻塞删除）、FLUSHALL以及FLUASHDB命令，这些命令在常量的时间内完成。另一个线程将以尽可能快的速度在后台以增量方式释放对象。</p>
+<p>DEL、UNLINK以及FLUSHALL\FLUSHAB的异步操作均为用户可控的，应用程序的设计是为了理解何时使用一个或另一个方案，然而，Redis服务器有时需要删除键或将整个数据库刷新将为其它操作带来一些副作用，具体地说，Redis在以下场景中删除对象是独立于用户调用的：</p>
+<ul>
+<li>由于maxmemory和maxmemory策略配置，为了给新数据腾出空间，而不超过指定的内存限制，就会被收回。</li>
+<li>过期：当键是和必须从内存中删除的存活时间相关联</li>
+<li>由于命令的副作用，将数据存储在可能已经存在的键上。比如RENAME命令在重命名为另外一个名字的时候可能回删掉旧键所对应的内容。类似的<br>SUNIONSTORE（将两个集合合并为一个进行存储）、对存储选项进行排序可能会删掉已经存在的键。SET命令本身删除指定键的任何旧内容，以便用指定的字符串替换它。</li>
+<li>在复制期间，当一个从属节点与主节点重新执行完全同步时，整个数据库的内容被删除，以便加载刚刚传输的RDB文件。</li>
+</ul>
+<p>针对上面的所有情况，默认删除对象都是以阻塞的方式进行的，当然你可以对不同的case进行配置以便于释放以非阻塞的方式释放内存，直接使用以下的命名：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">lazyfree-lazy-eviction no</span><br><span class="line">lazyfree-lazy-expire no</span><br><span class="line">lazyfree-lazy-server-del no</span><br><span class="line">slave-lazy-flush no</span><br></pre></td></tr></table></figure>
+<h3 id="只追加模式-APPEND-ONLY-MODE"><a href="#只追加模式-APPEND-ONLY-MODE" class="headerlink" title="只追加模式 APPEND ONLY MODE"></a>只追加模式 APPEND ONLY MODE</h3><p>Redis默认会异步地将数据集dump到磁盘上。这种方式能够适应于很多应用，但是，Redis进程的断电的问题可能会导致几分钟的写作失败（根据配置的保存点）。</p>
+<p>附加文件是一种替代的持久性模式，它提供了更好的持久性。例如使用默认数据fsync策略（可参看配置文件）。Redis可能在突发性事件比如断电的情况下丢失一秒内的写数据。</p>
+<p>AOF和RDB持久化可以同时启用，如果AOF在Redis启动时启用将会加载AOF文件，该文件能保证更好的持久性。</p>
+<p>可以通过<a href="http://redis.io/topics/persistence查看更多相关信息。" target="_blank" rel="noopener">http://redis.io/topics/persistence查看更多相关信息。</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">appendonly no</span><br></pre></td></tr></table></figure>
+<p>追加文件命名（默认：appendonly.aof）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">appendfilename &quot;appendonly.aof&quot;</span><br></pre></td></tr></table></figure>
+<p>fsync()通知操作系统执行数据的硬盘持久化写入操作而不用继续等待输出缓冲区里积累更多的数据，一些操作系统会将数据刷新到磁盘上，另外一些操作系统可能并不保证立马执行。</p>
+<p>Redis支持三种不同的模式：</p>
+<ul>
+<li>no：no fsync（无帧同步脉冲），仅让操作系统在需要的时候执行数据刷新，该方式较快；</li>
+<li>always： 在每次写操作后都fsync到日志里，该模式较慢，但安全性最高；</li>
+<li>everysec：以秒为单位进行fsync操作，是一种较为折中的方式。</li>
+</ul>
+<p>默认是采取“everysec”模式，在速度和数据的安全性上的折中考虑是比较正确的处理方式。可以设置为“no”，这样操作系统能在需要的时候讲输出缓冲区里的数据进行flush固化，或者使用“always”方式比较慢，但比“everysec”更安全，这都取决于你自己的判决。<br>如果不确定，那就使用“everysec”模式吧。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># appendfsync always</span><br><span class="line">appendfsync everysec</span><br><span class="line"># appendfsync no</span><br></pre></td></tr></table></figure></p>
+<p>如果将AOF策略设置为always或是everysec模式，后台的存储进程将会对磁盘做大量的I/O操作，在一些Linux配置中，Redis调用fsync()可能会阻塞相当长的时间。请注意，目前没有对此进行修复，因为即使在不同的线程中执行fsync也会阻塞我们的同步写的调用。</p>
+<p>为了缓和这个问题，可以在程序处于BGSAVE或BGREWRITEAOF时使用以下选项来防止fsync()在主进程中被调用。</p>
+<p>这就是说当另一个子进程在执行保存时，Redis的持久化相当于是“appendfsync none”。实际上，这意味着在最坏的情况下可能会丢失30秒的日志，</p>
+<p>如果你有延迟问题，把它变成“yes”。否则，从持久性性的角度来看，设置为“no”最安全的选择。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">no-appendfsync-on-rewrite no</span><br></pre></td></tr></table></figure>
+<p>自动复写只扩展文件。当AOF日志大小以指定的百分比增长时，Redis能够y隐式调用BGREWRITEAOF自动重写日志文件。</p>
+<p>这是如何工作的呢：Redis记录下了最后一次重写操作对应的AOF文件大小（如果在重启后没有发生重写操作，在启动时使用AOF的大小）。</p>
+<p>用这个基础打下对比于当前的大小，如果当前的size大于一个指定的百分比，将会触发重写操作。还需要指定要重写的AOF文件的最小的size，这样就能够有效地避免，这对于避免重写AOF文件是很有用的，即使已经达到了百分比的增加，但是它仍然是很小的。</p>
+<p>指定百分比为0，可禁用自动AOF重写特性。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">auto-aof-rewrite-percentage 100</span><br><span class="line">auto-aof-rewrite-min-size 64mb</span><br></pre></td></tr></table></figure>
+<p>在启动Redis的过程中，当AOF数据被加载会内存时，可能会发现AOF文件的末尾被截断了，当Redis运行的系统崩溃时，这种情况可能会发生，特别是当ext4文件系统在没有data=ordered选项的情况下被挂载时（然而，当Redis本身崩溃或中断但操作系统仍然正常工作时，这种情况不会发生）。</p>
+<p>Redis可以在出现错误时退出，也可以加载尽可能多的数据(现在是默认值)，如果在末尾发现AOF文件被截断，则启动。以下选项控制此行为。</p>
+<p>如果将“aof-load-truncated”设置为yes，加载被截断的AOF文件，Redis服务器开始发出日志来通知用户事件。反之，如果该选项被设为no，服务器将以错误中止并拒绝启动。当设置为no时，用户需要在重新启动服务器之前使用“redis-check-aof”实用程序修复AOF文件。</p>
+<p>注意：如果AOF文件中间被损坏，Redis服务器同样会以error方式退出。此选项仅适用于Redis试图从AOF文件中读取更多数据，但却找不到足够的字节数据的情况。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aof-load-truncated yes</span><br></pre></td></tr></table></figure>
+<p>当重写AOF文件时，Redis可以在AOF文件中使用RDB作为开始来更快地重写和恢复。当打开此选项时，重写的AOF文件由两个不同部分组成：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#   [RDB file][AOF tail]</span><br></pre></td></tr></table></figure>
+<p>当载入Redis时识别出AOF文件是以“REDIS”字符串开头并加载前缀RDB文件，随后继续加载AOF尾部。</p>
+<p>默认情况下，为了避免格式更改的意外，是处于关闭的，但是在某些时候会被用作默认值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aof-use-rdb-preamble no</span><br></pre></td></tr></table></figure>
+<h3 id="LUA脚本-lUA-SCRIPTING"><a href="#LUA脚本-lUA-SCRIPTING" class="headerlink" title="LUA脚本 lUA SCRIPTING"></a>LUA脚本 lUA SCRIPTING</h3><p>LUA脚本的最大执行时间在毫秒级，如果达到最大的执行时间，Redis将记录脚本在最大允许的时间之后仍会继续执行，并开始以错误的方式响应查询。当一个长时间运行的脚本草除了最大执行时间后只有SCRIPT KILL和SHUTDOWN NOSAVE命令可以使用。第一个可以用来停止一个尚未调用写命令的脚本。第二个是关闭服务器的唯一方法，因为脚本已经发出了write命令，但是用户不想等待脚本的自然终止。将其设置为0或负数将会一直执行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lua-time-limit 5000</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -449,7 +471,7 @@ auto-aof-rewrite-min-size 64mb
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/05/11/it/redis/base/2018-05-11/Redis配置文件直译/" rel="next" title="redis.conf配置文件直译（1）">
+              <a href="/2018/05/11/it/redis/base/2018-05-11/Redis配置文件直译1/" rel="next" title="redis.conf配置文件直译（1）">
                 <i class="fa fa-chevron-left"></i> redis.conf配置文件直译（1）
               </a>
             
@@ -593,7 +615,7 @@ auto-aof-rewrite-min-size 64mb
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#安全（SECURITY）"><span class="nav-text">安全（SECURITY）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#客户端-CLIENTS"><span class="nav-text">客户端 CLIENTS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内存管理-MEMORY-MANAGEMENT"><span class="nav-text">内存管理 MEMORY MANAGEMENT</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#安全（SECURITY）"><span class="nav-text">安全（SECURITY）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#客户端-CLIENTS"><span class="nav-text">客户端 CLIENTS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内存管理-MEMORY-MANAGEMENT"><span class="nav-text">内存管理 MEMORY MANAGEMENT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#懒释放-LAZY-FREEING"><span class="nav-text">懒释放 LAZY FREEING</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#只追加模式-APPEND-ONLY-MODE"><span class="nav-text">只追加模式 APPEND ONLY MODE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LUA脚本-lUA-SCRIPTING"><span class="nav-text">LUA脚本 lUA SCRIPTING</span></a></li></ol></div>
             
 
           </div>
