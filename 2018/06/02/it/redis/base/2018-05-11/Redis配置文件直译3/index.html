@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="LeetCode,algorithm," />
+  <meta name="keywords" content="Redis," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="Problem Given a string s, find the longest palindromic substring in s. You may assume that the maximum length of s is 1000. Example 1: 123Input: &amp;quot;babad&amp;quot;Output: &amp;quot;bab&amp;quot;Note: &amp;quot;aba">
-<meta name="keywords" content="LeetCode,algorithm">
+<meta name="description" content="书接前文，续。  Redis集群(REDIS CLUSTER)提示： Redis集群被认定为是稳定的，但要使得其被认为是稳定版本，需要相当的用户群体在生产环境中进行实际部署。 常规的Redis实例不能够成为Redis集群的一部分；只有作为集群节点启动的节点可以。为了将Redis实例作为集群节点启动，需要取消以下注释： 1# cluster-enabled yes 集群中的每个节点都有一份配置文件">
+<meta name="keywords" content="Redis">
 <meta property="og:type" content="article">
-<meta property="og:title" content="5. Longest Palindromic Substring">
-<meta property="og:url" content="http://yoursite.com/2018/05/10/it/algorithm/leetcode/2018-05-10/algorithm5/index.html">
+<meta property="og:title" content="redis.conf配置文件直译（3）">
+<meta property="og:url" content="http://yoursite.com/2018/06/02/it/redis/base/2018-05-11/Redis配置文件直译3/index.html">
 <meta property="og:site_name" content="大道至简">
-<meta property="og:description" content="Problem Given a string s, find the longest palindromic substring in s. You may assume that the maximum length of s is 1000. Example 1: 123Input: &amp;quot;babad&amp;quot;Output: &amp;quot;bab&amp;quot;Note: &amp;quot;aba">
+<meta property="og:description" content="书接前文，续。  Redis集群(REDIS CLUSTER)提示： Redis集群被认定为是稳定的，但要使得其被认为是稳定版本，需要相当的用户群体在生产环境中进行实际部署。 常规的Redis实例不能够成为Redis集群的一部分；只有作为集群节点启动的节点可以。为了将Redis实例作为集群节点启动，需要取消以下注释： 1# cluster-enabled yes 集群中的每个节点都有一份配置文件">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-05-12T16:38:51.526Z">
+<meta property="og:updated_time" content="2018-06-02T16:29:06.723Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="5. Longest Palindromic Substring">
-<meta name="twitter:description" content="Problem Given a string s, find the longest palindromic substring in s. You may assume that the maximum length of s is 1000. Example 1: 123Input: &amp;quot;babad&amp;quot;Output: &amp;quot;bab&amp;quot;Note: &amp;quot;aba">
+<meta name="twitter:title" content="redis.conf配置文件直译（3）">
+<meta name="twitter:description" content="书接前文，续。  Redis集群(REDIS CLUSTER)提示： Redis集群被认定为是稳定的，但要使得其被认为是稳定版本，需要相当的用户群体在生产环境中进行实际部署。 常规的Redis实例不能够成为Redis集群的一部分；只有作为集群节点启动的节点可以。为了将Redis实例作为集群节点启动，需要取消以下注释： 1# cluster-enabled yes 集群中的每个节点都有一份配置文件">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/05/10/it/algorithm/leetcode/2018-05-10/algorithm5/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/06/02/it/redis/base/2018-05-11/Redis配置文件直译3/"/>
 
 
 
 
 
-  <title>5. Longest Palindromic Substring | 大道至简</title>
+  <title>redis.conf配置文件直译（3） | 大道至简</title>
   
 
 
@@ -263,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/10/it/algorithm/leetcode/2018-05-10/algorithm5/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/02/it/redis/base/2018-05-11/Redis配置文件直译3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="boyka">
@@ -280,7 +280,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">5. Longest Palindromic Substring</h1>
+          <h1 class="post-title" itemprop="name headline">redis.conf配置文件直译（3）</h1>
         
 
         <div class="post-meta">
@@ -292,8 +292,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-10T00:00:00+08:00">
-                2018-05-10
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-02T00:00:00+08:00">
+                2018-06-02
               </time>
             
 
@@ -315,8 +315,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
+                  <a href="/categories/Redis/" itemprop="url" rel="index">
+                    <span itemprop="name">Redis</span>
                   </a>
                 </span>
 
@@ -352,17 +352,30 @@
       
 
       
-        <p><strong>Problem</strong></p>
-<p>Given a string s, find the longest palindromic substring in s. You may assume that the maximum length of s is 1000.</p>
-<p><strong>Example 1:</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: &quot;babad&quot;</span><br><span class="line">Output: &quot;bab&quot;</span><br><span class="line">Note: &quot;aba&quot; is also a valid answer.</span><br></pre></td></tr></table></figure>
-<p><strong>Example 2:</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: &quot;cbbd&quot;</span><br><span class="line">Output: &quot;bb&quot;</span><br></pre></td></tr></table></figure>
-<p><strong>idea</strong></p>
-<p>这道题是求取一个字符串中的最长回文子字符串，所谓回文串，即对称的字符串，也就是说从回文串的中心出发两侧的字符串依次是相同，比如字符串 <strong>abcba</strong> ，以字符 <strong>c</strong> 为中心，两边依次是   <strong>b</strong> 、 <strong>a</strong>， 这就是一种回文串-长度为奇数的回文串，中间字符即为回文中心； 还有长度为偶数的回文串如： <strong>abccba</strong> ，那我们就可以认为串的中心就是两个 <strong>c</strong> 的中间。</p>
-<p>知道回文串的基本概念后，就可以以某一字符为中心向两侧扩展，以求取匹配的子串长，并记录下最长回文子串的起始下标和对应的回文长度即可。</p>
-<p><strong>code</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">   <span class="function"><span class="keyword">public</span> String <span class="title">longestPalindrome</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">       <span class="comment">//判断字符串有效性</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">null</span> == s || s.length() == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">""</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> len = s.length(), start = <span class="number">0</span>, maxLen = <span class="number">0</span>, tempLen = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">            <span class="comment">//求取以当前字符作为对称中心回文长度</span></span><br><span class="line">            tempLen = getLen(i - <span class="number">1</span>, i + <span class="number">1</span>, s);</span><br><span class="line">            <span class="keyword">if</span> (tempLen &gt; maxLen) &#123;</span><br><span class="line">                maxLen = tempLen;</span><br><span class="line">                start = i - maxLen / <span class="number">2</span>;</span><br><span class="line">            &#125;</span><br><span class="line">             <span class="comment">//求取以当前字符和右字符作为对称中心回文长度</span></span><br><span class="line">            tempLen = getLen(i, i + <span class="number">1</span>, s);</span><br><span class="line">            <span class="keyword">if</span> (tempLen &gt; maxLen) &#123;</span><br><span class="line">                maxLen = tempLen;</span><br><span class="line">                start = i - maxLen / <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> s.substring(start, start + maxLen);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">getLen</span><span class="params">(<span class="keyword">int</span> start, <span class="keyword">int</span> end, String s)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">while</span> (start &gt;= <span class="number">0</span> &amp;&amp; end &lt; s.length() &amp;&amp; s.charAt(start) == s.charAt(end)) &#123;</span><br><span class="line">            start--;</span><br><span class="line">            end++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> end - start - <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <blockquote>
+<p>书接前文，续。</p>
+</blockquote>
+<h3 id="Redis集群-REDIS-CLUSTER"><a href="#Redis集群-REDIS-CLUSTER" class="headerlink" title="Redis集群(REDIS CLUSTER)"></a>Redis集群(REDIS CLUSTER)</h3><p>提示： Redis集群被认定为是稳定的，但要使得其被认为是稳定版本，需要相当的用户群体在生产环境中进行实际部署。</p>
+<p>常规的Redis实例不能够成为Redis集群的一部分；只有作为集群节点启动的节点可以。为了将Redis实例作为集群节点启动，需要取消以下注释：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># cluster-enabled yes</span><br></pre></td></tr></table></figure>
+<p>集群中的每个节点都有一份配置文件。这个配置文件并不由人工进行编辑，它的创建和修改都是通过Redis节点自身完成的。各节点需要不同的集群配置文件，确保在同一系统中运行的实例没有重名的集群配置文件名。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># cluster-config-file nodes-6379.conf</span><br></pre></td></tr></table></figure>
+<p>集群节点超时是指节点在故障状态下必须无法到达的毫秒数。其他大多数内部时间限制是多个节点超时。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># cluster-node-timeout 15000</span><br></pre></td></tr></table></figure>
+<p>如果故障主服务器的数据看起来太旧，它将不会启动故障转移。</p>
+<p>对于从节点来说，没有什么方法可以准确测量数据的存活时间，可以执行下面两个检查项：</p>
+<ul>
+<li><p>如果有多个从节点能够进行故障转移，它们交换消息的目的是为了给具有最佳复制偏移量的从服务器带来优势（更多的数据来自主节点）。从节点根据偏移量进行rank评分，它们被应用于故障转移与其对应的Rank评分级别成比例。</p>
+</li>
+<li><p>每个从节点计算其余主节点最后的交互时间。这可以是最后一个接收到的ping或命令（如果主节点仍处理连接状态），或者同主节点端看连接的时长，如果最后的交互太旧，那么从节点将不会进行故障转移。</p>
+</li>
+</ul>
+<p>上面的第2点可以进行调整，尤其是一个从节点根本不执行故障转移，由于最后一次与master的交互，所经过的时间大于:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(node-timeout * slave-validity-factor) + repl-ping-slave-period</span><br></pre></td></tr></table></figure>
+<p>例如node-timeout时间为30s，slave-validity-factor时间为10s，repl-ping-slave-period假设默认为10s，那么从节点在和主节点未交互时长达到310s的话将不会进行故障转移。</p>
+<p>一个较大的slave-validity-factor可能允许数据太旧的从节点对主节点进行故障转移，太小的值可能会阻止集群对从节点选择。</p>
+<p>为了最大的可用性，设置slave-validity-factor的值为0，这个意思就是说从节点不管和主节点的最后交互时间是什么样子都要进行故障转移操作（但是，它们会尝试应用一个与他们的偏移量rank成比例的延迟）。0可以能够保证当所有分区恢复时集群将始终能够继续，且是唯一的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># cluster-slave-validity-factor 10</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -379,9 +392,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/LeetCode/" rel="tag"># LeetCode</a>
-          
-            <a href="/tags/algorithm/" rel="tag"># algorithm</a>
+            <a href="/tags/Redis/" rel="tag"># Redis</a>
           
         </div>
       
@@ -394,8 +405,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/05/10/it/algorithm/leetcode/2018-05-10/algorithm7/" rel="next" title="7. Reverse Integer">
-                <i class="fa fa-chevron-left"></i> 7. Reverse Integer
+              <a href="/2018/05/26/it/redis/base/2018-05-11/Redis配置文件直译2/" rel="next" title="redis.conf配置文件直译（2）">
+                <i class="fa fa-chevron-left"></i> redis.conf配置文件直译（2）
               </a>
             
           </div>
@@ -403,10 +414,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/05/11/it/redis/base/2018-05-11/Redis配置文件直译1/" rel="prev" title="redis.conf配置文件直译（1）">
-                redis.conf配置文件直译（1） <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -458,8 +465,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -519,6 +535,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis集群-REDIS-CLUSTER"><span class="nav-text">Redis集群(REDIS CLUSTER)</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
