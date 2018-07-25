@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="大道至简">
 <meta property="og:description" content="书接前文，续。  Redis集群(REDIS CLUSTER)提示： Redis集群被认定为是稳定的，但要使得其被认为是稳定版本，需要相当的用户群体在生产环境中进行实际部署。 常规的Redis实例不能够成为Redis集群的一部分；只有作为集群节点启动的节点可以。为了将Redis实例作为集群节点启动，需要取消以下注释： 1# cluster-enabled yes 集群中的每个节点都有一份配置文件">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-06-02T16:29:06.723Z">
+<meta property="og:updated_time" content="2018-06-04T14:49:13.411Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="redis.conf配置文件直译（3）">
 <meta name="twitter:description" content="书接前文，续。  Redis集群(REDIS CLUSTER)提示： Redis集群被认定为是稳定的，但要使得其被认为是稳定版本，需要相当的用户群体在生产环境中进行实际部署。 常规的Redis实例不能够成为Redis集群的一部分；只有作为集群节点启动的节点可以。为了将Redis实例作为集群节点启动，需要取消以下注释： 1# cluster-enabled yes 集群中的每个节点都有一份配置文件">
@@ -376,6 +376,28 @@
 <p>一个较大的slave-validity-factor可能允许数据太旧的从节点对主节点进行故障转移，太小的值可能会阻止集群对从节点选择。</p>
 <p>为了最大的可用性，设置slave-validity-factor的值为0，这个意思就是说从节点不管和主节点的最后交互时间是什么样子都要进行故障转移操作（但是，它们会尝试应用一个与他们的偏移量rank成比例的延迟）。0可以能够保证当所有分区恢复时集群将始终能够继续，且是唯一的。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># cluster-slave-validity-factor 10</span><br></pre></td></tr></table></figure>
+<p>集群从节点能够迁移到孤立的主节点上（主节点没有工作的从节点），这提高了集群抵御失败的能力，因为如果没有工作的从属服务器，孤立的主服务器在失败的情况下不会进行故障转移。</p>
+<p>只有当有一定数量的从节点为老主节点服务时，从节点才能迁移到孤立主节点，把这个数量称为“迁移屏障”,迁移屏障为1表示一个从节点只有在它的主人至少有一个其他的工作从节点时才会迁移，以此类推。它通常反映了集群中每个主服务器所需的从节点的数量。</p>
+<p>默认值为1（当从节点对应的主节点至少与一个从节点时才会进行迁移）。要想使迁移禁用只需将这个选项设置一个比较大的值。可以设置为0，但这通常是用于调试，应用在生产环境中比较危险。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># cluster-migration-barrier 1</span><br></pre></td></tr></table></figure>
+<p>在默认情况下，如果Redis发现至少有一个hash槽未被发现则将会停止接收查询（没有可用的节点为其服务）。如果集群部分宕机(例如，不再覆盖散列槽的范围)，那么所有集群最终都将不可用。</p>
+<p>但是如果想要集群中的部分节点能够继续工作，接受仍然覆盖的键空间部分的查询，需要将“cluster-require-full-coverage”选项设置为“no”:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># cluster-require-full-coverage yes</span><br></pre></td></tr></table></figure>
+<p>为了设置好集群，可用阅读文档<a href="http://redis.io" target="_blank" rel="noopener">http://redis.io</a></p>
+<h3 id="集群DOCKER-NAT支持（CLUSTER-DOCKER-NAT-support）"><a href="#集群DOCKER-NAT支持（CLUSTER-DOCKER-NAT-support）" class="headerlink" title="集群DOCKER/NAT支持（CLUSTER DOCKER/NAT support）"></a>集群DOCKER/NAT支持（CLUSTER DOCKER/NAT support）</h3><p>在某些部署中，Redis集群节点地址探测失败，可能是应为地址是NAT-ted或者端口被转发（典型的就是Docker或其他容器）。</p>
+<p>为了保证Redis集群在这些环节中能够正常工作，每个节点都需要通过一个静态配置知晓其对应的公共地址，如下的两个选项用于这种情况：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># * cluster-announce-ip</span><br><span class="line"># * cluster-announce-port</span><br><span class="line"># * cluster-announce-bus-port</span><br></pre></td></tr></table></figure>
+<p>每个节点都通知节点其地址、客户端端口和集群消息总线端口。这些信息随后会发布在总线数据包的头部，这样，其他的节点将能够通过该节点发布的信息而正确地获取到映射的地址。</p>
+<p>如果上面的选项未使用，那么Redis集群将会用“auto-detection”进行替之。</p>
+<p>注意，当在重新映射时，总线端口可能不在客户端端口+ 10000的固定偏移位置，所以可以指定任意的端口和总线端口，这取决于他们被如何重映射。如果未涉足总线端口，则一般会使用固定的10000的偏移量。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># cluster-announce-ip 10.1.1.5</span><br><span class="line"># cluster-announce-port 6379</span><br><span class="line"># cluster-announce-bus-port 6380</span><br></pre></td></tr></table></figure>
+<h3 id="慢日志-SLOW-LOG"><a href="#慢日志-SLOW-LOG" class="headerlink" title="慢日志 (SLOW LOG)"></a>慢日志 (SLOW LOG)</h3><p>Redis慢日志是一个记录查询时间超过一个指定时间的系统，这里所说的超时并不包含I/O操作比如和客户端的交互，发送响应等等，而是真正执行命令的时间（在此阶段，线程被阻塞，同时不能处理其他请求）。</p>
+<p>可以通过两个参数来配置慢日志：一个用于告知Redis超时时间；另一个是慢日志长度。当一条新命令被记录的同时最老的一条将会从日志命令队列中移除。<br>下面的时间是以毫秒进行表示的，所有1000000表示1秒。注意一个负数表示禁用慢日志功能，0则表示强制记录每一条命令。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">slowlog-log-slower-than 10000</span><br></pre></td></tr></table></figure>
+<h3 id="延迟监控（LATENCY-MONITOR）"><a href="#延迟监控（LATENCY-MONITOR）" class="headerlink" title="延迟监控（LATENCY MONITOR）"></a>延迟监控（LATENCY MONITOR）</h3><p>Redis延迟监视子系统在运行时采样不同的操作，以便收集与Redis实例的潜在延迟源相关的数据。用户可以通过LATENCY命令获取这些信息，打印体表并获取报告结果。</p>
+<p>系统只记录执行时间等于或大于通过latency-monitor-threshold配置指令指定的毫秒数的操作。当它的值被设置为0时，延迟监视器将被关闭。</p>
+<p>默认情况下，延迟监视将被禁用，因为如果没有延迟问题，那么大多数情况下都不需要监视，并且收集数据会对性能产生影响，虽然非常小，但是可以在大负载下进行测量。如果需要，可以使用“CONFIG SET lat- monitorthreshold &lt;毫秒&gt;”命令在运行时启用延迟监视。</p>
+
       
     </div>
     
@@ -490,7 +512,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -501,7 +523,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -512,7 +534,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -545,7 +567,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis集群-REDIS-CLUSTER"><span class="nav-text">Redis集群(REDIS CLUSTER)</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis集群-REDIS-CLUSTER"><span class="nav-text">Redis集群(REDIS CLUSTER)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#集群DOCKER-NAT支持（CLUSTER-DOCKER-NAT-support）"><span class="nav-text">集群DOCKER/NAT支持（CLUSTER DOCKER/NAT support）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#慢日志-SLOW-LOG"><span class="nav-text">慢日志 (SLOW LOG)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#延迟监控（LATENCY-MONITOR）"><span class="nav-text">延迟监控（LATENCY MONITOR）</span></a></li></ol></div>
             
 
           </div>
