@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Spring,IoC," />
 
 
 
@@ -79,13 +79,18 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="大道至简">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+<meta name="description" content="Spring是个好东西，可是一直只懂点皮毛，面向搜索引擎配置也能勉强搭建起一个环境来，问道，Spring的核心是什么、谈谈IoC、AOP总是比较浅，对其内部实现原理更是无解，本篇文档主要谈谈IoC的一些理解和认识。 IoC(Inversion of Control，控制反转) ，什么是控制反转？控制和被控制对象是什么，控制反转带来的好处是什么？ 之前在一篇大牛的博客上看到对IoC的介绍，说这个Io">
+<meta name="keywords" content="Spring,IoC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring IoC">
+<meta property="og:url" content="http://yoursite.com/2018/07/25/it/spring/ioc/2018-07-25/Spring-IoC概论/index.html">
 <meta property="og:site_name" content="大道至简">
+<meta property="og:description" content="Spring是个好东西，可是一直只懂点皮毛，面向搜索引擎配置也能勉强搭建起一个环境来，问道，Spring的核心是什么、谈谈IoC、AOP总是比较浅，对其内部实现原理更是无解，本篇文档主要谈谈IoC的一些理解和认识。 IoC(Inversion of Control，控制反转) ，什么是控制反转？控制和被控制对象是什么，控制反转带来的好处是什么？ 之前在一篇大牛的博客上看到对IoC的介绍，说这个Io">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-07-25T17:16:49.176Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="大道至简">
+<meta name="twitter:title" content="Spring IoC">
+<meta name="twitter:description" content="Spring是个好东西，可是一直只懂点皮毛，面向搜索引擎配置也能勉强搭建起一个环境来，问道，Spring的核心是什么、谈谈IoC、AOP总是比较浅，对其内部实现原理更是无解，本篇文档主要谈谈IoC的一些理解和认识。 IoC(Inversion of Control，控制反转) ，什么是控制反转？控制和被控制对象是什么，控制反转带来的好处是什么？ 之前在一篇大牛的博客上看到对IoC的介绍，说这个Io">
 
 
 
@@ -115,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/archives/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/07/25/it/spring/ioc/2018-07-25/Spring-IoC概论/"/>
 
 
 
 
 
-  <title>Archive | 大道至简</title>
+  <title>Spring IoC | 大道至简</title>
   
 
 
@@ -140,7 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -244,411 +249,175 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/25/it/spring/ioc/2018-07-25/Spring-IoC概论/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="boyka">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大道至简">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">Spring IoC</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-25T00:00:00+08:00">
+                2018-07-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        Um..! 23 posts in total. Keep on posting.
-      </span>
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
 
-      
-
-        
-        
-        
-
-        
+                
+                
+              
+            </span>
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2018">2018</h1>
-          </div>
-        
-        
 
-        
+          
+            
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/07/25/it/spring/ioc/2018-07-25/Spring-IoC概论/" itemprop="url">
-              
-                <span itemprop="name">Spring IoC</span>
-              
-            </a>
-        
-      </h2>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-07-25T00:00:00+08:00"
-              content="2018-07-25" >
-          07-25
-        </time>
-      </div>
+          
 
-    </header>
-  </article>
+          
 
+        </div>
+      </header>
+    
 
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/06/02/it/redis/base/2018-05-11/Redis配置文件直译3/" itemprop="url">
-              
-                <span itemprop="name">redis.conf配置文件直译（3）</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-06-02T00:00:00+08:00"
-              content="2018-06-02" >
-          06-02
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/05/26/it/redis/base/2018-05-11/Redis配置文件直译2/" itemprop="url">
-              
-                <span itemprop="name">redis.conf配置文件直译（2）</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-05-26T00:00:00+08:00"
-              content="2018-05-26" >
-          05-26
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <p>Spring是个好东西，可是一直只懂点皮毛，面向搜索引擎配置也能勉强搭建起一个环境来，问道，Spring的核心是什么、谈谈IoC、AOP总是比较浅，对其内部实现原理更是无解，本篇文档主要谈谈IoC的一些理解和认识。</p>
+<p>IoC(Inversion of Control，控制反转) ，什么是控制反转？控制和被控制对象是什么，控制反转带来的好处是什么？</p>
+<p>之前在一篇大牛的博客上看到对IoC的介绍，说这个IoC呀，就类似于找对象，我们找个对象，都应该有一个定位，不同的人找对象的要求不太一样，比如品性、颜值、身高等，有了对对象的要求后，然后就满大街去匹配合适的mm，就上去撩，加微信加QQ嘛的，然后进一步……，hh。不过这好像对我们这些宅男来说太难啦，有时间窝在家里多耍两把游戏岂不更妙，这不是说程序中实例化对象难，主要想说的是这种实例化方式完全需要程序自身去处理，遇到实例化对象内部结构比较复杂时，可能需要经过多层实例化操作，那就一层一层的去new对象啊。</p>
+<p>不是说自己去找对象老火嘛，可以通过婚介公司呀，你说你要啥样啥样，大眼睛、瓜子脸、樱樱桃嘴……对对，就像刘亦菲那样的，没过几天，人家就按你的要求找了个mm，然后你俩就可以谈朋友、然后进一步发展……。没错，把你自己找对象的这一复杂过程交给婚介公司，因为他们那有所有mm的注册信息，然后根据你的需求就可以进行匹配，这就成功了，这也正是IoC的思想，我提供一个容器，容器里面有所有对象、资源的注册信息，你需要什么依赖对象，在需要的时候、自动给你注入进去，不用管这些对象如何如何加载、如何实例化。我觉得，生活中，这种模式非常之多，比如在线购物可以找天猫、京东等平台，想住新房可以找房地产开发公司云云。</p>
+<p>ok，简而言之言而简之，控制反转，就是控制获取实例对象、资源等的方式的反转，以前需要客户端程序自己去完成，这个操作现在变成通过第三方去完成这个过程，然后在需要的时候给你注入进去，这个注入过程也叫做DI(Dependency Injection，依赖注入)。</p>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/05/11/it/redis/base/2018-05-11/Redis配置文件直译/" itemprop="url">
-              
-                <span itemprop="name">redis.conf配置文件直译（1）</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-05-11T00:00:00+08:00"
-              content="2018-05-11" >
-          05-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/05/11/it/redis/base/2018-05-11/Redis配置文件直译1/" itemprop="url">
-              
-                <span itemprop="name">redis.conf配置文件直译（1）</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-05-11T00:00:00+08:00"
-              content="2018-05-11" >
-          05-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/05/10/it/algorithm/leetcode/2018-05-10/algorithm7/" itemprop="url">
-              
-                <span itemprop="name">7. Reverse Integer</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-05-10T00:00:00+08:00"
-              content="2018-05-10" >
-          05-10
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/05/10/it/algorithm/leetcode/2018-05-10/algorithm5/" itemprop="url">
-              
-                <span itemprop="name">5. Longest Palindromic Substring</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-05-10T00:00:00+08:00"
-              content="2018-05-10" >
-          05-10
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/04/30/it/redis/base/redis安装/" itemprop="url">
-              
-                <span itemprop="name">部署redis单机环境</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-04-30T00:00:00+08:00"
-              content="2018-04-30" >
-          04-30
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/04/27/it/algorithm/leetcode/2018-04-27/2018-04-27/" itemprop="url">
-              
-                <span itemprop="name">3. Longest Substring Without Repeating Characters</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-04-27T00:00:00+08:00"
-              content="2018-04-27" >
-          04-27
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/04/25/it/algorithm/leetcode/2018-04-25/algorithm2/" itemprop="url">
-              
-                <span itemprop="name">2. Two Sum</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-04-25T00:00:00+08:00"
-              content="2018-04-25" >
-          04-25
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Spring/" rel="tag"># Spring</a>
+          
+            <a href="/tags/IoC/" rel="tag"># IoC</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/02/it/redis/base/2018-05-11/Redis配置文件直译3/" rel="next" title="redis.conf配置文件直译（3）">
+                <i class="fa fa-chevron-left"></i> redis.conf配置文件直译（3）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><a class="extend next" rel="next" href="/archives/page/2/"><i class="fa fa-angle-right"></i></a>
-  </nav>
+  </article>
 
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -656,6 +425,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -877,6 +650,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
